@@ -1,0 +1,14 @@
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+// for window
+# include <sys/stat.h>
+# include <fcntl.h>
+
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/types.h>
+# include "libft.h"
+# include "get_next_line.h"
+
+#endif
