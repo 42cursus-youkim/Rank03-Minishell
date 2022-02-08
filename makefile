@@ -7,7 +7,7 @@ RM       := rm -rf
 
 PRE      := src
 LIB      := lib
-INC      := -I includes/ -I $(LIB)/includes
+INC      := -I include/ -I $(LIB)/include
 LIBFT    := $(LIB)/libft.a
 
 # ===== Test & Debugging =====
@@ -30,13 +30,11 @@ define choose_modules
 endef
 
 $(LIBFT):
-	@$(call log, G, Building $(CU)$(LIBFT)$(V))
-	make all -C $(LIB) DFLAGS="$(DFLAGS)"
-	@$(call log, G, Built $(CU)$(LIBFT)$(V))
+	@make all -C $(LIB) DFLAGS="$(DFLAGS)"
 
-# ===== Sources & Objects & Includes =====
-SRC      = $(call choose_modules, $(PKGS))
-OBJ      = $(SRC:%.c=%.o)
+# ===== Sources & Objects & Include =====
+SRC     := $(call choose_modules, $(PKGS))
+OBJ     := $(SRC:%.c=%.o)
 
 # ===== Rules =====
 %.o: %.c
@@ -71,7 +69,7 @@ ald: docs all cls
 docs:
 	@set -e;\
 		for p in $(PKGS); do\
-			$(HGEN) -I includes/$$p.h src/$$p;\
+			$(HGEN) -I include/$$p.h src/$$p;\
 		done
 	@$(call log, G, Updated Docs)
 
@@ -87,9 +85,9 @@ leak: docs all cls
 
 supp: docs all cls
 	@$(call log, Y, Creating Leak Suppressions,...)
-	@valgrind $(VFLAGS) --gen-suppressions=all $(TEST)
+	@valgrind $(VFLAGS) --gen-suppressions=all ./$(NAME)
 
-.PHONY: all re clean fclean test red docs
+.PHONY: all re clean fclean test red docs $(LIBFT)
 
 # ===== Colors =====
 cls:

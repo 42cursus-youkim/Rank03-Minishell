@@ -3,6 +3,10 @@
 
 //@func
 /*
+** < split.c > */
+
+char	**ft_split(char const *s, char c);
+/*
 ** < utils.c > */
 
 int		ft_strlen(const char *str);
