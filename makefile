@@ -38,25 +38,23 @@ OBJ      = $(SRC:%.c=%.o)
 
 # ===== Rules =====
 %.o: %.c
-	@echo "  $(WU)$(<F)$(R) -> $(E)$(@F)"
-	$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
+	@echo "   $(WU)$(<F)$(R) -> $(E)$(@F)"
+	@$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
 
 # @$(call build_library)
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(INC) -o $@ $^
-	@$(call log, V, Linked Object files,\
-		\n\twith flag $(R)$(DFLAGS)$(E)$(CFLAGS))
-	@echo "$(G)<<$(NAME)>>$(E)"
+	@$(CC) $(CFLAGS) $(INC) -o $@ $^
+	@$(call log, V, 🚀 linked with flag $(R)$(DFLAGS)$(E)$(CFLAGS))
 
 all: $(NAME)
 
 clean:
 	@$(RM) $(OBJ)
-	@$(call log, R, Cleaned Object files)
+	@$(call log, G, 🗑 Remove $(NAME)'s object files)
 
 fclean: clean
 	@$(RM) $(NAME)
-	@$(call log, R, Cleaned Names)
+	@$(call log, G, 🗑 Remove $(NAME))
 
 re: fclean all
 
@@ -100,9 +98,8 @@ YU ?= \033[4;33m
 G  ?= \033[0;92m
 V  ?= \033[0;35m
 E  ?= \033[0m
-CNAM ?= for $(YU)$(strip $(NAME)$(E))
+BD ?= \033[1m
 
 define log
-	printf "$($(strip $(1)))<$(strip $(2))\
-			$(CNAM)$($(strip $(1)))$(strip $(3))$($(strip $(1)))>$(E)\n"
+	printf "$($(strip $(1)))$(2)$(strip $(3))$(E) ... Done\n"
 endef
