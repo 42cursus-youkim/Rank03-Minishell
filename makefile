@@ -50,11 +50,15 @@ all: $(NAME)
 
 clean:
 	@$(RM) $(OBJ)
-	@$(call log, G, 🗑 Remove $(NAME)'s object files)
+	@$(call log, G, 🗑 cleaned $(NAME)'s object files)
 
 fclean: clean
 	@$(RM) $(NAME)
-	@$(call log, G, 🗑 Remove $(NAME))
+	@$(call log, G, 🗑 cleaned $(NAME))
+
+tclean: fclean
+	@make fclean -C $(LIB)
+# @$(call log, G, 🗑 Remove $(LIBFT))
 
 re: fclean all
 
@@ -101,5 +105,5 @@ E  ?= \033[0m
 BD ?= \033[1m
 
 define log
-	printf "$($(strip $(1)))$(2)$(strip $(3))$(E) ... Done\n"
+	printf "$($(strip $(1)))$(strip $(2))$(strip $(3))$(E) ... Done\n"
 endef
