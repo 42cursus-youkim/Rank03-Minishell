@@ -1,5 +1,5 @@
-#ifndef YTYPES_H
-# define YTYPES_H
+#ifndef TYPES_H
+# define TYPES_H
 
 typedef enum e_res
 {
