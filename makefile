@@ -7,7 +7,7 @@ RM       := rm -rf
 
 PRE      := src
 LIB      := lib
-INC      := -I includes/ -I $(LIB)
+INC      := -I includes/ -I $(LIB)/includes
 LIBFT    := $(LIB)/libft.a
 
 # ===== Test & Debugging =====
@@ -75,12 +75,11 @@ docs:
 	@$(call log, G, Updated Docs)
 
 test: docs all cls
-	@$(call log, Y, Running Test, \n\twith param $(R)$(TPARAM)$(E))
-	@$(TEST)
-	@$(call log, G, Ended Test)
+	@$(call log, G, 🧪 Running Test)
+	@./$(NAME)
 
 leak: docs all cls
-	@$(call log, Y, Running Leak Test,...)
+	@$(call log, Y, 🧪 Running Leak Test)
 	@colour-valgrind $(VFLAGS) $(TEST)
 
 supp: docs all cls
