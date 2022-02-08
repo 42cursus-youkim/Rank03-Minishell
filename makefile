@@ -1,71 +1,108 @@
-SHELL = bash
+# ===== Target & FLAGS =====
+NAME     := minishell
 
-# VARIABLES
-CC = gcc
-CFLAG = -Wall -Wextra -Werror
-RM = rm -rf
+CC       := gcc
+CFLAGS   := -Wall -Wextra -Werror
+RM       := rm -rf
 
-NAME = minishell
+PRE      := src
+LIB      := lib
+INC      := -I includes/ -I $(LIB)
+LIBFT    := $(LIB)/libft.a
 
-INCD_DIR = ./include
+# ===== Test & Debugging =====
+DFLAGS	 :=  #-g3 -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
+HGEN     := hgen
 
-LIBFT_DIR = ./lib
-LIBFT_NAME = ft
-LIBFT = $(LIBFT_DIR)/lib$(LIBFT_NAME).a
+# ===== Packages =====
+PKGS     :=
 
-SRCS_DIR = ./src
-SRCS =	main.c
-INDEX = 0
 
-OBJS_DIR = ./obj
-OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
+# ===== Macros =====
+define choose_modules
+	$(foreach pkg, $(1),\
+		$(foreach file, $($(pkg)V),\
+			$(PRE)/$(pkg)/$(file).c\
+		)\
+	) $(PRE)/main.c
+endef
 
-#STYLE
-FG_TEXT = \033[38;5;85m
-FG_DEBUG = \033[48;5;203m
-CL_RESET = \033[0m
-CL_BOLD = \033[1m
-CL_BRESET = \033[21m
+$(LIBFT):
+	@$(call log, G, Building $(CU)$(LIBFT)$(V))
+	make all -C $(LIB) DFLAGS="$(DFLAGS)"
+	@$(call log, G, Built $(CU)$(LIBFT)$(V))
 
-# RULE
-.PHONY : all clean fclean re tclean rere $(LIBFT_NAME)_clean $(LIBFT_NAME)_fclean
+# ===== Sources & Objects & Includes =====
+SRC      = $(call choose_modules, $(PKGS))
+OBJ      = $(SRC:%.c=%.o)
 
-all : $(LIBFT) $(NAME)
+# ===== Rules =====
+%.o: %.c
+	@echo "  $(WU)$(<F)$(R) -> $(E)$(@F)"
+	$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
 
-clean :
-	@$(RM) $(OBJS_DIR)
-	@echo -e "🗑 Remove $(CL_BOLD)$(NAME)'s OBJs$(CL_RESET) ... Done"
+# @$(call build_library)
+$(NAME): $(OBJ) $(LIBFT)
+	$(CC) $(CFLAGS) $(INC) -o $@ $^
+	@$(call log, V, Linked Object files,\
+		\n\twith flag $(R)$(DFLAGS)$(E)$(CFLAGS))
+	@echo "$(G)<<$(NAME)>>$(E)"
 
-fclean : clean
+all: $(NAME)
+
+clean:
+	@$(RM) $(OBJ)
+	@$(call log, R, Cleaned Object files)
+
+fclean: clean
 	@$(RM) $(NAME)
-	@echo -e "🗑 Remove $(CL_BOLD)$(NAME)$(CL_RESET) ... Done"
+	@$(call log, R, Cleaned Names)
 
-re : fclean all
+re: fclean all
 
-tclean : $(LIBFT_NAME)_fclean fclean
+# ===== Custom Rules =====
+red: fclean docs all cls
+ald: docs all cls
 
-rere : tclean all
+docs:
+	@$(call log, V, Generating Docs,...)
+	@set -e;\
+		for p in $(PKGS); do\
+			$(HGEN) -I includes/$$p.h src/$$p;\
+		done
+	@$(call log, G, Updated Docs)
 
-$(NAME) : $(OBJS)
-	$(CC) $(CFLAG) -I $(INCD_DIR) $(OBJS) -L $(LIBFT_DIR) -l$(LIBFT_NAME) -o $(NAME) -g
-	@echo -e "  $(CL_RESET)$(FG_TEXT)Done$(CL_RESET)"
+test: docs all cls
+	@$(call log, Y, Running Test, \n\twith param $(R)$(TPARAM)$(E))
+	@$(TEST)
+	@$(call log, G, Ended Test)
 
-$(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
-	@mkdir -p $(OBJS_DIR)
-	$(eval INDEX = $(shell expr $(INDEX) + 1))
-	@if [ $(INDEX) = 1 ] ; then \
-		echo -en "$(FG_TEXT)Creating $(CL_BOLD)$(NAME) ◼︎︎︎︎︎︎︎︎◼︎◼︎︎︎︎︎︎︎︎◼︎◼︎︎︎︎︎︎︎︎◼︎" ; \
-	else \
-		echo -en "$(FG_TEXT)◼︎︎︎︎︎︎︎︎◼︎◼︎︎︎︎︎︎︎︎◼◼︎︎︎︎︎︎︎︎◼︎" ; \
-	fi
-	@$(CC) $(CFLAGS) -I $(INCD_DIR) -I $(LIBFT_DIR) -c $< -o $@ -g
+leak: docs all cls
+	@$(call log, Y, Running Leak Test,...)
+	@colour-valgrind $(VFLAGS) $(TEST)
 
-# Lib
-$(LIBFT) : 
-	@make --no-print-directory -C $(LIBFT_DIR) all
+supp: docs all cls
+	@$(call log, Y, Creating Leak Suppressions,...)
+	@valgrind $(VFLAGS) --gen-suppressions=all $(TEST)
 
-$(LIBFT_NAME)_clean :
-	@make --no-print-directory -C $(LIBFT_DIR) clean
+.PHONY: all re clean fclean test red docs
 
-$(LIBFT_NAME)_fclean :
-	@make --no-print-directory -C $(LIBFT_DIR) fclean
+# ===== Colors =====
+cls:
+	@set -e; clear
+
+R  ?= \033[0;91m
+WU ?= \033[4;37m
+C  ?= \033[0;96m
+CU ?= \033[4;36m
+Y  ?= \033[0;33m
+YU ?= \033[4;33m
+G  ?= \033[0;92m
+V  ?= \033[0;35m
+E  ?= \033[0m
+CNAM ?= for $(YU)$(strip $(NAME)$(E))
+
+define log
+	printf "$($(strip $(1)))<$(strip $(2))\
+			$(CNAM)$($(strip $(1)))$(strip $(3))$($(strip $(1)))>$(E)\n"
+endef

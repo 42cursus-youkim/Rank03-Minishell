@@ -8,6 +8,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
+# include <sys/dirent.h>
+
 # include "libft.h"
 # include "get_next_line.h"
 
