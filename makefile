@@ -11,7 +11,9 @@ INC      := -I includes/ -I $(LIB)/includes
 LIBFT    := $(LIB)/libft.a
 
 # ===== Test & Debugging =====
-DFLAGS	 :=  #-g3 -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
+DFLAGS	 :=  -g #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
+VFLAGS   := --leak-check=full --show-leak-kinds=all \
+			--track-origins=yes
 HGEN     := hgen
 
 # ===== Packages =====
@@ -67,20 +69,21 @@ red: fclean docs all cls
 ald: docs all cls
 
 docs:
-	@$(call log, V, Generating Docs,...)
 	@set -e;\
 		for p in $(PKGS); do\
 			$(HGEN) -I includes/$$p.h src/$$p;\
 		done
 	@$(call log, G, Updated Docs)
 
-test: docs all cls
-	@$(call log, G, 🧪 Running Test)
+run: docs all
 	@./$(NAME)
+# test: docs all cls
+# 	@$(call log, G, 🧪 Running Test)
+# 	@./$(NAME)
 
 leak: docs all cls
 	@$(call log, Y, 🧪 Running Leak Test)
-	@colour-valgrind $(VFLAGS) $(TEST)
+	@colour-valgrind $(VFLAGS) ./$(NAME)
 
 supp: docs all cls
 	@$(call log, Y, Creating Leak Suppressions,...)
@@ -104,5 +107,5 @@ E  ?= \033[0m
 BD ?= \033[1m
 
 define log
-	printf "$($(strip $(1)))$(strip $(2))$(strip $(3))$(E) ... Done\n"
+	printf "$($(strip $(1)))$(strip $(2))$(strip $(3))$(E)\n"
 endef

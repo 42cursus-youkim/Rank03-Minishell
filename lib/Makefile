@@ -3,7 +3,7 @@ NAME     := libft.a
 
 CC       := gcc
 CFLAGS   := -Wall -Wextra -Werror -std=c99
-# DFLAGS	 := -g3 #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
+DFLAGS	 := -g #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
 # VFLAGS   := --leak-check=full --show-leak-kinds=all \
 # 			--track-origins=yes \
 # 			--suppressions=./macos.supp
