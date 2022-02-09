@@ -21,4 +21,5 @@ char	**ft_split(char const *str, char delimitor);
 ** < util.c > */
 
 int		ft_strlen(const char *str);
+bool	is_str_equel(const char *str1, const char *str2);
 #endif
