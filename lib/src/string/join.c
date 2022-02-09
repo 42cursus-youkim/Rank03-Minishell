@@ -1,6 +1,6 @@
 #include "libft.h"
 
-static char	*ft_char_to_str(char c)
+static char	*new_char_tostr(char c)
 {
 	char	*new;
 
@@ -12,7 +12,7 @@ static char	*ft_char_to_str(char c)
 	return (new);
 }
 
-char	*ft_arr_join(char **arr, char delimiter)
+char	*new_str_join(char **arr, char delimiter)
 {
 	int			i;
 	char		*new;
@@ -22,15 +22,15 @@ char	*ft_arr_join(char **arr, char delimiter)
 	printf("arr_len: %d\n", arr_len);
 	if (!arr || !arr_len)
 		return (NULL);
-	new = ft_strdup("");
-	delim = ft_char_to_str(delimiter);
+	new = new_str("");
+	delim = new_char_tostr(delimiter);
 	i = -1;
 	while (++i < arr_len - 1)
 	{
-		ft_strappend(&new, arr[i]);
-		ft_strappend(&new, delim);
+		ft_str_append(&new, arr[i]);
+		ft_str_append(&new, delim);
 	}
-	ft_strappend(&new, arr[i]);
+	ft_str_append(&new, arr[i]);
 	free(delim);
 	return (new);
 }

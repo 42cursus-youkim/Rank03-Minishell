@@ -18,11 +18,11 @@ t_res	ft_arr_extend(char ***parr, char **src)
 	new[total_len] = NULL;
 	i = -1;
 	while (++i < arr_len)
-		new[i] = ft_strdup((*parr)[i]);
+		new[i] = new_str((*parr)[i]);
 	i = -1;
 	while (++i < src_len)
-		new[arr_len + i] = ft_strdup(src[i]);
-	ft_arr_free(*parr);
+		new[arr_len + i] = new_str(src[i]);
+	del_arr(*parr);
 	*parr = new;
 	return (OK);
 }
@@ -40,7 +40,7 @@ int	ft_arr_len(char **arr)
 }
 
 //	free all elements of arr then itself
-void	ft_arr_free(char **arr)
+void	del_arr(char **arr)
 {
 	int	i;
 

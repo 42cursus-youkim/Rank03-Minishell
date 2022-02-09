@@ -34,8 +34,8 @@ void	minishell(void)
 		else if (ft_strlen(line) > 0)
 		{
 			add_history(line);
-			arr = ft_split(line, ' ');
-			new = ft_arr_join(arr, ' ');
+			arr = new_str_split(line, ' ');
+			new = new_str_join(arr, ' ');
 			printf("splitted then joined again: %s\n", new);
 		}
 		free(line);

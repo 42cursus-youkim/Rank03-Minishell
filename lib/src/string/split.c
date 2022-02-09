@@ -62,7 +62,7 @@ static char	**write_words(
 		arr[word_idx] = malloc((wordlen(i, str, delimitor) + 1) * sizeof(char));
 		if (!arr[word_idx])
 		{
-			ft_arr_free(arr);
+			del_arr(arr);
 			return (NULL);
 		}
 		arr[word_idx][wordlen(i, str, delimitor)] = '\0';
@@ -73,7 +73,7 @@ static char	**write_words(
 	return (arr);
 }
 
-char	**ft_split(char const *str, char delimitor)
+char	**new_str_split(char const *str, char delimitor)
 {
 	char	**strarr;
 	int		words;
