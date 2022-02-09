@@ -18,7 +18,7 @@ TEST     := test
 # ===== Packages =====
 PKGS     := string
 
-stringV  := utils split
+stringV  := utils array split
 
 # ===== Macros =====
 define choose_modules

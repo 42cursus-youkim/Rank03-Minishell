@@ -5,6 +5,8 @@
 /*
 ** < array.c > */
 
+t_res	ft_arr_extend(char ***parr, char **src);
+int		ft_arr_len(char **arr);
 void	ft_arr_free(char **arr);
 /*
 ** < split.c > */
