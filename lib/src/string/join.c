@@ -1,32 +1,36 @@
 #include "libft.h"
 
-// static int	total_len(char **arr)
-// {
-// 	int	i;
-// 	int	total_len;
+static char	*ft_char_to_str(char c)
+{
+	char	*new;
 
-// 	i = -1;
-// 	while (++i < total_words)
-// 		total_len += ft_strlen(arr[i]);
-// 	return (total_len);
-// }
+	new = malloc(2 * sizeof(char));
+	if (!new)
+		return (NULL);
+	new[0] = c;
+	new[1] = '\0';
+	return (new);
+}
 
-// char	*ft_arr_join(char **arr, char delimiter)
-// {
-// 	int			i;
-// 	char		*new;
-// 	int			new_len;
+char	*ft_arr_join(char **arr, char delimiter)
+{
+	int			i;
+	char		*new;
+	char		*delim;
+	const int	arr_len = ft_arr_len(arr);
 
-// 	const int	total_words = ft_arr_len(arr);
-
-// 	if (total_words == ERR)
-// 		return (NULL);
-// 	total_len = 0;
-// 	i = -1;
-
-// 	new_len = total_len + (total_words - 1);
-// 	new = malloc((new_len + 1) * sizeof(char));
-// 	if (!new)
-// 		return (NULL);
-// 	new[new_len] = '\0';
-// }
+	printf("arr_len: %d\n", arr_len);
+	if (!arr || !arr_len)
+		return (NULL);
+	new = ft_strdup("");
+	delim = ft_char_to_str(delimiter);
+	i = -1;
+	while (++i < arr_len - 1)
+	{
+		ft_strappend(&new, arr[i]);
+		ft_strappend(&new, delim);
+	}
+	ft_strappend(&new, arr[i]);
+	free(delim);
+	return (new);
+}
