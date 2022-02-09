@@ -3,9 +3,13 @@
 
 //@func
 /*
+** < array.c > */
+
+void	ft_arr_free(char **arr);
+/*
 ** < split.c > */
 
-char	**ft_split(char const *s, char c);
+char	**ft_split(char const *str, char delimitor);
 /*
 ** < utils.c > */
 

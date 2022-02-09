@@ -1,17 +1,17 @@
 #include "libft.h"
 
-static char	**del_strs(char *strs[])
-{
-	int	i;
+// static char	**ft_arr_free(char *strs[])
+// {
+// 	int	i;
 
-	i = -1;
-	while (strs[++i])
-		free(strs[i]);
-	free(strs);
-	return (NULL);
-}
+// 	i = -1;
+// 	while (strs[++i])
+// 		free(strs[i]);
+// 	free(strs);
+// 	return (NULL);
+// }
 
-static int	count_words(char const *s, char delim)
+static int	count_words(char const *str, char delimiter)
 {
 	int		i;
 	int		count;
@@ -20,9 +20,9 @@ static int	count_words(char const *s, char delim)
 	i = -1;
 	count = 1;
 	prev_delim = false;
-	while (s[++i])
+	while (str[++i])
 	{
-		if (s[i] == delim)
+		if (str[i] == delimiter)
 			prev_delim = true;
 		else if (prev_delim)
 		{
@@ -33,12 +33,12 @@ static int	count_words(char const *s, char delim)
 	return (count);
 }
 
-static int	wordlen(int i, char const *s, char const c)
+static int	wordlen(int i, char const *str, char const delimiter)
 {
 	int	len;
 
 	len = 0;
-	while (s[i] && s[i] != c)
+	while (str[i] && str[i] != delimiter)
 	{
 		i++;
 		len++;
@@ -46,7 +46,8 @@ static int	wordlen(int i, char const *s, char const c)
 	return (len);
 }
 
-static char	**write_words(char **strarr, int words, char const *s, char c)
+static char	**write_words(
+	char **arr, int words, char const *str, char delimitor)
 {
 	int	i;
 	int	j;
@@ -56,30 +57,36 @@ static char	**write_words(char **strarr, int words, char const *s, char c)
 	word_idx = -1;
 	while (++word_idx < words)
 	{
-		while (s[i] == c)
+		while (str[i] == delimitor)
 			i++;
-		strarr[word_idx] = malloc((wordlen(i, s, c) + 1) * sizeof(char));
-		if (!strarr[word_idx])
-			return (del_strs(strarr));
-		strarr[word_idx][wordlen(i, s, c)] = '\0';
+		arr[word_idx] = malloc((wordlen(i, str, delimitor) + 1) * sizeof(char));
+		if (!arr[word_idx])
+		{
+			ft_arr_free(arr);
+			return (NULL);
+		}
+		arr[word_idx][wordlen(i, str, delimitor)] = '\0';
 		j = 0;
-		while (s[i] && s[i] != c)
-			strarr[word_idx][j++] = s[i++];
+		while (str[i] && str[i] != delimitor)
+			arr[word_idx][j++] = str[i++];
 	}
-	return (strarr);
+	return (arr);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *str, char delimitor)
 {
 	char	**strarr;
 	int		words;
 
-	if (!s)
+	if (!str)
 		return (NULL);
-	words = count_words(s, c);
+	words = count_words(str, delimitor);
 	strarr = malloc((words + 1) * sizeof(char *));
 	if (!strarr)
-		return (del_strs(strarr));
+	{
+		ft_arr_free(strarr);
+		return (NULL);
+	}
 	strarr[words] = NULL;
-	return (write_words(strarr, words, s, c));
+	return (write_words(strarr, words, str, delimitor));
 }
