@@ -83,10 +83,7 @@ char	**ft_split(char const *str, char delimitor)
 	words = count_words(str, delimitor);
 	strarr = malloc((words + 1) * sizeof(char *));
 	if (!strarr)
-	{
-		ft_arr_free(strarr);
 		return (NULL);
-	}
 	strarr[words] = NULL;
 	return (write_words(strarr, words, str, delimitor));
 }
