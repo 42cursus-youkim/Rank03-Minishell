@@ -3,7 +3,6 @@
 
 int	main(void)
 {
-	signal(SIGINT, signal_handler);
 	prompt();
 	return (0);
 }

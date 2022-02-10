@@ -17,6 +17,7 @@ char	*new_str_join(char **arr, char delimiter);
 ** < new.c > */
 
 char	*new_str(const char *src);
+char	*new_str_slice(char *str, int begin, int end);
 int		ft_str_append(char **pstr, char *src);
 /*
 ** < split.c > */

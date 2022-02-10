@@ -3,10 +3,6 @@
 
 //@func
 /*
-** < interrupt.c > */
-
-void	signal_handler(int status);
-/*
 ** < prompt.c > */
 
 void	prompt(void);
