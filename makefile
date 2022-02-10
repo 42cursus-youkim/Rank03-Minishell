@@ -7,7 +7,8 @@ RM       := rm -rf
 
 PRE      := src
 INC      := -I./include/ -I./lib/include
-LIB		 := -L/usr/lib -lreadline -L./lib -lft
+READLINE := -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
+LIB		 := $(READLINE) -lreadline -L./lib -lft
 
 # ===== Test & Debugging =====
 DFLAGS	 :=  -g #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
@@ -64,6 +65,7 @@ red: tclean docs all cls
 ald: docs all cls
 
 docs:
+	@make docs -C lib/
 	@set -e;\
 		for p in $(PKGS); do\
 			$(HGEN) -I include/$$p.h src/$$p;\
