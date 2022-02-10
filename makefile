@@ -6,9 +6,8 @@ CFLAGS   := -Wall -Wextra -Werror
 RM       := rm -rf
 
 PRE      := src
-INC      := -I./include/ -I./lib/include
-READLINE := -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
-LIB		 := $(READLINE) -lreadline -L./lib -lft
+INC      := -I./include/ -I./lib/include -I ~/.brew/opt/readline/include
+LIB		 := -L ~/.brew/opt/readline/lib -lreadline -L./lib -lft
 
 # ===== Test & Debugging =====
 DFLAGS	 :=  -g #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
