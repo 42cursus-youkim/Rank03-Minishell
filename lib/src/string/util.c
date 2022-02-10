@@ -12,7 +12,7 @@ int	ft_strlen(const char *str)
 	return (i);
 }
 
-bool	is_str_equel(const char *str1, const char *str2)
+bool	is_str_equal(const char *str1, const char *str2)
 {
 	const int	str1_len = ft_strlen(str1);
 	const int	str2_len = ft_strlen(str2);
