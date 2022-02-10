@@ -1,14 +1,13 @@
 # ===== Target & FLAGS =====
 NAME     := minishell
 
-CC       := gcc
+CC       := clang
 CFLAGS   := -Wall -Wextra -Werror
 RM       := rm -rf
 
 PRE      := src
-LIB      := lib
-INC      := -I includes/ -I $(LIB)/includes
-LIBFT    := $(LIB)/libft.a
+INC      := -I./include/ -I./lib/include
+LIB		 := -L/usr/lib -lreadline -L./lib -lft
 
 # ===== Test & Debugging =====
 DFLAGS	 :=  -g #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
@@ -19,7 +18,6 @@ HGEN     := hgen
 # ===== Packages =====
 PKGS     :=
 
-
 # ===== Macros =====
 define choose_modules
 	$(foreach pkg, $(1),\
@@ -29,14 +27,9 @@ define choose_modules
 	) $(PRE)/main.c
 endef
 
-$(LIBFT):
-	@$(call log, G, Building $(CU)$(LIBFT)$(V))
-	make all -C $(LIB) DFLAGS="$(DFLAGS)"
-	@$(call log, G, Built $(CU)$(LIBFT)$(V))
-
-# ===== Sources & Objects & Includes =====
-SRC      = $(call choose_modules, $(PKGS))
-OBJ      = $(SRC:%.c=%.o)
+# ===== Sources & Objects & Include =====
+SRC      := $(call choose_modules, $(PKGS))
+OBJ      := $(SRC:%.c=%.o)
 
 # ===== Rules =====
 %.o: %.c
@@ -44,8 +37,9 @@ OBJ      = $(SRC:%.c=%.o)
 	@$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
 
 # @$(call build_library)
-$(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) $(INC) -o $@ $^
+$(NAME): $(OBJ)
+	make all -C lib/ DFLAGS="$(DFLAGS)"
+	@$(CC) $(CFLAGS) $(INC) $(LIB) -o $@ $^
 	@$(call log, V, 🚀 linked with flag $(R)$(DFLAGS)$(E)$(CFLAGS))
 
 all: $(NAME)
@@ -59,27 +53,28 @@ fclean: clean
 	@$(call log, G, 🗑 cleaned $(NAME))
 
 tclean: fclean
-	@make fclean -C $(LIB)
+	@make fclean -C lib
+
 # @$(call log, G, 🗑 Remove $(LIBFT))
 
 re: fclean all
 
 # ===== Custom Rules =====
-red: fclean docs all cls
+red: tclean docs all cls
 ald: docs all cls
 
 docs:
 	@set -e;\
 		for p in $(PKGS); do\
-			$(HGEN) -I includes/$$p.h src/$$p;\
+			$(HGEN) -I include/$$p.h src/$$p;\
 		done
-	@$(call log, G, Updated Docs)
 
 run: docs all
 	@./$(NAME)
-# test: docs all cls
-# 	@$(call log, G, 🧪 Running Test)
-# 	@./$(NAME)
+
+test: docs all
+	@$(call log, G, 🧪 Running Test)
+	@./$(NAME)
 
 leak: docs all cls
 	@$(call log, Y, 🧪 Running Leak Test)
@@ -87,9 +82,9 @@ leak: docs all cls
 
 supp: docs all cls
 	@$(call log, Y, Creating Leak Suppressions,...)
-	@valgrind $(VFLAGS) --gen-suppressions=all $(TEST)
+	@valgrind $(VFLAGS) --gen-suppressions=all ./$(NAME)
 
-.PHONY: all re clean fclean test red docs
+.PHONY: all re clean fclean test red docs $(LIBFT)
 
 # ===== Colors =====
 cls:

@@ -1,18 +1,6 @@
 #include "libft.h"
 
-int	ft_strlen(const char *str)
-{
-	int	i;
-
-	if (!str)
-		return (ERR);
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strdup(const char *src)
+char	*new_str(const char *src)
 {
 	int		i;
 	char	*new;
@@ -38,7 +26,7 @@ static int	ft_strcpy(char *dst, char *src)
 	return (ft_strlen(src));
 }
 
-int	ft_strappend(char **pstr, char *src)
+int	ft_str_append(char **pstr, char *src)
 {
 	const int	org_len = ft_strlen(*pstr);
 	const int	src_len = ft_strlen(src);

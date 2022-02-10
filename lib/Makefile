@@ -4,14 +4,13 @@ NAME     := libft.a
 CC       := gcc
 CFLAGS   := -Wall -Wextra -Werror -std=c99
 DFLAGS	 := -g #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
-# VFLAGS   := --leak-check=full --show-leak-kinds=all \
-# 			--track-origins=yes \
-# 			--suppressions=./macos.supp
+VFLAGS   := --leak-check=full --show-leak-kinds=all \
+			--track-origins=yes
 AR       := ar -rcs
 RM       := rm -f
 
 PRE      := src
-INC      := -I includes
+INC      := -I include
 
 HGEN     := hgen
 TEST     := test
@@ -19,7 +18,7 @@ TEST     := test
 # ===== Packages =====
 PKGS     := string
 
-stringV  := utils
+stringV  := util array split new join
 
 # ===== Macros =====
 define choose_modules
@@ -30,7 +29,7 @@ define choose_modules
 	)
 endef
 
-# ===== Sources & Objects & Includes =====
+# ===== Sources & Objects & Include =====
 SRC      := $(call choose_modules, $(PKGS))
 OBJ      := $(SRC:%.c=%.o)
 
@@ -62,7 +61,7 @@ ald: docs all
 docs:
 	@set -e;\
 		for p in $(PKGS); do\
-			$(HGEN) -I includes/$$p.h src/$$p;\
+			$(HGEN) -I include/$$p.h src/$$p;\
 		done
 	@$(call log, V, 📝 Generating Docs)
 
