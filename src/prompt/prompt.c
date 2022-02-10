@@ -19,19 +19,20 @@ static void	signal_handler(int status)
 void	prompt(void)
 {
 	char	*line;
-	char	*prompt;
 	char	*name;
+	char	*prompt_str;
 
+	rl_catch_signals = 0;
 	name = getenv("USER");
-	prompt = new_str_join((char *[]){
+	prompt_str = new_str_join((char *[]){
 			BGRN, name, "@🐚 > " END, NULL}, '\0');
 	signal(SIGINT, signal_handler);
 	while (true)
 	{
-		line = readline(prompt);
+		line = readline(prompt_str);
 		if (is_line_eof(line) || is_str_equal(line, "exit"))
 		{
-			printf("\r%sexit\n", prompt);
+			printf("\r%sexit\n", prompt_str);
 			break ;
 		}
 		else if (is_line_empty(line))
