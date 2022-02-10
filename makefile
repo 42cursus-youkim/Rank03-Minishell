@@ -16,7 +16,9 @@ VFLAGS   := --leak-check=full --show-leak-kinds=all \
 HGEN     := hgen
 
 # ===== Packages =====
-PKGS     :=
+PKGS     := prompt
+
+promptV  := prompt interrupt util terminal
 
 # ===== Macros =====
 define choose_modules
