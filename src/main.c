@@ -1,14 +1,30 @@
 #include "minishell.h"
+#define BACKSPACE "\b \b"
 
+/*
+	- printf: move to new line
+	- rl_on_new_line: Regenerate the prompt on a newline
+	- rl_replace_line: Clear the previous text
+*/
 static void	signal_handler(int status)
 {
 	if (status == SIGINT)
 	{
-		printf("\n"); // Move to a new line
-		rl_on_new_line(); // Regenerate the prompt on a newline
-		rl_replace_line("", 0); // Clear the previous text
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+}
+
+bool	is_line_eof(char *line)
+{
+	return (line == NULL);
+}
+
+bool	is_line_empty(char *line)
+{
+	return (ft_strlen(line) > 0);
 }
 
 void	prompt(void)
@@ -23,12 +39,12 @@ void	prompt(void)
 	while (true)
 	{
 		line = readline(prompt);
-		if (!line || is_str_equal(line, "exit"))
+		if (is_line_eof(line) || is_str_equal(line, "exit"))
 		{
 			printf("\r%sexit\n", prompt);
 			break ;
 		}
-		else if (ft_strlen(line) > 0)
+		else if (is_line_empty(line))
 		{
 			add_history(line);
 			rl_redisplay();
