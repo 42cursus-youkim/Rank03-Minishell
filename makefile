@@ -18,8 +18,8 @@ HGEN     := hgen
 # ===== Packages =====
 PKGS     := prompt lexer
 
-promptV  := prompt interrupt util terminal
 lexerV   := lexer lexer_tokenizer
+promptV  := prompt interrupt util
 
 # ===== Macros =====
 define choose_modules

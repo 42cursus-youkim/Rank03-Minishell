@@ -1,45 +1,25 @@
 #include "minishell.h"
 
-/*
-	- printf: move to new line
-	- rl_on_new_line: Regenerate the prompt on a newline
-	- rl_replace_line: Clear the previous text
-*/
-static void	signal_handler(int status)
-{
-	if (status == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
-
 void	prompt(void)
 {
-	char	*line;
-	char	*name;
-	char	*prompt_str;
+	char		*line;
+	t_prompt	prompt;
 
-	rl_catch_signals = 0;
-	name = getenv("USER");
-	prompt_str = new_str_join((char *[]){
-			BGRN, name, "@🐚 > " END, NULL}, '\0');
-	signal(SIGINT, signal_handler);
+	prompt_init(&prompt);
 	while (true)
 	{
-		line = readline(prompt_str);
+		line = readline(prompt.ps1);
 		if (is_line_eof(line) || is_str_equal(line, "exit"))
 		{
-			printf("\r%sexit\n", prompt_str);
+			prompt_replace_line(prompt.ps1, "exit");
 			break ;
 		}
-		else if (is_line_empty(line))
+		else if (!is_line_empty(line))
 		{
 			add_history(line);
-			printf("typed <%s>\n", line);
+			printf("typed <%s>; TODO: do something here\n", line);
 		}
 		free(line);
 	}
+	del_prompt(&prompt);
 }
