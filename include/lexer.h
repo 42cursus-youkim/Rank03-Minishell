@@ -11,13 +11,13 @@ typedef struct s_token
 /*
 ** < lexer.c > */
 
-t_token	*tokenizer(char *arr[]);
+t_token		*tokenizer(char *arr[]);
 /*
 ** < lexer_tokenizer.c > */
 
-bool	is_metachar(t_token *token, const char *str);
-bool	is_quotes(const char *str);
-bool	is_expand_parameter(const char *str);
-void	token_print(t_token token[]);
-void	del_token(t_token token[]);
+t_tokentype	tokentype_check(const char *str);
+bool		is_quotes(const char *str);
+bool		is_expand_parameter(const char *str);
+void		tokens_print(t_token tokens[]);
+void		del_tokens(t_token tokens[]);
 #endif

@@ -1,18 +1,15 @@
 #include "minishell.h"
 
-bool	is_metachar(t_token *token, const char *str)
+t_tokentype	tokentype_check(const char *str)
 {
 	if (is_str_equal(str, "|"))
-		token->type = PIPELINE;
-	else if (is_str_equal(str, ";"))
-		token->type = COMMAND;
-	else if (is_str_equal(str, "<") || is_str_equal(str, "<<")
+		return (PIPELINE);
+	if (is_str_equal(str, ";"))
+		return (COMMAND);
+	if (is_str_equal(str, "<") || is_str_equal(str, "<<")
 		|| is_str_equal(str, ">") || is_str_equal(str, ">>"))
-		token->type = REDIRECT;
-	else
-		return (false);
-	token->text = new_str(str);
-	return (true);
+		return (REDIRECT);
+	return (WORD);
 }
 
 bool	is_quotes(const char *str)
@@ -29,24 +26,24 @@ bool	is_expand_parameter(const char *str)
 	return (false);
 }
 
-void	token_print(t_token token[])
+void	tokens_print(t_token tokens[])
 {
 	int	i;
 
 	i = 0;
-	while (token[i].text)
+	while (tokens[i].text)
 	{
-		printf("[%d] text: %s\ttype: %d\n", i, token[i].text, token[i].type);
+		printf("[%d] text: %s\ttype: %d\n", i, tokens[i].text, tokens[i].type);
 		i++;
 	}
 }
 
-void	del_token(t_token token[])
+void	del_tokens(t_token tokens[])
 {
 	int	i;
 
 	i = -1;
-	while (token[++i].text)
-		free(token[i].text);
-	free(token);
+	while (tokens[++i].text)
+		free(tokens[i].text);
+	free(tokens);
 }
