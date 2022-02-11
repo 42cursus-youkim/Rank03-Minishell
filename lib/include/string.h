@@ -27,5 +27,5 @@ int		ft_str_append(char **pstr, char *src);
 
 int		ft_strlen(const char *str);
 bool	is_str_equal(const char *str1, const char *str2);
-int		ft_strchr_i(const char *str, int c);
+int		ft_strchr_i(const char *str, char c);
 #endif
