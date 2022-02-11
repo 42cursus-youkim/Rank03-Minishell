@@ -15,9 +15,16 @@ bool	is_metachar(t_token *token, const char *str)
 	return (true);
 }
 
+bool	is_quotes(const char *str)
+{
+	if (str[0] == '\'' || str[0] == '\"')
+		return (true);
+	return (false);
+}
+
 bool	is_expand_parameter(const char *str)
 {
-	if (str[0] == '\'' || (str[0] == '\"' && (ft_strchr_i(str, '$') == ERR)))
+	if (str[0] == '\"' && (ft_strchr_i(str, '$') != ERR))
 		return (true);
 	return (false);
 }

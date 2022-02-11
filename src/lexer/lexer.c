@@ -16,7 +16,7 @@ t_token	*tokenizer(char *arr[])
 		if (is_metachar(&token[i], arr[i]))
 			continue ;
 		token[i].type = WORD;
-		if (is_expand_parameter(arr[i]))
+		if (is_quotes(arr[i]) && !is_expand_parameter(arr[i]))
 			token[i].text = new_str_slice(arr[i], 1, ft_strlen(arr[i]) - 1);
 		else
 			token[i].text = new_str(arr[i]);
