@@ -19,6 +19,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+# include "minishell_type.h"
+# include "lexer.h"
+
 // # include "get_next_line.h"
 
 #endif
