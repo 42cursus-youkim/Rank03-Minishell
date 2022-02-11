@@ -26,3 +26,19 @@ bool	is_str_equal(const char *str1, const char *str2)
 			return (false);
 	return (true);
 }
+
+int	ft_strchr_i(const char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (i);
+		i++;
+	}
+	if (c == '\0')
+		return (i);
+	return (ERR);
+}
