@@ -1,5 +1,5 @@
-#ifndef COLORS_H
-# define COLORS_H
+#ifndef COLOR_H
+# define COLOR_H
 
 //	===== Regular text =====
 # define BLK "\e[0;30m"
