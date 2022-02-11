@@ -16,9 +16,10 @@ VFLAGS   := --leak-check=full --show-leak-kinds=all \
 HGEN     := hgen
 
 # ===== Packages =====
-PKGS     := prompt
+PKGS     := prompt lexer
 
 promptV  := prompt interrupt util terminal
+lexerV   := lexer lexer_tokenizer
 
 # ===== Macros =====
 define choose_modules
@@ -40,8 +41,8 @@ OBJ      := $(SRC:%.c=%.o)
 
 # @$(call build_library)
 $(NAME): $(OBJ)
-	make all -C lib/ DFLAGS="$(DFLAGS)"
-	@$(CC) $(CFLAGS) $(INC) $(LIB) -o $@ $^
+	@make --no-print-directory all -C lib/ DFLAGS="$(DFLAGS)"
+	@$(CC) $(CFLAGS) $(INC) $^ $(LIB) -o $@
 	@$(call log, V, 🚀 linked with flag $(R)$(DFLAGS)$(E)$(CFLAGS))
 
 all: $(NAME)
@@ -66,7 +67,7 @@ red: tclean docs all cls
 ald: docs all cls
 
 docs:
-	@make docs -C lib/
+	@make --no-print-directory docs -C lib/
 	@set -e;\
 		for p in $(PKGS); do\
 			$(HGEN) -I include/$$p.h src/$$p;\

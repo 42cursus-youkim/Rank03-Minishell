@@ -36,7 +36,6 @@ char	*new_str_slice(char *str, int begin, int end)
 	return (new);
 }
 
-
 static int	ft_strcpy(char *dst, char *src)
 {
 	int	i;
