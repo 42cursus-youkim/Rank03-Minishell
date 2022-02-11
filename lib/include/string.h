@@ -3,6 +3,10 @@
 
 //@func
 /*
+** < join.c > */
+
+char	*new_str_join(char **arr, char delimiter);
+/*
 ** < array.c > */
 
 t_res	ft_arr_append(char **parr[], char *str);
@@ -14,13 +18,10 @@ void	del_arr(char **arr);
 
 char	**new_str_split(char const *str, char delimitor);
 /*
-** < join.c > */
-
-char	*new_str_join(char **arr, char delimiter);
-/*
 ** < new.c > */
 
 char	*new_str(const char *src);
+char	*new_str_slice(char *str, int begin, int end);
 int		ft_str_append(char **pstr, char *src);
 /*
 ** < util.c > */
