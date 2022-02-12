@@ -50,7 +50,7 @@ static void	dict_move_items(t_dict *dict, t_ditem **items_n, int cap_n)
 	dict->items = items_n;
 }
 
-//	creates new dictitems, and moves all items to new array with new hash ids
+//	creates new ditems, and moves all items to new array with new hash ids
 int	dict_expand(t_dict *dict)
 {
 	int		cap_n;

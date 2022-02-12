@@ -7,6 +7,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <stdint.h>
 
 # include "type.h"
 # include "string.h"
