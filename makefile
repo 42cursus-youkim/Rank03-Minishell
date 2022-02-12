@@ -16,9 +16,10 @@ VFLAGS   := --leak-check=full --show-leak-kinds=all \
 HGEN     := hgen
 
 # ===== Packages =====
-PKGS     := lexer
+PKGS     := lexer builtin
 
 lexerV   := lexer lexer_tokenizer
+builtinV := env path
 
 # ===== Macros =====
 define choose_modules
