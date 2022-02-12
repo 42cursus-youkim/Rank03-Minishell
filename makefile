@@ -7,7 +7,8 @@ RM       := rm -rf
 
 PRE      := src
 INC      := -I./include/ -I./lib/include
-LIB		 := -L/usr/lib -lreadline -L./lib -lft
+LIB		 := -L/usr/lib -lreadline
+LIBFT    := lib/libft.a
 
 # ===== Test & Debugging =====
 DFLAGS	 :=  -g #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
@@ -35,13 +36,15 @@ SRC      := $(call choose_modules, $(PKGS))
 OBJ      := $(SRC:%.c=%.o)
 
 # ===== Rules =====
+$(LIBFT):
+	@make --no-print-directory all -C lib/ DFLAGS="$(DFLAGS)"
+
 %.o: %.c
 	@echo "   $(WU)$(<F)$(R) -> $(E)$(@F)"
 	@$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
 
 # @$(call build_library)
-$(NAME): $(OBJ)
-	@make --no-print-directory all -C lib/ DFLAGS="$(DFLAGS)"
+$(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(INC) $^ $(LIB) -o $@
 	@$(call log, V, 🚀 linked with flag $(R)$(DFLAGS)$(E)$(CFLAGS))
 
