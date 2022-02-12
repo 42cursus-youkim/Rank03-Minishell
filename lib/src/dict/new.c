@@ -6,6 +6,8 @@ t_ditem	*new_ditem(const char *key, void *value)
 	t_ditem	*item;
 
 	item = malloc(sizeof(t_ditem));
+	if (!item)
+		return (NULL);
 	item->key = new_str(key);
 	item->value = value;
 	return (item);
@@ -27,15 +29,18 @@ t_ditem	**new_ditem_arr(int capacity)
 }
 
 //	initializes dictionary, NULLs items, saves
-static void	dict_init(t_dict *dict, t_del_f del_value)
+static t_res	dict_init(t_dict *dict, t_del_f del_value)
 {
 	dict->size = 0;
 	dict->capacity = DICT_INITIAL_CAPACITY;
 	dict->items = new_ditem_arr(dict->capacity);
+	if (!dict->items)
+		return (ERR);
 	if (del_value)
 		dict->del_value = del_value;
 	else
 		dict->del_value = no_free;
+	return (OK);
 }
 
 /*	creates an empty dict with destructor (ex: free).
@@ -48,15 +53,14 @@ t_dict	*new_dict(t_del_f del_value)
 	t_dict	*dict;
 
 	dict = malloc(sizeof(t_dict));
-	dict_init(dict, del_value);
-	if (dict->items)
-		return (dict);
-	else
+	if (!dict)
+		return (NULL);
+	if (dict_init(dict, del_value) == ERR)
 	{
-		free(dict->items);
 		free(dict);
 		return (NULL);
 	}
+	return (dict);
 }
 
 //	creates a new dict with allocated string k,v
