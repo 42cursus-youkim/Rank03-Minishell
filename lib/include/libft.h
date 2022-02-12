@@ -12,5 +12,7 @@
 # include "string.h"
 # include "system.h"
 # include "color.h"
+# include "deque.h"
+# include "dict.h"
 
 #endif

@@ -16,9 +16,11 @@ HGEN     := hgen
 TEST     := test
 
 # ===== Packages =====
-PKGS     := string
+PKGS     := string dict #deque
 
-stringV  := util array split new join
+stringV  := new util array split join
+dequeV   := new
+dictV    := new del hash set get expand print status
 
 # ===== Macros =====
 define choose_modules
