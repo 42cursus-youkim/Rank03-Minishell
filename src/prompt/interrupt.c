@@ -1,5 +1,10 @@
 #include "minishell.h"
 
+void	prompt_ignore_signal(int status)
+{
+	(void)status;
+}
+
 /*
 	- printf: move to new line
 	- rl_on_new_line: Regenerate the prompt on a newline
@@ -12,9 +17,4 @@ void	prompt_new_line(int status)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-}
-
-void	prompt_replace_line(char *prompt, char *str)
-{
-	printf("\r%s%s\n", prompt, str);
 }

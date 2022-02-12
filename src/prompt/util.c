@@ -10,23 +10,24 @@ bool	is_line_empty(char *line)
 	return (ft_strlen(line) <= 0);
 }
 
-void	prompt_init(t_prompt *prompt)
+void	prompt_exit(char *line)
 {
-	rl_catch_signals = 0;
-	signal(SIGINT, prompt_new_line);
-	prompt->user = getenv("USER");
-	prompt->ps1 = new_str_join((char *[]){
-			BGRN, prompt->user, "@🐚 > " END, NULL}, '\0');
-	prompt->ps2 = new_str("🐚 > ");
+	printf("exit\n");
+	free(line);
+}
+
+void	cursor_up(void)
+{
+	printf("\033[1A");
 }
 
 /*
-	- prompt: not freed; uses static allocation (init)
-	- user: stores result of getenv(); should not be freed
-	- ps1, ps2: freed
+	only works when replaced line is shorter than original prompt.
+	intended to be only used with EOF and "exit"
 */
-void	del_prompt(t_prompt *prompt)
+void	prompt_replace_line_with(char *line, char *ps, char *new_line)
 {
-	free(prompt->ps1);
-	free(prompt->ps2);
+	cursor_up();
+	printf("\r%s%s\n", ps, new_line);
+	free(line);
 }

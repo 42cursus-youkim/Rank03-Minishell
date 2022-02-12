@@ -10,6 +10,11 @@ typedef struct s_prompt
 
 //@func
 /*
+** < interrupt.c > */
+
+void	prompt_ignore_signal(int status);
+void	prompt_new_line(int status);
+/*
 ** < prompt.c > */
 
 void	prompt(void);
@@ -18,11 +23,7 @@ void	prompt(void);
 
 bool	is_line_eof(char *line);
 bool	is_line_empty(char *line);
-void	prompt_init(t_prompt *prompt);
-void	del_prompt(t_prompt *prompt);
-/*
-** < interrupt.c > */
-
-void	prompt_new_line(int status);
-void	prompt_replace_line(char *prompt, char *str);
+void	prompt_exit(char *line);
+void	cursor_up(void);
+void	prompt_replace_line_with(char *line, char *ps, char *new_line);
 #endif
