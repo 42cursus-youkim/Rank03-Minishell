@@ -7,13 +7,12 @@
 #  include <dirent.h>
 # endif
 
-# include <sys/stat.h>
-# include <fcntl.h>
-
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
-
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <signal.h>
 # include "libft.h"
 
 # include <readline/readline.h>
@@ -25,6 +24,7 @@
 # include "ast_node.h"
 
 # include "lexer.h"
+# include "prompt.h"
 // # include "get_next_line.h"
 
 #endif
