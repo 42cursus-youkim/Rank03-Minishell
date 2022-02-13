@@ -20,8 +20,11 @@
 # include <readline/history.h>
 
 # include "minishell_type.h"
-# include "lexer.h"
 
+# include "ast_type.h"
+# include "ast_node.h"
+
+# include "lexer.h"
 // # include "get_next_line.h"
 
 #endif
