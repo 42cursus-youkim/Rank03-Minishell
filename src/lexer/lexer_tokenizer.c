@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_tokentype	tokentype_check(const char *str)
+t_AST_type	tokentype_check(const char *str)
 {
 	if (is_str_equal(str, "|"))
 		return (PIPELINE);
