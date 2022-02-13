@@ -3,7 +3,7 @@
 
 typedef struct s_token
 {
-	t_tokentype	type;	
+	t_AST_type	type;
 	char		*text;
 }	t_token;
 
@@ -15,7 +15,7 @@ t_token		*tokenizer(char *arr[]);
 /*
 ** < lexer_tokenizer.c > */
 
-t_tokentype	tokentype_check(const char *str);
+t_AST_type	tokentype_check(const char *str);
 bool		is_quotes(const char *str);
 bool		is_expand_parameter(const char *str);
 void		tokens_print(t_token tokens[]);

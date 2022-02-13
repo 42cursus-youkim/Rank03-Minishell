@@ -6,8 +6,8 @@ CFLAGS   := -Wall -Wextra -Werror
 RM       := rm -rf
 
 PRE      := src
-INC      := -I./include/ -I./lib/include
-LIB		 := -L/usr/lib -lreadline
+INC      := -I./include/ -I./lib/include -I ~/.brew/opt/readline/include
+LIB		 := -L ~/.brew/opt/readline/lib -lreadline -L./lib -lft
 LIBFT    := lib/libft.a
 
 # ===== Test & Debugging =====
@@ -17,9 +17,10 @@ VFLAGS   := --leak-check=full --show-leak-kinds=all \
 HGEN     := hgen
 
 # ===== Packages =====
-PKGS     := lexer builtin
+PKGS     := prompt lexer builtin
 
 lexerV   := lexer lexer_tokenizer
+promptV  := prompt interrupt util
 builtinV := env path
 
 # ===== Macros =====

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_tokentype	tokentype_check(const char *str)
+t_AST_type	tokentype_check(const char *str)
 {
 	if (is_str_equal(str, "|"))
 		return (PIPELINE);
@@ -28,14 +28,15 @@ bool	is_expand_parameter(const char *str)
 
 void	tokens_print(t_token tokens[])
 {
-	int	i;
+	int			i;
+	const char	*type_str[] = {
+		BWHT "💬 WORD", BBLU "🔗 PIPELINE",
+		BYEL "🔁 REDIRECT", BRED "🔥 COMMAND"};
 
-	i = 0;
-	while (tokens[i].text)
-	{
-		printf("[%d] text: %s\ttype: %d\n", i, tokens[i].text, tokens[i].type);
-		i++;
-	}
+	i = -1;
+	while (tokens[++i].text)
+		printf("[%2d] " BGRN "%-12s" END "%s\n" END,
+			i, tokens[i].text, type_str[tokens[i].type]);
 }
 
 void	del_tokens(t_token tokens[])
