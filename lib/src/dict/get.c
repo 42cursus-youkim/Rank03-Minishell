@@ -3,7 +3,7 @@
 //	wrapper for hash that returns index got from hash
 int	dict_getid(int capacity, char *key)
 {
-	return (yhash_fnv1a(key) % (uint64_t)capacity);
+	return (hash_fnv1a(key) % (uint64_t)capacity);
 }
 
 static bool	does_itemmatch(t_ditem *item, char *key)

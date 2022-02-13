@@ -16,10 +16,9 @@ HGEN     := hgen
 TEST     := test
 
 # ===== Packages =====
-PKGS     := string dict #deque
+PKGS     := string dict
 
 stringV  := new util array split join
-dequeV   := new
 dictV    := new del hash set get expand print status
 
 # ===== Macros =====

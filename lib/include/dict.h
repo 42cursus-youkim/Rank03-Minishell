@@ -44,7 +44,7 @@ char		*dict_get_default(t_dict *dict, char *key, char *default_value);
 /*
 ** < hash.c > */
 
-uint64_t	yhash_fnv1a(const char *key);
+uint64_t	hash_fnv1a(const char *key);
 /*
 ** < new.c > */
 
