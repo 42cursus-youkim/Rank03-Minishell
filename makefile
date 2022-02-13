@@ -8,6 +8,7 @@ RM       := rm -rf
 PRE      := src
 INC      := -I./include/ -I./lib/include -I ~/.brew/opt/readline/include
 LIB		 := -L ~/.brew/opt/readline/lib -lreadline -L./lib -lft
+LIBFT    := lib/libft.a
 
 # ===== Test & Debugging =====
 DFLAGS	 :=  -g #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
@@ -16,10 +17,11 @@ VFLAGS   := --leak-check=full --show-leak-kinds=all \
 HGEN     := hgen
 
 # ===== Packages =====
-PKGS     := prompt lexer
+PKGS     := prompt lexer builtin
 
 lexerV   := lexer lexer_tokenizer
 promptV  := prompt interrupt util
+builtinV := env path
 
 # ===== Macros =====
 define choose_modules
@@ -35,13 +37,15 @@ SRC      := $(call choose_modules, $(PKGS))
 OBJ      := $(SRC:%.c=%.o)
 
 # ===== Rules =====
+$(LIBFT):
+	@make --no-print-directory all -C lib/ DFLAGS="$(DFLAGS)"
+
 %.o: %.c
 	@echo "   $(WU)$(<F)$(R) -> $(E)$(@F)"
 	@$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
 
 # @$(call build_library)
-$(NAME): $(OBJ)
-	@make --no-print-directory all -C lib/ DFLAGS="$(DFLAGS)"
+$(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(INC) $^ $(LIB) -o $@
 	@$(call log, V, 🚀 linked with flag $(R)$(DFLAGS)$(E)$(CFLAGS))
 

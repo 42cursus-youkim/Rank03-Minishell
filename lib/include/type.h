@@ -8,6 +8,6 @@ typedef enum e_res
 	UNSET = -2,
 }	t_res;
 
-// typedef void	(*t_del_f)(void *data);
+typedef void	(*t_del_f)(void *data);
 
 #endif

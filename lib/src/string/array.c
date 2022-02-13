@@ -64,6 +64,24 @@ int	ft_arr_len(char **arr)
 	return (i);
 }
 
+char	**new_arr(char **arr)
+{
+	int			i;
+	char		**new;
+
+	new = malloc(sizeof(char *) * 1);
+	if (!new)
+		return (NULL);
+	new[0] = NULL;
+	if (arr)
+	{
+		i = -1;
+		while (arr[++i])
+			ft_arr_append(&new, arr[i]);
+	}
+	return (new);
+}
+
 //	free all elements of arr then itself
 void	del_arr(char **arr)
 {
