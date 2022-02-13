@@ -19,7 +19,6 @@ char	*new_str_join(char **arr, char delimiter)
 	char		*delim;
 	const int	arr_len = ft_arr_len(arr);
 
-	printf("arr_len: %d\n", arr_len);
 	if (!arr || !arr_len)
 		return (NULL);
 	new = new_str("");

@@ -32,8 +32,8 @@ static void	dict_move_items(t_dict *dict, t_ditem **items_n, int cap_n)
 	int		id;
 	t_ditem	*item;
 
-	i = 0;
-	while (i < dict->capacity)
+	i = -1;
+	while (++i < dict->capacity)
 	{
 		item = dict->items[i];
 		if (item && item->key)
@@ -44,7 +44,6 @@ static void	dict_move_items(t_dict *dict, t_ditem **items_n, int cap_n)
 			else
 				dict_probenew(items_n, cap_n, id, item);
 		}
-		i++;
 	}
 	free(dict->items);
 	dict->items = items_n;

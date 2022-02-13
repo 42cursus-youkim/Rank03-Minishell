@@ -35,3 +35,25 @@ void	env_print(t_dict *env)
 			printf(BHYEL "%s" END "=" GRN "%s\n" END,
 				env->items[i]->key, env->items[i]->value);
 }
+
+char	**new_env_to_envp(t_dict *env)
+{
+	int		i;
+	int		envp_idx;
+	char	**envp;
+
+	envp = malloc(sizeof(char *) * (env->size + 1));
+	if (!envp)
+		return (NULL);
+	envp[env->capacity] = NULL;
+	envp_idx = -1;
+	i = -1;
+	while (++i < env->capacity)
+	{
+		if (!env->items[i])
+			continue ;
+		envp[++envp_idx] = new_str_join((char *[]){
+				env->items[i]->key, env->items[i]->value, NULL}, '=');
+	}
+	return (envp);
+}
