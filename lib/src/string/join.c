@@ -22,6 +22,8 @@ char	*new_str_join(char **arr, char delimiter)
 	if (!arr || !arr_len)
 		return (NULL);
 	new = new_str("");
+	if (!new)
+		return (NULL);
 	delim = new_char_tostr(delimiter);
 	i = -1;
 	while (++i < arr_len - 1)
@@ -31,5 +33,27 @@ char	*new_str_join(char **arr, char delimiter)
 	}
 	ft_str_append(&new, arr[i]);
 	free(delim);
+	return (new);
+}
+
+char	*new_str_join_freed(char *delimiter_str, int size, t_tempstr map[])
+{
+	int		i;
+	char	*new;
+
+	if (!map || !delimiter_str || size < 0)
+		return (NULL);
+	new = new_str("");
+	if (!new)
+		return (NULL);
+	i = -1;
+	while (++i < size)
+	{
+		ft_str_append(&new, map[i].str);
+		if (i < size - 1)
+			ft_str_append(&new, delimiter_str);
+		if (map[i].will_free)
+			free(map[i].str);
+	}
 	return (new);
 }

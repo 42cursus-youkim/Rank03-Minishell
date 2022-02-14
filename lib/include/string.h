@@ -1,6 +1,12 @@
 #ifndef STRING_H
 # define STRING_H
 
+typedef struct s_tempstr
+{
+	char	*str;
+	bool	will_free;
+}	t_tempstr;
+
 //@func
 /*
 ** < array.c > */
@@ -14,6 +20,7 @@ void	del_arr(char **arr);
 ** < join.c > */
 
 char	*new_str_join(char **arr, char delimiter);
+char	*new_str_join_freed(char *delimiter_str, int size, t_tempstr map[]);
 /*
 ** < new.c > */
 
