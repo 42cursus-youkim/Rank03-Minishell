@@ -27,27 +27,32 @@ t_dict	*new_env(char *envp[])
 
 void	env_print(t_dict *env)
 {
-	int		i;
+	int		id;
+	t_ditem	*item;
+	t_ditem	**items;
 
-	i = -1;
-	while (++i < env->capacity)
-		if (env->items[i])
-			printf(BHYEL "%s" END "=" GRN "%s\n" END,
-				env->items[i]->key, env->items[i]->value);
+	items = new_dict_kv_ordered(env);
+	if (!items)
+		return ;
+	id = -1;
+	while (++id < env->size)
+	{
+		item = items[id];
+		printf(BHYEL "%-s" END "=" HGRN "%s\n" END, item->key, item->value);
+	}
+	free(items);
 }
 
-char	**new_dict_to_arr(t_dict *env)
+char	**new_arr_env(t_dict *env)
 {
 	int		i;
 	t_ditem	*item;
 	char	**envp;
-	// int		envp_idx;
 
 	envp = ft_calloc(sizeof(char *), env->size + 1);
 	if (!envp)
 		return (NULL);
 	envp[env->size] = NULL;
-	// envp_idx = -1;
 	i = -1;
 	while (++i < env->capacity)
 	{
