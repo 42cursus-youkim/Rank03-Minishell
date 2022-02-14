@@ -5,6 +5,7 @@
 /*
 ** < math.c > */
 
-int	ft_digit_len(int n);
-int	ft_max(int a, int b);
+int		ft_digit_len(int n);
+int		ft_max(int a, int b);
+char	*new_itoa(int n);
 #endif
