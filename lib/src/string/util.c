@@ -42,3 +42,17 @@ int	ft_strchr_i(const char *str, char c)
 		return (i);
 	return (ERR);
 }
+
+//	prints NULL-terminated array in fancy colors
+void	ft_arr_print(char **arr)
+{
+	int			i;
+	const int	len = ft_arr_len(arr);
+	const int	pad = ft_digit_len(len - 1);
+
+	if (!arr || len == ERR)
+		return ;
+	i = -1;
+	while (arr[++i])
+		printf(BHYEL "[%*d] " HGRN "%s\n" END, pad, i, arr[i]);
+}

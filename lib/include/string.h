@@ -30,4 +30,5 @@ char	**new_str_split(char const *str, char delimitor);
 int		ft_strlen(const char *str);
 bool	is_str_equal(const char *str1, const char *str2);
 int		ft_strchr_i(const char *str, char c);
+void	ft_arr_print(char **arr);
 #endif
