@@ -6,6 +6,7 @@ static void	dict_insert(t_dict *dict, int id, char *key, void *value)
 	t_ditem	*item;
 
 	item = new_ditem(key, value);
+	item->order = dict->size;
 	dict->items[id] = item;
 	dict->size++;
 }

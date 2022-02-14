@@ -1,6 +1,8 @@
 #ifndef TYPE_H
 # define TYPE_H
 
+# include <stdint.h>
+
 typedef enum e_res
 {
 	OK = 0,

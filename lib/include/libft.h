@@ -7,9 +7,9 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
-# include <stdint.h>
 
 # include "type.h"
+# include "ft_math.h"
 # include "string.h"
 # include "system.h"
 # include "color.h"

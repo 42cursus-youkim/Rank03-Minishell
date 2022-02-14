@@ -1,33 +1,5 @@
 #include "libft.h"
 
-//	creates a new dictonary item, with key and value
-t_ditem	*new_ditem(const char *key, void *value)
-{
-	t_ditem	*item;
-
-	item = malloc(sizeof(t_ditem));
-	if (!item)
-		return (NULL);
-	item->key = new_str(key);
-	item->value = value;
-	return (item);
-}
-
-//	creates new NULL-set array of items
-t_ditem	**new_ditem_arr(int capacity)
-{
-	int		id;
-	t_ditem	**items;
-
-	items = malloc(capacity * sizeof(t_ditem *));
-	if (!items)
-		return (NULL);
-	id = -1;
-	while (++id < capacity)
-		items[id] = NULL;
-	return (items);
-}
-
 //	initializes dictionary, NULLs items, saves
 static t_res	dict_init(t_dict *dict, t_del_f del_value)
 {
