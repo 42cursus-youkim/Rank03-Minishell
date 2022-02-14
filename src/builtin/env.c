@@ -49,10 +49,9 @@ char	**new_arr_env(t_dict *env)
 	t_ditem	*item;
 	char	**envp;
 
-	envp = ft_calloc(sizeof(char *), env->size + 1);
+	envp = ft_calloc(sizeof(char *), env->size);
 	if (!envp)
 		return (NULL);
-	envp[env->size] = NULL;
 	i = -1;
 	while (++i < env->capacity)
 	{

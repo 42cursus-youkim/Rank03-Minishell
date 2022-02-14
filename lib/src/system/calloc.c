@@ -1,6 +1,6 @@
 #include "libft.h"
 
-void	*ft_calloc(size_t count, size_t size)
+void	*ft_calloc(size_t size, size_t count)
 {
 	size_t			i;
 	char			*ptr;

@@ -17,15 +17,11 @@ t_ditem	*new_ditem(const char *key, void *value)
 //	creates new NULL-set array of items
 t_ditem	**new_ditem_arr(int capacity)
 {
-	int		id;
 	t_ditem	**items;
 
-	items = malloc(capacity * sizeof(t_ditem *));
+	items = ft_calloc(sizeof(t_ditem *), capacity);
 	if (!items)
 		return (NULL);
-	id = -1;
-	while (++id < capacity)
-		items[id] = NULL;
 	return (items);
 }
 
