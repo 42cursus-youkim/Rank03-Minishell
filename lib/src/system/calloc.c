@@ -4,7 +4,7 @@ void	*ft_calloc(size_t count, size_t size)
 {
 	size_t			i;
 	char			*ptr;
-	const size_t	allocated_space = count * size;
+	const size_t	allocated_space = count * (size + 1);
 
 	ptr = malloc(allocated_space);
 	if (!ptr)
