@@ -10,6 +10,7 @@ t_ditem	*new_ditem(const char *key, void *value)
 		return (NULL);
 	item->key = new_str(key);
 	item->value = value;
+	item->order = ERR;
 	return (item);
 }
 

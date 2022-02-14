@@ -36,24 +36,26 @@ void	env_print(t_dict *env)
 				env->items[i]->key, env->items[i]->value);
 }
 
-char	**new_env_to_envp(t_dict *env)
+char	**new_dict_to_arr(t_dict *env)
 {
 	int		i;
-	int		envp_idx;
+	t_ditem	*item;
 	char	**envp;
+	// int		envp_idx;
 
-	envp = malloc(sizeof(char *) * (env->size + 1));
+	envp = ft_calloc(sizeof(char *), env->size + 1);
 	if (!envp)
 		return (NULL);
-	envp[env->capacity] = NULL;
-	envp_idx = -1;
+	envp[env->size] = NULL;
+	// envp_idx = -1;
 	i = -1;
 	while (++i < env->capacity)
 	{
-		if (!env->items[i])
+		item = env->items[i];
+		if (!item)
 			continue ;
-		envp[++envp_idx] = new_str_join((char *[]){
-				env->items[i]->key, env->items[i]->value, NULL}, '=');
+		envp[item->order] = new_str_join((char *[]){
+				item->key, item->value, NULL}, '=');
 	}
 	return (envp);
 }

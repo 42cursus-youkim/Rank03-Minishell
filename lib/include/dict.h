@@ -14,6 +14,7 @@ typedef struct s_ditem
 {
 	char	*key;
 	void	*value;
+	int		order;
 }	t_ditem;
 
 typedef struct s_dict
