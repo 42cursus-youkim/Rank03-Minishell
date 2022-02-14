@@ -6,7 +6,7 @@
 typedef struct s_AST_WORD
 {
 	char			*text;
-	t_AST_expansion	*expansion;
+	t_AST_expansion	**expansions;
 }	t_AST_WORD;
 
 typedef struct s_AST_REDIRECT
@@ -28,11 +28,14 @@ typedef struct s_AST_suffix
 typedef struct s_AST_COMMAND
 {
 	t_AST_WORD		name;
-	t_AST_REDIRECT	*prefix;
-	t_AST_suffix	*suffix;
+	t_AST_REDIRECT	**prefixes;
+	t_AST_suffix	**suffixes;
 }	t_AST_COMMAND;
 
-typedef t_AST_COMMAND*		t_AST_PIPELINE;
+typedef struct s_AST_PIPELINE
+{
+	t_AST_COMMAND	**commands;
+}	t_AST_PIPELINE;
 
 typedef struct s_AST_SCRIPT_elem
 {
@@ -44,6 +47,9 @@ typedef struct s_AST_SCRIPT_elem
 	}	u_data;
 }	t_AST_SCRIPT_elem;
 
-typedef t_AST_SCRIPT_elem*	t_AST_SCRIPT;
+typedef struct s_AST_SCRIPT
+{
+	t_AST_SCRIPT_elem	**elems;
+}	t_AST_SCRIPT;
 
 #endif
