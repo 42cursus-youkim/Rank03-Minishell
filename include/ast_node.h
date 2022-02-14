@@ -15,7 +15,7 @@ typedef struct s_AST_REDIRECT
 	t_redirect_op	op;
 }	t_AST_REDIRECT;
 
-typedef struct s_AST_suffix
+typedef struct s_AST_node
 {
 	t_AST_type			type;
 	union
@@ -23,13 +23,13 @@ typedef struct s_AST_suffix
 		t_AST_WORD		word;
 		t_AST_REDIRECT	redirection;
 	}	u_data;
-}	t_AST_suffix;
+}	t_AST_node;
 
 typedef struct s_AST_COMMAND
 {
 	t_AST_WORD		name;
 	t_AST_REDIRECT	**prefixes;
-	t_AST_suffix	**suffixes;
+	t_AST_node		**suffixes;
 }	t_AST_COMMAND;
 
 typedef struct s_AST_PIPELINE
