@@ -12,3 +12,10 @@ int	ft_digit_len(int n)
 	}
 	return (len);
 }
+
+int	ft_max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}

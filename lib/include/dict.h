@@ -5,10 +5,16 @@
 
 typedef enum e_dictconfig
 {
-	DICT_INITIAL_CAPACITY = 32,
+	DICT_INITIAL_CAPACITY = 8,
 	FNV_OFFSET = 14695981039346656037UL,
 	FNV_PRIME = 1099511628211UL,
 }	t_dictconfig;
+
+typedef enum e_dpad
+{
+	PAD_SIZE,
+	PAD_KEY,
+}	t_dpad;
 
 typedef struct s_ditem
 {
@@ -57,6 +63,7 @@ t_dict		*new_dict_str(char *key[], char *value[]);
 ** < print.c > */
 
 void		dict_print(t_dict *dict);
+void		dict_print_ordered(t_dict *dict);
 /*
 ** < set.c > */
 
