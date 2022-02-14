@@ -42,26 +42,6 @@ void	dict_print(t_dict *dict)
 	}
 }
 
-static t_ditem	**new_kv_ordered(t_dict *dict)
-{
-	int		id;
-	t_ditem	*item;
-	t_ditem	**items;
-
-	items = new_ditem_arr(dict->size);
-	if (!items)
-		return (NULL);
-	id = -1;
-	while (++id < dict->capacity)
-	{
-		item = dict->items[id];
-		if (!item || !item->key)
-			continue ;
-		items[item->order] = item;
-	}
-	return (items);
-}
-
 //	visualize list with order. only works when EVERY values are string.
 void	dict_print_ordered(t_dict *dict)
 {
@@ -72,7 +52,7 @@ void	dict_print_ordered(t_dict *dict)
 
 	pad_init(dict, pad, dict->size);
 	pad[PAD_SIZE] = ft_max(5, pad[PAD_SIZE]);
-	items = new_kv_ordered(dict);
+	items = new_dict_kv_ordered(dict);
 	if (!items)
 		return ;
 	printf(UMAG "%*s |%-*s|%-6s(x%d)\n" END,

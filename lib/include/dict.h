@@ -55,8 +55,6 @@ uint64_t	hash_fnv1a(const char *key);
 /*
 ** < new.c > */
 
-t_ditem		*new_ditem(const char *key, void *value);
-t_ditem		**new_ditem_arr(int capacity);
 t_dict		*new_dict(t_del_f del_value);
 t_dict		*new_dict_str(char *key[], char *value[]);
 /*
@@ -77,4 +75,10 @@ bool		is_key_vacant(const t_dict *dict, int id);
 bool		is_key_update(const t_dict *dict, int id, const char *key);
 bool		is_dict_almostfull(const t_dict *dict);
 bool		is_capacity_overflow(const t_dict *dict);
+/*
+** < util.c > */
+
+t_ditem		*new_ditem(const char *key, void *value);
+t_ditem		**new_ditem_arr(int capacity);
+t_ditem		**new_dict_kv_ordered(t_dict *dict);
 #endif

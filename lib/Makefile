@@ -19,7 +19,7 @@ TEST     := test
 PKGS     := string dict system ft_math
 
 stringV  := new util array split join
-dictV    := new del hash set get expand print status
+dictV    := new del util hash set get expand print status
 systemV  := calloc
 ft_mathV := math
 
