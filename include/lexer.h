@@ -9,16 +9,20 @@ typedef struct s_token
 
 //@func
 /*
-** < lexer_scanner.c > */
-
-t_res		buf_to_arr(char **parr[], char **buf);
-t_res		whitespace_scan(char **arr[], char **buf, char *str, int *idx);
-t_res		metachar_scan(char **arr[], char **buf, char *str, int *idx);
-/*
 ** < lexer.c > */
 
 t_res		scanner(char **scan_data[], char *line);
 t_token		*tokenizer(char *arr[]);
+/*
+** < scanner_util.c > */
+
+bool		is_quotes_open(char *str);
+t_res		buf_to_arr(char **parr[], char **buf);
+t_res		whitespace_scan(char **arr[], char **buf, char *str, int *idx);
+/*
+** < scanner_util2.c > */
+
+t_res		metachar_scan(char **arr[], char **buf, char *str, int *idx);
 /*
 ** < lexer_tokenizer.c > */
 
@@ -30,7 +34,6 @@ void		del_tokens(t_token tokens[]);
 /*
 ** < util.c > */
 
-bool		is_quotes_open(char *str);
 bool		is_metachar(char c);
 bool		is_whitespace(char c);
 #endif
