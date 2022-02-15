@@ -28,10 +28,10 @@ char	*new_str_join(char **arr, char delimiter)
 	i = -1;
 	while (++i < arr_len - 1)
 	{
-		ft_str_append(&new, arr[i]);
-		ft_str_append(&new, delim);
+		ft_str_extend(&new, arr[i]);
+		ft_str_extend(&new, delim);
 	}
-	ft_str_append(&new, arr[i]);
+	ft_str_extend(&new, arr[i]);
 	free(delim);
 	return (new);
 }
@@ -49,9 +49,9 @@ char	*new_str_join_freed(char *delimiter_str, int size, t_tempstr map[])
 	i = -1;
 	while (++i < size)
 	{
-		ft_str_append(&new, map[i].str);
+		ft_str_extend(&new, map[i].str);
 		if (i < size - 1)
-			ft_str_append(&new, delimiter_str);
+			ft_str_extend(&new, delimiter_str);
 		if (map[i].will_free)
 			free(map[i].str);
 	}

@@ -47,17 +47,36 @@ static int	ft_strcpy(char *dst, char *src)
 	return (ft_strlen(src));
 }
 
-int	ft_str_append(char **pstr, char *src)
+/* append a character 'c' to the end of the string "pstr"
+*/
+int	ft_str_append(char **pstr, char c)
+{
+	const int	len = ft_strlen(*pstr);
+	char	*new;
+
+	new = ft_calloc(sizeof(char), len + 1);
+	if (!new)
+		return (ERR);
+	ft_strcpy(new, *pstr);
+	new[len] = c;
+	free(*pstr);
+	*pstr = new;
+	return (OK);
+}
+
+/*	extends string "src" to "pstr"
+	ex: "hello " + "world" = "hello world"
+*/
+int	ft_str_extend(char **pstr, char *src)
 {
 	const int	org_len = ft_strlen(*pstr);
 	const int	src_len = ft_strlen(src);
 	const int	new_len = org_len + src_len;
 	char		*new;
 
-	new = malloc((new_len + 1) * sizeof(char));
+	new = ft_calloc(sizeof(char), new_len);
 	if (!new)
 		return (ERR);
-	new[new_len] = '\0';
 	ft_strcpy(new, *pstr);
 	ft_strcpy(new + org_len, src);
 	free(*pstr);

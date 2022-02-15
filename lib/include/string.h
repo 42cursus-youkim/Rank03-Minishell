@@ -17,6 +17,10 @@ int		ft_arr_len(char **arr);
 char	**new_arr(char **arr);
 void	del_arr(char **arr);
 /*
+** < split.c > */
+
+char	**new_str_split(char const *str, char delimitor);
+/*
 ** < join.c > */
 
 char	*new_str_join(char **arr, char delimiter);
@@ -26,11 +30,8 @@ char	*new_str_join_freed(char *delimiter_str, int size, t_tempstr map[]);
 
 char	*new_str(const char *src);
 char	*new_str_slice(char *str, int begin, int end);
-int		ft_str_append(char **pstr, char *src);
-/*
-** < split.c > */
-
-char	**new_str_split(char const *str, char delimitor);
+int		ft_str_append(char **pstr, char c);
+int		ft_str_extend(char **pstr, char *src);
 /*
 ** < util.c > */
 
