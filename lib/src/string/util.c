@@ -31,15 +31,30 @@ int	ft_strchr_i(const char *str, char c)
 {
 	int	i;
 
-	i = 0;
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
 		if (str[i] == c)
 			return (i);
-		i++;
 	}
 	if (c == '\0')
 		return (i);
+	return (ERR);
+}
+
+int	ft_strrchr_i(const char *str, char c)
+{
+	const int	len = ft_strlen(str);
+	int			i;
+
+	if (c == '\0')
+		return (len);
+	i = len;
+	while (--i > -1)
+	{
+		if (str[i] == c)
+			return (i);
+	}
 	return (ERR);
 }
 
@@ -54,5 +69,5 @@ void	ft_arr_print(char **arr)
 		return ;
 	i = -1;
 	while (arr[++i])
-		printf(BHYEL "[%*d] " HGRN "%s\n" END, pad, i, arr[i]);
+		printf(BHYEL "[%*d] " END "\"" HGRN "%s" END "\"\n", pad, i, arr[i]);
 }
