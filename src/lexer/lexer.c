@@ -1,5 +1,32 @@
 #include "minishell.h"
 
+t_res	scanner(char **scan_data[], char *line)
+{
+	char	*buf;
+	int		i;
+	t_res	scan_res;
+
+	buf = new_str("");
+	i = -1;
+	while (line[++i])
+	{
+		if (whitespace_scan(scan_data, &buf, line, &i) == OK)
+			continue ;
+		scan_res = metachar_scan(scan_data, &buf, line, &i);
+		if (scan_res == OK)
+			continue ;
+		if (scan_res == ERR)
+		{
+			free(buf);
+			return (ERR);
+		}
+		ft_str_append(&buf, line[i]);
+	}
+	buf_to_arr(scan_data, &buf);
+	free(buf);
+	return (OK);
+}
+
 static char	*new_quotes_remove(char *str, int quote_i)
 {
 	char	**split_words;
@@ -16,8 +43,8 @@ static char	*new_expand_parameter(char *str)
 	char	*new;
 
 	new = new_str("\"");
-	ft_str_append(&new, str);
-	ft_str_append(&new, "\"");
+	ft_str_extend(&new, str);
+	ft_str_extend(&new, "\"");
 	return (new);
 }
 
