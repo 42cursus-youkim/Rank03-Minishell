@@ -23,26 +23,26 @@ bool	is_quotes_open(char *str)
 	return (false);
 }
 
-t_res	buf_to_arr(char **parr[], char **buf)
+t_res	buf_to_list(t_list **list, char **buf)
 {
 	const int	buf_len = ft_strlen(*buf);
 
 	if (buf_len == 0)
 		return (UNSET);
-	ft_arr_append(parr, *buf);
+	ft_list_append(list, new_list(new_scan_node(new_str(*buf), NULL)));
 	free(*buf);
 	*buf = new_str("");
 	return (OK);
 }
 
-t_res	whitespace_scan(char **arr[], char **buf, char *str, int *idx)
+t_res	whitespace_scan(t_list **list, char **buf, char *str, int *idx)
 {
 	int	i;
 
 	i = *idx;
 	if (is_whitespace(str[i]) && !is_quotes_open(*buf))
 	{
-		buf_to_arr(arr, buf);
+		buf_to_list(list, buf);
 		while (is_whitespace(str[++i]))
 			;
 		*idx = --i;
