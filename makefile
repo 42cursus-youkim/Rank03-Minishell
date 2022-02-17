@@ -74,7 +74,7 @@ docs:
 	@make --no-print-directory docs -C lib/
 	@set -e;\
 		for p in $(PKGS); do\
-			$(HGEN) -I include/$$p.h src/$$p;\
+			$(HGEN) -I include/$$p.h src/$$p 1> /dev/null;\
 		done
 
 run: docs all

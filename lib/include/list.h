@@ -7,7 +7,6 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-typedef void	(*t_del_f)(void *param);
 typedef void	(*t_print_f)(void *param);
 
 //@func
