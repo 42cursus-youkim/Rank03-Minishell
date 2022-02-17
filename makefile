@@ -21,7 +21,7 @@ PKGS     := prompt lexer parser api builtin
 
 lexerV   := lexer scanner_list scanner_util scanner_util2 \
 			lexer_tokenizer util expansion
-parserV  := new
+parserV  := new print
 promptV  := prompt interrupt util
 apiV     := exec path
 builtinV := env util

@@ -37,3 +37,25 @@ char	**new_path(t_dict *env)
 	return (path);
 }
 
+/*	returns array of candidates
+	ex: "echo"
+	-> [ 1] "/usr/local/bin/echo"
+	-> [ 2] "/usr/bin/echo"
+	-> [14] "/Users/youkim/.brew/bin/echo"
+	...
+*/
+char	**new_path_with_name(t_dict *env, char *name)
+{
+	int		i;
+	char	**new;
+	char	**path;
+
+	path = new_path(env);
+	new = new_arr(NULL);
+	i = -1;
+	while (path[++i])
+		ft_arr_append_free(&new, new_str_join((char *[]){
+			path[i], name, NULL}, '\0'));
+	del_arr(path);
+	return (new);
+}
