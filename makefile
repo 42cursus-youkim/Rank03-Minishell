@@ -25,7 +25,7 @@ parserV  := new1 new2 del
 promptV  := prompt interrupt util
 apiV     := exec path
 builtinV := env util
-treeV    := repr1 repr2 util print
+treeV    := repr1 repr2
 
 # ===== Macros =====
 define choose_modules

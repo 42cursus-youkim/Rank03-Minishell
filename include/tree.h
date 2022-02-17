@@ -17,9 +17,4 @@ void	ast_node_repr(t_AST_NODE *node, int level);
 
 void	ast_command_repr(t_AST_COMMAND *cmd, int level);
 void	ast_pipeline_repr(t_AST_PIPELINE *pipeline, int level);
-/*
-** < util.c > */
-
-char	*pad_whitespace(int len);
-void	pad_repr(char **repr, int len);
 #endif
