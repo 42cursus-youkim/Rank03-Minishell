@@ -4,12 +4,13 @@ bool	is_builtin(char *str)
 {
 	int			i;
 	const char	*builtins[] = {
-		"cd",
 		"echo",
+		"cd",
+		"pwd",
+		"export",
+		"unset",
 		"env",
 		"exit",
-		"setenv",
-		"unset",
 	};
 
 	i = -1;
