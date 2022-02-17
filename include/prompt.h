@@ -1,6 +1,9 @@
 #ifndef PROMPT_H
 # define PROMPT_H
 
+# define SIGN "\001"
+# define EIGN "\002"
+
 typedef struct s_prompt
 {
 	char	*user;

@@ -7,8 +7,13 @@ static void	prompt_init(t_prompt *prompt)
 	signal(SIGQUIT, prompt_ignore_signal);
 	prompt->user = getenv("USER");
 	prompt->ps1 = new_str_join((char *[]){
-			BGRN, prompt->user, "@🐚 > " END, NULL}, '\0');
-	prompt->ps2 = new_str("🐚 > ");
+			SIGN BGRN EIGN,
+			prompt->user, "@minishell > "
+			SIGN END EIGN, NULL}, '\0');
+	prompt->ps2 = new_str_join((char *[]){
+			SIGN BGRN EIGN
+			"> "
+			SIGN END EIGN, NULL}, '\0');
 }
 
 /*
