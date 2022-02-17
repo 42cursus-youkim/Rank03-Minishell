@@ -35,7 +35,7 @@ static void	ast_expansion_repr(t_AST_expansion **expansions, int indent)
 
 static void	ast_word_repr(t_AST_NODE *node, int indent)
 {
-	printf(BWHT "%*s%s\n" END, indent, "", node->text);
+	printf(BWHT "%*s💬%s\n" END, indent, "", node->text);
 	ast_expansion_repr(node->expansions, indent);
 }
 
@@ -52,7 +52,7 @@ static void	ast_redirect_repr(t_AST_NODE *node, int indent)
 
 void	ast_node_repr(t_AST_NODE *node, int level)
 {
-	const int	indent = level * 2;
+	const int	indent = level * INDENT_SIZE;
 
 	if (node->type == WORD)
 		return (ast_word_repr(node, indent));
