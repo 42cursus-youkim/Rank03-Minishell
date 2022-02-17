@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static char	*new_path_resolved(char *path, t_dict *env)
+char	*new_path_resolved(char *path, t_dict *env)
 {
 	char	*new;
 
