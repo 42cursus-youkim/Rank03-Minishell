@@ -7,8 +7,13 @@ static void	prompt_init(t_prompt *prompt)
 	signal(SIGQUIT, prompt_ignore_signal);
 	prompt->user = getenv("USER");
 	prompt->ps1 = new_str_join((char *[]){
-			BGRN, prompt->user, "@🐚 > " END, NULL}, '\0');
-	prompt->ps2 = new_str("🐚 > ");
+			SIGN BGRN EIGN,
+			prompt->user, "@minishell > "
+			SIGN END EIGN, NULL}, '\0');
+	prompt->ps2 = new_str_join((char *[]){
+			SIGN BGRN EIGN
+			"> "
+			SIGN END EIGN, NULL}, '\0');
 }
 
 /*
@@ -20,6 +25,17 @@ static void	del_prompt(t_prompt *prompt)
 {
 	free(prompt->ps1);
 	free(prompt->ps2);
+}
+
+static void	prompt_run_line(char *line)
+{
+	t_list	*scan_list;
+
+	scan_list = NULL;
+	if (scanner(&scan_list, line) == OK)
+		ft_list_print(scan_list, scan_node_print);
+	del_list(&scan_list, del_scan_node);
+	free(line);
 }
 
 static void	prompt_loop(t_prompt *prompt)
@@ -36,8 +52,7 @@ static void	prompt_loop(t_prompt *prompt)
 		else if (!is_line_empty(line))
 		{
 			add_history(line);
-			printf("typed <%s>; TODO: do something here\n", line);
-			free(line);
+			prompt_run_line(line);
 		}
 	}
 }

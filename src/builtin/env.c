@@ -13,6 +13,11 @@ void	env_set(t_dict *env, char *str)
 	free(key);
 }
 
+char	*env_get(t_dict *env, char *key)
+{
+	return (dict_get_default(env, key, ""));
+}
+
 t_dict	*new_env(char *envp[])
 {
 	int		i;

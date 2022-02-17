@@ -6,12 +6,8 @@
 ** < env.c > */
 
 void	env_set(t_dict *env, char *str);
+char	*env_get(t_dict *env, char *key);
 t_dict	*new_env(char *envp[]);
 void	env_print(t_dict *env);
 char	**new_arr_env(t_dict *env);
-/*
-** < path.c > */
-
-char	**new_path(t_dict *env);
-void	path_print(char **path);
 #endif

@@ -18,7 +18,7 @@ TEST     := test
 # ===== Packages =====
 PKGS     := string dict system ft_math list
 
-stringV  := new util array split join
+stringV  := new util util2 array array2 split join
 dictV    := new del util hash set get expand print status
 systemV  := calloc
 ft_mathV := math
@@ -65,7 +65,7 @@ ald: docs all
 docs:
 	@set -e;\
 		for p in $(PKGS); do\
-			$(HGEN) -I include/$$p.h src/$$p;\
+			$(HGEN) -I include/$$p.h src/$$p 1> /dev/null;\
 		done
 	@$(call log, V, 📝 Generating Docs)
 

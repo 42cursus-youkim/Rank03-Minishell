@@ -6,7 +6,7 @@ CFLAGS   := -Wall -Wextra -Werror
 RM       := rm -rf
 
 PRE      := src
-INC      := -I./include/ -I./lib/include -I ~/.brew/opt/readline/include
+INC      := -I ~/.brew/opt/readline/include -I./include/ -I./lib/include
 LIB		 := -L ~/.brew/opt/readline/lib -lreadline -L./lib -lft
 LIBFT    := lib/libft.a
 
@@ -45,9 +45,8 @@ $(LIBFT):
 	@echo "   $(WU)$(<F)$(R) -> $(E)$(@F)"
 	@$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
 
-# @$(call build_library)
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) $(INC) $^ $(LIB) -o $@
+	@$(CC) $(CFLAGS) $(INC) $(LIB) $^ -o $@
 	@$(call log, V, 🚀 linked with flag $(R)$(DFLAGS)$(E)$(CFLAGS))
 
 all: $(NAME)
@@ -75,7 +74,7 @@ docs:
 	@make --no-print-directory docs -C lib/
 	@set -e;\
 		for p in $(PKGS); do\
-			$(HGEN) -I include/$$p.h src/$$p;\
+			$(HGEN) -I include/$$p.h src/$$p 1> /dev/null;\
 		done
 
 run: docs all
