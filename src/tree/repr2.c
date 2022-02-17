@@ -29,3 +29,18 @@ void	ast_command_repr(t_AST_COMMAND *cmd, int level)
 		ast_nodes_repr(cmd->suffixes, level + 2);
 	}
 }
+
+void	ast_pipeline_repr(t_AST_PIPELINE *pipeline, int level)
+{
+	int			i;
+	const int	indent = level * INDENT_SIZE;
+
+	printf(BBLU "%*s🔗PIPELINE\n" END, indent, "");
+	if (pipeline->commands)
+	{
+		printf(BBLU "%*s[commands]\n" END, indent + INDENT_SIZE, "");
+		i = -1;
+		while (pipeline->commands[++i])
+			ast_command_repr(pipeline->commands[i], level + 2);
+	}
+}

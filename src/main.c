@@ -29,7 +29,11 @@ int	main(void)
 	t_AST_NODE *redir = new_ast_redirect("a.txt", exp, REDIR_INPUT);
 	t_AST_COMMAND *cmd = new_ast_command(word, NULL, (t_AST_NODE *[]){
 		word, word, redir, NULL});
-	ast_command_repr(cmd, 0);
+	t_AST_PIPELINE *pip = new_ast_pipeline((t_AST_COMMAND *[]){
+		cmd, cmd, cmd, NULL});
+
+	ast_pipeline_repr(pip, 0);
+	// ast_command_repr(cmd, 0);
 	// ast_tree_print(cmd, COMMAND);
 	// ast_node_repr(word, 1);
 	// ast_node_repr(redir, 3);
