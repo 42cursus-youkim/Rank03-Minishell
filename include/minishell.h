@@ -13,6 +13,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <sys/wait.h>
 # include "libft.h"
 
 # include <readline/readline.h>
@@ -21,12 +22,13 @@
 # include "minishell_type.h"
 
 # include "ast_type.h"
-# include "ast_node.h"
 
 # include "lexer.h"
+# include "parser.h"
 # include "prompt.h"
 # include "api.h"
 # include "builtin.h"
+# include "tree.h"
 // # include "get_next_line.h"
 
 #endif

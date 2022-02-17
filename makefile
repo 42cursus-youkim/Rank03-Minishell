@@ -17,12 +17,15 @@ VFLAGS   := --leak-check=full --show-leak-kinds=all \
 HGEN     := hgen
 
 # ===== Packages =====
-PKGS     := prompt lexer builtin
+PKGS     := prompt lexer parser api builtin tree
 
 lexerV   := lexer scanner_list scanner_util scanner_util2 \
 			lexer_tokenizer util expansion
+parserV  := new1 new2 del
 promptV  := prompt interrupt util
-builtinV := env path
+apiV     := exec path
+builtinV := env util
+treeV    := repr1 repr2
 
 # ===== Macros =====
 define choose_modules

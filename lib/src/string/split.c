@@ -1,16 +1,5 @@
 #include "libft.h"
 
-// static char	**ft_arr_free(char *strs[])
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (strs[++i])
-// 		free(strs[i]);
-// 	free(strs);
-// 	return (NULL);
-// }
-
 static int	count_words(char const *str, char delimiter)
 {
 	int		i;
