@@ -55,7 +55,6 @@ t_AST_NODE	*new_ast_redirect(
 	return (node);
 }
 
-
 t_AST_COMMAND	*new_ast_command(
 	t_AST_NODE *name, t_AST_NODE *prefixes[], t_AST_NODE *suffixes[])
 {

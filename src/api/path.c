@@ -7,10 +7,10 @@ char	*new_path_resolved(char *path, t_dict *env)
 	new = new_str(path);
 	if (path[0] == '~')
 		ft_str_replace(&new, new_str_join((char *[]){
-			env_get(env, "HOME"), path + 1, NULL}, '\0'));
+				env_get(env, "HOME"), path + 1, NULL}, '\0'));
 	if (path[ft_strlen(path) - 1] != '/')
 		ft_str_replace(&new, new_str_join((char *[]){
-			new, "/", NULL}, '\0'));
+				new, "/", NULL}, '\0'));
 	return (new);
 }
 
@@ -55,7 +55,7 @@ char	**new_path_with_name(t_dict *env, char *name)
 	i = -1;
 	while (path[++i])
 		ft_arr_append_free(&new, new_str_join((char *[]){
-			path[i], name, NULL}, '\0'));
+				path[i], name, NULL}, '\0'));
 	del_arr(path);
 	return (new);
 }

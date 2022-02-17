@@ -58,7 +58,7 @@ void	del_list(t_list **list, t_del_f del)
 
 void	ft_list_print(t_list *list, t_print_f print_func)
 {
-	t_list 		*current;
+	t_list		*current;
 	int			i;
 	const int	len = ft_list_size(list);
 	const int	pad = ft_digit_len(len - 1);

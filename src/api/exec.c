@@ -21,9 +21,15 @@ bool	is_parent(pid_t pid)
 	return (pid > 0);
 }
 
+bool	is_child(pid_t pid)
+{
+	return (pid == 0);
+}
+
 void	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env)
 {
 	pid_t	pid;
+	int		status;
 	(void)cmd; (void)env;
 
 	pid = fork();
@@ -32,10 +38,14 @@ void	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env)
 		printf("I'm parent and waiting for child\n");
 		// close(pipe[PIPE_WRITE]);
 		// dup2(pipe[PIPE_READ], STDIN_FILENO);
-		waitpid(pid, NULL, WNOHANG);
-		printf("yo child's dead\n");
+		// FIXME: rewrite here later
+		waitpid(pid, &status, WNOHANG);
+		if (status == pid)
+			printf("child is successfully dead!\n");
+		else
+			printf("something's gone wrong\n");
 	}
-	else if (pid == CHILD)
+	else if (is_child(pid))
 	{
 		// close(pipe[PIPE_READ]);
 		printf("HAYO I'm child\n");

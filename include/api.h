@@ -3,7 +3,6 @@
 
 typedef enum e_procflag
 {
-	CHILD = 0,
 	PIPE_READ = 0,
 	PIPE_WRITE = 1,
 	INPUT = 0,
@@ -25,6 +24,7 @@ typedef struct s_context
 ** < exec.c > */
 
 bool	is_parent(pid_t pid);
+bool	is_child(pid_t pid);
 void	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env);
 /*
 ** < path.c > */

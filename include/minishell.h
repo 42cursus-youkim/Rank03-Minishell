@@ -13,6 +13,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <sys/wait.h>
 # include "libft.h"
 
 # include <readline/readline.h>

@@ -5,10 +5,6 @@
 
 //@func
 /*
-** < print.c > */
-
-void	ast_tree_print(void *tree, t_AST_type type);
-/*
 ** < repr1.c > */
 
 void	ast_node_repr(t_AST_NODE *node, int level);
