@@ -24,6 +24,7 @@
 # include "ast_node.h"
 
 # include "lexer.h"
+# include "parser.h"
 # include "prompt.h"
 # include "api.h"
 # include "builtin.h"

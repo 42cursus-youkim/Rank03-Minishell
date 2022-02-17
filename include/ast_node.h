@@ -23,13 +23,13 @@ typedef struct s_AST_node
 		t_AST_WORD		word;
 		t_AST_REDIRECT	redirection;
 	}	u_data;
-}	t_AST_node;
+}	t_AST_NODE;
 
 typedef struct s_AST_COMMAND
 {
 	t_AST_WORD		name;
 	t_AST_REDIRECT	**prefixes;
-	t_AST_node		**suffixes;
+	t_AST_NODE		**suffixes;
 }	t_AST_COMMAND;
 
 typedef struct s_AST_PIPELINE
