@@ -30,8 +30,6 @@ char	*new_str_join_freed(char *delimiter_str, int size, t_tempstr map[]);
 
 char	*new_str(const char *src);
 char	*new_str_slice(char *str, int begin, int end);
-int		ft_str_append(char **pstr, char c);
-int		ft_str_extend(char **pstr, char *src);
 /*
 ** < split.c > */
 
@@ -48,4 +46,7 @@ void	ft_arr_print(char **arr);
 ** < util2.c > */
 
 t_res	ft_str_replace(char **str_p, char *new);
+int		ft_str_append(char **pstr, char c);
+int		ft_str_extend(char **pstr, char *src);
+int		ft_str_extend_freed(char **pstr, char *src);
 #endif
