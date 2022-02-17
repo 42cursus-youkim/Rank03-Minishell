@@ -11,11 +11,15 @@ typedef struct s_tempstr
 /*
 ** < array.c > */
 
-t_res	ft_arr_append(char **parr[], char *str);
-t_res	ft_arr_extend(char **parr[], char *src[]);
-int		ft_arr_len(char **arr);
 char	**new_arr(char **arr);
 void	del_arr(char **arr);
+int		ft_arr_len(char **arr);
+/*
+** < array2.c > */
+
+t_res	ft_arr_append(char **parr[], char *str);
+t_res	ft_arr_append_free(char **parr[], char *str);
+t_res	ft_arr_extend(char **parr[], char *src[]);
 /*
 ** < join.c > */
 
