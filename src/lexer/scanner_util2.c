@@ -16,11 +16,11 @@ static bool	is_prev_metachar_attachable(char *str)
 }
 
 static t_res	metastr_append(
-	char **arr[], char **prev_pstr, char **pstr, char c)
+	t_list **list, char **prev_pstr, char **pstr, char c)
 {
 	if (is_prev_metachar_attachable(*prev_pstr))
 	{
-		ft_arr_append(arr, *pstr);
+		ft_list_append(list, new_list(new_scan_node(new_str(*pstr), NULL)));
 		if (!c)
 			return (UNSET);
 		free(*prev_pstr);
@@ -38,7 +38,7 @@ static t_res	metastr_append(
 	}
 }
 
-static bool	is_metachar_valid(char **arr[], char *str, int *idx)
+static bool	is_metachar_valid(t_list **list, char *str, int *idx)
 {
 	char	*metastr;
 	char	*prev_metastr;
@@ -52,26 +52,26 @@ static bool	is_metachar_valid(char **arr[], char *str, int *idx)
 	{
 		if (metachar_attachable(&metastr, str[i - 1], str[i]) == OK)
 			continue ;
-		res = metastr_append(arr, &prev_metastr, &metastr, str[i]);
+		res = metastr_append(list, &prev_metastr, &metastr, str[i]);
 		if (res == UNSET)
 			break ;
 		if (res == ERR)
 			return (false);
 	}
 	if (str[i] && is_prev_metachar_attachable(prev_metastr))
-		ft_arr_append(arr, metastr);
+		ft_list_append(list, new_list(new_scan_node(new_str(metastr), NULL)));
 	*idx = --i;
 	free(metastr);
 	free(prev_metastr);
 	return (true);
 }
 
-t_res	metachar_scan(char **arr[], char **buf, char *str, int *idx)
+t_res	metachar_scan(t_list **list, char **buf, char *str, int *idx)
 {
 	if (is_metachar(str[*idx]) && !is_quotes_open(*buf))
 	{
-		buf_to_arr(arr, buf);
-		if (!is_metachar_valid(arr, str, idx))
+		buf_to_list(list, buf);
+		if (!is_metachar_valid(list, str, idx))
 			return (ERR);
 		return (OK);
 	}

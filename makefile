@@ -19,7 +19,8 @@ HGEN     := hgen
 # ===== Packages =====
 PKGS     := prompt lexer builtin
 
-lexerV   := lexer scanner_util scanner_util2 lexer_tokenizer util
+lexerV   := lexer scanner_list scanner_util scanner_util2 \
+			lexer_tokenizer util expansion
 promptV  := prompt interrupt util
 builtinV := env path
 
