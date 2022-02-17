@@ -68,7 +68,7 @@ static bool	is_metachar_valid(t_list **list, char *str, int *idx)
 
 t_res	metachar_scan(t_list **list, char **buf, char *str, int *idx)
 {
-	if (is_metachar(str[*idx]) && !is_quotes_open(*buf))
+	if (is_metachar(str[*idx]) && !is_quotes_open(NULL, *buf))
 	{
 		buf_to_list(list, buf);
 		if (!is_metachar_valid(list, str, idx))

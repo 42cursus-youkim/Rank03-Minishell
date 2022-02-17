@@ -1,26 +1,28 @@
 #include "minishell.h"
 
-static int	quotes_count(char *str, char quote)
+bool	is_quotes_open(char *last_quote, char *str)
 {
-	int	i;
-	int	count;
+	char	quote;
+	bool	open;
+	int		i;
 
 	i = -1;
-	count = 0;
+	quote = '\0';
+	open = false;
 	while (str[++i])
-		if (str[i] == quote)
-			count++;
-	return (count);
-}
-
-bool	is_quotes_open(char *str)
-{
-	const int	single_quotes = quotes_count(str, '\'');
-	const int	double_quotes = quotes_count(str, '\"');
-
-	if (single_quotes % 2 || double_quotes % 2)
-		return (true);
-	return (false);
+	{
+		if (is_quotechar(str[i]) && !open)
+		{
+			quote = str[i];
+			open = true;
+			continue ;
+		}
+		if (is_quotechar(str[i]) && str[i] == quote)
+			open = false;
+	}
+	if (last_quote)
+		*last_quote = quote;
+	return (open);
 }
 
 t_res	buf_to_list(t_list **list, char **buf)
@@ -40,7 +42,7 @@ t_res	whitespace_scan(t_list **list, char **buf, char *str, int *idx)
 	int	i;
 
 	i = *idx;
-	if (is_whitespace(str[i]) && !is_quotes_open(*buf))
+	if (is_whitespace(str[i]) && !is_quotes_open(NULL, *buf))
 	{
 		buf_to_list(list, buf);
 		while (is_whitespace(str[++i]))
