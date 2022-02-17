@@ -28,6 +28,7 @@
 # include "prompt.h"
 # include "api.h"
 # include "builtin.h"
+# include "tree.h"
 // # include "get_next_line.h"
 
 #endif
