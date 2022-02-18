@@ -23,9 +23,7 @@ typedef struct s_context
 /*
 ** < exec.c > */
 
-bool	is_parent(pid_t pid);
-bool	is_child(pid_t pid);
-void	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env);
+t_res	api_run_cmd(t_AST_COMMAND *cmd, t_dict *env);
 /*
 ** < path.c > */
 
@@ -33,4 +31,9 @@ char	*new_path_resolved(char *path, t_dict *env);
 char	**new_raw_path(t_dict *env);
 char	**new_path(t_dict *env);
 char	**new_path_with_name(t_dict *env, char *name);
+/*
+** < util.c > */
+
+bool	is_parent(pid_t pid);
+bool	is_child(pid_t pid);
 #endif

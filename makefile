@@ -23,7 +23,7 @@ lexerV   := lexer scanner_list scanner_util scanner_util2 \
 			lexer_tokenizer util expansion
 parserV  := new1 new2 del
 promptV  := prompt interrupt util
-apiV     := exec path
+apiV     := exec signal path util
 builtinV := env util
 treeV    := repr1 repr2
 

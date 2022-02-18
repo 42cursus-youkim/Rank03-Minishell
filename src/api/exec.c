@@ -16,41 +16,45 @@ static void	api_exec_cmd_inner(t_AST_COMMAND *cmd, t_dict *env)
 	del_arr(envp);
 }
 
-bool	is_parent(pid_t pid)
+static t_res	parent_proc(pid_t pid)
 {
-	return (pid > 0);
+	int		status;
+
+	printf("I'm parent and waiting for child\n");
+	waitpid(pid, &status, WNOHANG);
+	if (status == pid)
+	{
+		printf("child is successfully dead!\n");
+		return (OK);
+	}
+	else
+	{
+		printf("something's gone wrong\n");
+		return (ERR);
+	}
 }
 
-bool	is_child(pid_t pid)
+static void	child_proc(t_AST_COMMAND *cmd, t_dict *env)
 {
-	return (pid == 0);
+	printf("HAYO I'm child\n");
+	api_exec_cmd_inner(cmd, env);
 }
 
-void	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env)
+t_res	api_run_cmd(t_AST_COMMAND *cmd, t_dict *env)
 {
 	pid_t	pid;
-	int		status;
-	(void)cmd; (void)env;
 
 	pid = fork();
 	if (is_parent(pid))
-	{
-		printf("I'm parent and waiting for child\n");
-		// close(pipe[PIPE_WRITE]);
-		// dup2(pipe[PIPE_READ], STDIN_FILENO);
-		// FIXME: rewrite here later
-		waitpid(pid, &status, WNOHANG);
-		if (status == pid)
-			printf("child is successfully dead!\n");
-		else
-			printf("something's gone wrong\n");
-	}
+		return (parent_proc(pid));
 	else if (is_child(pid))
-	{
-		// close(pipe[PIPE_READ]);
-		printf("HAYO I'm child\n");
-		api_exec_cmd_inner(cmd, env);
-	}
+		child_proc(cmd, env);
 	else
-		printf("fork error\n");
+		printf(RED "fork error\n" END);
+	return (ERR);
 }
+
+// t_res	api_run_pipe(t_AST_PIPELINE *pipeline, t_dict *env)
+// {
+
+// }
