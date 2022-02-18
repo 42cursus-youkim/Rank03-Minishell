@@ -4,7 +4,7 @@
 typedef struct s_scan_node
 {
 	char				*text;
-	t_AST_expansion		**expansion;
+	t_AST_expansion		**expansions;
 }	t_scan_node;
 
 typedef struct s_token
@@ -17,11 +17,13 @@ typedef struct s_token
 /*
 ** < expansion.c > */
 
-void		del_expansion_arr(t_AST_expansion *arr[]);
+int			expansions_len(t_AST_expansion *expansions[]);
+t_res		expansions_append_free(t_AST_expansion **parr[],
+				t_AST_expansion *element);
+void		expansions_print(t_AST_expansion *expansions[]);
 /*
 ** < lexer.c > */
 
-t_res		scanner(t_list **scan_list, char *line);
 t_token		*tokenizer(char *arr[]);
 /*
 ** < lexer_tokenizer.c > */
@@ -32,6 +34,10 @@ bool		is_expand_parameter(const char *str);
 void		tokens_print(t_token tokens[]);
 void		del_tokens(t_token tokens[]);
 /*
+** < scanner.c > */
+
+t_res		scanner(t_list **scan_list, char *line);
+/*
 ** < scanner_list.c > */
 
 t_scan_node	*new_scan_node(char *str, t_AST_expansion **arr);
@@ -40,7 +46,7 @@ void		scan_node_print(void *param);
 /*
 ** < scanner_util.c > */
 
-bool		is_quotes_open(char *str);
+bool		is_quotes_open(char *last_quote, char *str);
 t_res		buf_to_list(t_list **list, char **buf);
 t_res		whitespace_scan(t_list **list, char **buf, char *str, int *idx);
 /*
@@ -48,8 +54,16 @@ t_res		whitespace_scan(t_list **list, char **buf, char *str, int *idx);
 
 t_res		metachar_scan(t_list **list, char **buf, char *str, int *idx);
 /*
+** < scanner_util3.c > */
+
+t_res		expansion_scan(t_list **list, char **buf, char *str, int *idx);
+t_res		dollar_scan(t_list **list, char **buf, char *str, int *idx);
+/*
 ** < util.c > */
 
 bool		is_metachar(char c);
 bool		is_whitespace(char c);
+bool		is_quotechar(char c);
+bool		is_alpha(char c);
+bool		is_digit(char c);
 #endif

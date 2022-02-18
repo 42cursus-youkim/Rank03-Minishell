@@ -8,7 +8,7 @@ t_scan_node	*new_scan_node(char *str, t_AST_expansion **arr)
 	if (!new)
 		return (NULL);
 	new->text = str;
-	new->expansion = arr;
+	new->expansions = arr;
 	return (new);
 }
 
@@ -18,23 +18,17 @@ void	del_scan_node(void *param)
 
 	node = (t_scan_node *)param;
 	free(node->text);
-	if (node->expansion)
-		del_expansion_arr(node->expansion);
+	if (node->expansions)
+		del_ast_expansions(node->expansions);
 	free(node);
 }
 
 void	scan_node_print(void *param)
 {
 	t_scan_node	*node;
-	int			i;
 
 	node = (t_scan_node *)param;
 	printf("\"" HGRN "%s" END "\"\n", node->text);
-	if (node->expansion)
-	{
-		i = -1;
-		while (node->expansion[++i] != NULL)
-			printf("(%s -> %d, %d)\n", node->expansion[i]->parameter,
-				node->expansion[i]->begin, node->expansion[i]->end);
-	}
+	if (node->expansions)
+		expansions_print(node->expansions);
 }

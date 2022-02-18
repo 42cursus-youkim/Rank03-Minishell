@@ -1,32 +1,5 @@
 #include "minishell.h"
 
-t_res	scanner(t_list **scan_list, char *line)
-{
-	char	*buf;
-	int		i;
-	t_res	scan_res;
-
-	buf = new_str("");
-	i = -1;
-	while (line[++i])
-	{
-		if (whitespace_scan(scan_list, &buf, line, &i) == OK)
-			continue ;
-		scan_res = metachar_scan(scan_list, &buf, line, &i);
-		if (scan_res == OK)
-			continue ;
-		if (scan_res == ERR)
-		{
-			free(buf);
-			return (ERR);
-		}
-		ft_str_append(&buf, line[i]);
-	}
-	buf_to_list(scan_list, &buf);
-	free(buf);
-	return (OK);
-}
-
 static char	*new_quotes_remove(char *str, int quote_i)
 {
 	char	**split_words;
