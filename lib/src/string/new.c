@@ -26,7 +26,7 @@ char	*new_str_slice(char *str, int begin, int end)
 
 	if (str_len == ERR || begin < 0 || end < 0 || begin > end || end > str_len)
 		return (NULL);
-	i = end - begin;
+	i = end - begin + 1;
 	new = malloc((i + 1) * sizeof(char));
 	if (!new)
 		return (NULL);
