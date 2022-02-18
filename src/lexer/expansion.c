@@ -43,5 +43,5 @@ void	expansions_print(t_AST_expansion *expansions[])
 	i = -1;
 	while (expansions[++i])
 		printf(BLU "\t[%d] (%s -> %d, %d)\n" END, i, expansions[i]->parameter,
-				expansions[i]->begin, expansions[i]->end);
+			expansions[i]->begin, expansions[i]->end);
 }
