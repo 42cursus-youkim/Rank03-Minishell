@@ -1,7 +1,7 @@
 # ===== Target & FLAGS =====
 NAME     := libft.a
 
-CC       := gcc
+CC       := clang
 CFLAGS   := -Wall -Wextra -Werror -std=c99
 DFLAGS	 := -g #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
 VFLAGS   := --leak-check=full --show-leak-kinds=all \

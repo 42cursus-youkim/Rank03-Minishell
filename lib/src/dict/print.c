@@ -36,7 +36,8 @@ void	dict_print(t_dict *dict)
 		item = dict->items[id];
 		if (item && item->key)
 			printf(HYEL "%*d |%-*s|" HGRN "%s\n" END,
-				pad[PAD_SIZE], id, pad[PAD_KEY], item->key, item->value);
+				pad[PAD_SIZE], id,
+				pad[PAD_KEY], item->key, (char *)item->value);
 		else
 			printf("%*d |%*s|\n", pad[PAD_SIZE], id, pad[PAD_KEY], "");
 	}
@@ -62,7 +63,7 @@ void	dict_print_ordered(t_dict *dict)
 	{
 		item = items[id];
 		printf(HYEL "%*d |%-*s|" HGRN "%s\n" END,
-			pad[PAD_SIZE], id, pad[PAD_KEY], item->key, item->value);
+			pad[PAD_SIZE], id, pad[PAD_KEY], item->key, (char *)item->value);
 	}
 	free(items);
 }
