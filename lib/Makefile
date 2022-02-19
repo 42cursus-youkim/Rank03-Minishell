@@ -20,7 +20,7 @@ PKGS     := string dict system ft_math list
 
 stringV  := new util util2 array array2 split join
 dictV    := new del util hash set get expand print status
-systemV  := calloc
+systemV  := calloc write
 ft_mathV := math
 listV    := list
 
