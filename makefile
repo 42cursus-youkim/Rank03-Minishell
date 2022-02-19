@@ -83,10 +83,6 @@ docs:
 run: docs all
 	@./$(NAME)
 
-test: docs all
-	@$(call log, G, 🧪 Running Test)
-	@./$(NAME)
-
 leak: docs all cls
 	@$(call log, Y, 🧪 Running Leak Test)
 	@colour-valgrind $(VFLAGS) ./$(NAME)

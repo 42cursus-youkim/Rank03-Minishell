@@ -19,4 +19,5 @@
   "conventionalCommits.promptFooter": true,
   "conventionalCommits.promptScopes": false,
   "git.postCommitCommand": "none",
+  "git.suggestSmartCommit": false,
 }
