@@ -22,8 +22,11 @@ static t_res	scanner_loop(t_list **scan_list, char *line, char **buf, int *i)
 	{
 		if (whitespace_scan(scan_list, buf, line, i) == OK)
 			continue ;
-		if (dollar_scan(scan_list, buf, line, i) == OK)
+		scan_res = dollar_scan(scan_list, buf, line, i);
+		if (scan_res == OK)
 			continue ;
+		if (scan_res == ERR)
+			return (free_n_return(buf, ERR));
 		scan_res = metachar_scan(scan_list, buf, line, i);
 		if (scan_res == OK)
 			continue ;
