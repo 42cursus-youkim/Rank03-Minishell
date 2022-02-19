@@ -13,7 +13,8 @@ int	main(int argc, char *argv[], char *envp[])
 	// 	word2, word3, NULL});
 	// ast_command_repr(cmd, 0);
 	// api_exec_cmd(cmd, env);
-	api_exec_cmd(NULL, NULL);
+	// api_exec_cmd(NULL, NULL);
+	api_exec_pipe(NULL, NULL);
 	// del_dict(env);
 	return (0);
 }

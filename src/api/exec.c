@@ -31,39 +31,43 @@ static t_res	parent_proc(pid_t pid)
 	// printf(GRN "I'm parent and waiting for child\n" END);
 	// waitpid(pid, &status, WNOHANG);
 	// exitcode = api_handle_status(status);
-	// if (exitcode == OK)
-	// {
-	// 	printf(GRN "child is successfully dead!\n" END);
-	// 	return (OK);
-	// }
-	// else
-	// {
-	// 	printf(BRED "exitcode: %d\n" END, exitcode);
-	// 	return (ERR);
-	// }
+
 
 }
 */
 
-static void	child_proc(t_AST_COMMAND *cmd, t_dict *env)
+void	api_exec(t_AST_COMMAND *cmd, t_dict *env)
 {
 	(void)env; (void)cmd;
 
 	printf(HYEL "HAYO I'm child\n" END);
 	char *argv[] = {"/bin/ls", "-l", "/home/scarf/Repo", NULL};
 	char *envp[] = {NULL};
-	if (execve(argv[0], argv, envp) == -1)
-		printf("execve failed\n");
-	exit(0);
+	if (execve(argv[0], argv, envp) == OK)
+		exit(0);
+	printf(RED "Execve fail!\n" END);
+	exit(1);
 }
 
-// static void	parent_proc(pid_t pid)
-// {
-// 	int	status;
-// 	printf(HGRN "HAYO I'm Parent process\n" END);
-// 	waitpid(pid, &status, WNOHANG);
-// 	printf ("Child process exited with status %d\n", api_handle_status(status));
-// }
+static int	parent_proc(pid_t pid)
+{
+	int	status;
+	int	exitcode;
+
+	printf(HGRN "HAYO I'm Parent process\n" END);
+	waitpid(pid, &status, 0);
+	exitcode = api_handle_status(status);
+	if (exitcode == OK)
+	{
+		printf(BGRN "HAYO child is successfully dead!\n" END);
+		return (OK);
+	}
+	else
+	{
+		printf(BRED "exitcode: %d\n" END, exitcode);
+		return (exitcode);
+	}
+}
 
 t_res	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env)
 {
@@ -74,20 +78,10 @@ t_res	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env)
 	pid = fork();
 
 	if (is_child(pid))
-	{
-		child_proc(NULL, NULL);
-		// char *argv[] = {"/bin/ls", "-l", "/home/scarf/Repo", NULL};
-		// char *envp[] = {NULL};
-		// if (execve(argv[0], argv, envp) == -1)
-		// 	printf("execve failed\n");
-	}
+		api_exec(NULL, NULL);
 	else if (is_parent(pid))
 	{
-		// parent_proc(pid);
-		int	status;
-		printf(HGRN "HAYO I'm Parent process\n" END);
-		waitpid(pid, &status, WNOHANG);
-		printf ("Child process exited with status %d\n", api_handle_status(status));
+		parent_proc(pid);
 		return (OK);
 	}
 	else

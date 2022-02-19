@@ -54,16 +54,9 @@ t_res		whitespace_scan(t_list **list, char **buf, char *str, int *idx);
 
 t_res		metachar_scan(t_list **list, char **buf, char *str, int *idx);
 /*
-** < scanner_util3.c > */
-
-t_res		expansion_scan(t_list **list, char **buf, char *str, int *idx);
-t_res		dollar_scan(t_list **list, char **buf, char *str, int *idx);
-/*
 ** < util.c > */
 
 bool		is_metachar(char c);
 bool		is_whitespace(char c);
 bool		is_quotechar(char c);
-bool		is_alpha(char c);
-bool		is_digit(char c);
 #endif
