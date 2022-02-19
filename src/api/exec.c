@@ -55,12 +55,13 @@ t_res	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env)
 	pid_t	pid;
 
 	(void)env; (void)cmd;
+
 	pid = fork();
 
 	if (is_child(pid))
 	{
 		printf("Child process\n");
-		char *argv[] = {"/bin/ls", "-l", NULL};
+		char *argv[] = {"/bin/ls", "-l", "/home/scarf/Repo", NULL};
 		char *envp[] = {NULL};
 		if (execve(argv[0], argv, envp) == -1)
 			printf("execve failed\n");
@@ -71,8 +72,8 @@ t_res	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env)
 		int status;
 		waitpid(pid, &status, WNOHANG);
 		printf ("Child process exited with status %d\n", api_handle_status(status));
-  	}
-	return (OK);
+	}
+	return (0);
 	// if (is_parent(pid))
 	// 	return (parent_proc(pid));
 	// else if (is_child(pid))
