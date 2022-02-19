@@ -22,6 +22,7 @@ static t_res	parent_proc(pid_t pid)
 
 	printf("I'm parent and waiting for child\n");
 	waitpid(pid, &status, WNOHANG);
+	api_handle_status(status);
 	if (status == pid)
 	{
 		printf("child is successfully dead!\n");
@@ -40,7 +41,7 @@ static void	child_proc(t_AST_COMMAND *cmd, t_dict *env)
 	api_exec_cmd_inner(cmd, env);
 }
 
-t_res	api_run_cmd(t_AST_COMMAND *cmd, t_dict *env)
+t_res	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env)
 {
 	pid_t	pid;
 
