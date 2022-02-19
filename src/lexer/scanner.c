@@ -13,24 +13,6 @@ static t_res	error_unclosed(char c, char **buf)
 	return (free_n_return(buf, ERR));
 }
 
-static t_res	dollar_scan(t_list **list, char **buf, char *str, int *idx)
-{
-	int		i;
-	char	last_quote;
-	(void)list;
-
-	i = *idx;
-	if (str[i] == '$')
-	{
-		if (is_quotes_open(&last_quote, *buf) && last_quote == '\'')
-			return (UNSET);
-		printf("%s$\n", *buf);
-		ft_str_append(buf, '$');
-		return (OK);
-	}
-	return (UNSET);
-}
-
 static t_res	scanner_loop(t_list **scan_list, char *line, char **buf, int *i)
 {
 	t_res	scan_res;

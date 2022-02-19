@@ -1,6 +1,18 @@
 #ifndef LEXER_H
 # define LEXER_H
 
+typedef struct	s_expansion_scan_info
+{
+	char			**buf;
+	char			*str;
+	int				*idx;
+	int				start_i;
+	t_AST_expansion	**expansions;
+	int				begin;
+	int				end;
+
+}	t_expansion_scan_info;
+
 typedef struct s_scan_node
 {
 	char				*text;
@@ -66,4 +78,11 @@ bool		is_whitespace(char c);
 bool		is_quotechar(char c);
 bool		is_alpha(char c);
 bool		is_digit(char c);
+/*
+** < util2.c > */
+
+bool		is_1stchar_valid(char c);
+bool		is_variable_char_valid(char c);
+bool		is_scan_continuos(char *buf, char c);
+bool		is_multi_expansions(t_expansion_scan_info info, int i);
 #endif
