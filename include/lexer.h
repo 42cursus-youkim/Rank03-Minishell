@@ -59,6 +59,7 @@ void		scan_node_print(void *param);
 ** < scanner_util.c > */
 
 bool		is_quotes_open(char *last_quote, char *str);
+bool		is_brace_open(char *str);
 t_res		buf_to_list(t_list **list, char **buf);
 t_res		whitespace_scan(t_list **list, char **buf, char *str, int *idx);
 /*

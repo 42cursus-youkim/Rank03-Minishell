@@ -25,6 +25,26 @@ bool	is_quotes_open(char *last_quote, char *str)
 	return (open);
 }
 
+bool	is_brace_open(char *str)
+{
+	int		i;
+	bool	open;
+
+	i = -1;
+	open = false;
+	while (str[++i])
+	{
+		if (str[i] == '$' && str[i + 1] == '{')
+		{
+			open = true;
+			i++;
+		}
+		if (open && str[i] == '}')
+			open = false;
+	}
+	return (open);
+}
+
 t_res	buf_to_list(t_list **list, char **buf)
 {
 	const int	buf_len = ft_strlen(*buf);
