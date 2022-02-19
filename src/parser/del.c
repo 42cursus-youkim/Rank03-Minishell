@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void	del_ast_expansions(t_AST_expansion *expansions[])
+void	del_ast_expansions(t_AST_expansion *expansions[])
 {
 	int		i;
 

@@ -1,11 +1,13 @@
 #include "minishell.h"
 
-t_AST_expansion	*new_ast_expansion(char *paramameter, int begin, int end)
+t_AST_expansion	*new_ast_expansion(char *parameter, int begin, int end)
 {
 	t_AST_expansion	*expansion;
 
 	expansion = malloc(sizeof(t_AST_expansion));
-	expansion->parameter = paramameter;
+	if (!expansion)
+		return (NULL);
+	expansion->parameter = new_str(parameter);
 	expansion->begin = begin;
 	expansion->end = end;
 	return (expansion);
@@ -16,15 +18,16 @@ t_AST_expansion	**new_ast_expansions(t_AST_expansion *expansions[])
 	int				i;
 	t_AST_expansion	**new;
 
-	new = malloc(sizeof(t_AST_expansion *));
-	if (!expansions)
+	new = ft_calloc(sizeof(t_AST_expansion *), 0);
+	if (!new)
 		return (NULL);
-	i = -1;
-	while (expansions[++i])
-		new[i] = new_ast_expansion(
-				expansions[i]->parameter,
-				expansions[i]->begin, expansions[i]->end);
-	return (expansions);
+	if (expansions)
+	{
+		i = -1;
+		while (expansions[++i])
+			expansions_append_free(&new, expansions[i]);
+	}
+	return (new);
 }
 
 t_AST_NODE	*new_ast_word(
