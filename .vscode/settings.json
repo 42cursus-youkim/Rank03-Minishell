@@ -1,17 +1,22 @@
 {
-    "files.associations": {
-        "**/*.pug": "jade",
-        "**/*.h": "c",
-        "**/*.html": "html",
-        "**/templates/**/*.html": "django-html",
-        "**/templates/**/*.css": "css",
-        "**/requirements{/**,*}.{txt,in}": "pip-requirements",
-        "*.html": "html",
-        "*.xpm": "c",
-        "*.h": "c",
-        "*.njk": "nunjucks",
-        "**/templates/**/*": "django-txt",
-        "*.pug": "jade",
-        "cmath": "c"
-    }
+  "files.associations": {
+    "**/*.pug": "jade",
+    "**/*.h": "c",
+    "**/*.html": "html",
+    "**/templates/**/*.html": "django-html",
+    "**/templates/**/*.css": "css",
+    "**/requirements{/**,*}.{txt,in}": "pip-requirements",
+    "*.html": "html",
+    "*.xpm": "c",
+    "*.h": "c",
+    "*.njk": "nunjucks",
+    "**/templates/**/*": "django-txt",
+    "*.pug": "jade",
+    "cmath": "c"
+  },
+  "conventionalCommits.autoCommit": false,
+  "conventionalCommits.promptBody": true,
+  "conventionalCommits.promptFooter": true,
+  "conventionalCommits.promptScopes": false,
+  "git.postCommitCommand": "none",
 }
