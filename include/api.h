@@ -8,7 +8,7 @@ typedef enum e_procflag
 	INPUT = 0,
 	OUTPUT = 1,
 	TEMP = 1,
-	WAIT_CHILD_END = 0,
+	WAIT_UNTIL_CHILD_END = 0,
 }	t_procflag;
 
 typedef enum e_exitcode
@@ -41,9 +41,7 @@ t_res	api_exec_pipe_temp(int size, char **argvs[]);
 /*
 ** < redirect.c > */
 
-void	redirect_output(t_AST_NODE *redirect);
-void	redirect_input(t_AST_NODE *redirect);
-void	api_redirect(t_AST_NODE *redirect);
+void	api_create_redirect(t_AST_NODE *redirect);
 /*
 ** < signal.c > */
 

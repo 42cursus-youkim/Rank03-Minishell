@@ -1,7 +1,6 @@
 #include "minishell.h"
 
-
-void	redirect_output(t_AST_NODE *redirect)
+static void	redirect_output(t_AST_NODE *redirect)
 {
 	int		fd;
 
@@ -10,7 +9,7 @@ void	redirect_output(t_AST_NODE *redirect)
 	dup2(fd, STDOUT_FILENO);
 }
 
-void	redirect_input(t_AST_NODE *redirect)
+static void	redirect_input(t_AST_NODE *redirect)
 {
 	int		fd;
 
@@ -19,7 +18,7 @@ void	redirect_input(t_AST_NODE *redirect)
 	dup2(STDIN_FILENO, fd);
 }
 
-void	api_redirect(t_AST_NODE *redirect)
+void	api_create_redirect(t_AST_NODE *redirect)
 {
 	const t_redirect_op	op = redirect->op;
 
