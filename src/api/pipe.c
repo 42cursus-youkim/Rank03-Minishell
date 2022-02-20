@@ -7,7 +7,7 @@
 static void	api_pipe_temp(char **argv)
 {
 	pid_t	pid;
-	t_fd	pipefd[2];
+	t_fd	pipefd[PIPE_SIZE];
 
 	pipe(pipefd);
 	pid = fork();
@@ -19,7 +19,7 @@ static void	api_pipe_temp(char **argv)
 	if (is_parent(pid))
 	{
 		receive_input_from_pipe(pipefd);
-		waitpid(pid, NULL, WAIT_CHILD_END);
+		waitpid(pid, NULL, WAIT_UNTIL_CHILD_END);
 	}
 	else
 		printf(RED "fork error\n" END);

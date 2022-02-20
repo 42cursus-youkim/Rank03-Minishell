@@ -5,6 +5,7 @@ typedef enum e_procflag
 {
 	PIPE_READ = 0,
 	PIPE_WRITE = 1,
+	PIPE_SIZE = 2,
 	INPUT = 0,
 	OUTPUT = 1,
 	TEMP = 1,
@@ -51,6 +52,6 @@ int		api_handle_status(int status);
 
 bool	is_parent(pid_t pid);
 bool	is_child(pid_t pid);
-void	send_output_to_pipe(t_fd pipefd[2]);
-void	receive_input_from_pipe(t_fd pipefd[2]);
+void	send_output_to_pipe(t_fd pipefd[PIPE_SIZE]);
+void	receive_input_from_pipe(t_fd pipefd[PIPE_SIZE]);
 #endif
