@@ -45,4 +45,6 @@ int		api_handle_status(int status);
 
 bool	is_parent(pid_t pid);
 bool	is_child(pid_t pid);
+void	send_output_to_pipe(t_fd pipefd[2]);
+void	receive_input_from_pipe(t_fd pipefd[2]);
 #endif

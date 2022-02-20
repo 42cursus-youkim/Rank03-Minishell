@@ -12,21 +12,19 @@ static void	api_pipe(char **argv, t_dict *env) // TODO: change to t_AST_COMMAND 
 {
 	(void)env;
 	pid_t	pid;
-	int		pipefd[2];
+	t_fd	pipefd[2];
 
 	pipe(pipefd);
 	pid = fork();
 	if (is_child(pid))
 	{
-		close(pipefd[PIPE_READ]);
-		dup2(pipefd[PIPE_WRITE], STDOUT_FILENO);
+		send_output_to_pipe(pipefd);
 		// api_exec(cmd, env);
 		test_exec(argv);
 	}
-	else if (is_parent(pid)) // is waiting for child
+	if (is_parent(pid)) // is waiting for child
 	{
-		close(pipefd[PIPE_WRITE]);
-		dup2(pipefd[PIPE_READ], STDIN_FILENO);
+		receive_input_from_pipe(pipefd);
 		waitpid(pid, NULL, WAIT_CHILD_END);
 	}
 	else
@@ -38,22 +36,22 @@ t_res	api_exec_pipe(t_AST_PIPELINE *pipeline, t_dict *env)
 	int	i;
 
 	char **argvs[] = {
-			(char *[]){"usr/bin/ls", "-l", "/home/scarf/Repo", NULL},
+			(char *[]){"/usr/bin/ls", "-l", ".", NULL},
 			(char *[]){"/usr/bin/wc", NULL},
 			(char *[]){"/usr/bin/wc", NULL},
 		};
 
-	(void)env; (void)pipeline;
+	(void)env; (void)pipeline; (void)i;
 	// i = -1;
 	// while ()
 	// {
 
 	// }
-	for (i = 0; i < 2; i++)
-	{
-		api_pipe(argvs[i], NULL);
-	}
-	test_exec(argvs[i]);
-	wait(0);
+	// test_exec(argvs[0]);
+	i = 0;
+	api_pipe(argvs[i], NULL);
+	// i = 1;
+	// test_exec(argvs[i]);
+	// wait(0);
 	return (OK);
 }

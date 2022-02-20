@@ -14,7 +14,10 @@ int	main(int argc, char *argv[], char *envp[])
 	// ast_command_repr(cmd, 0);
 	// api_exec_cmd(cmd, env);
 	// api_exec_cmd(NULL, NULL);
-	api_exec_pipe(NULL, NULL);
+	// t_AST_COMMAND *cmd = new_ast_command(NULL, NULL, (t_AST_NODE *[]){
+	// 	NULL});
+	// api_exec_pipe(NULL, NULL);
 	// del_dict(env);
+	prompt();
 	return (0);
 }
