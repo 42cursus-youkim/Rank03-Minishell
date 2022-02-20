@@ -39,15 +39,7 @@ void		expansions_print(t_AST_expansion *expansions[]);
 /*
 ** < lexer.c > */
 
-t_token		*tokenizer(t_list *scan_list);
 t_token		*lexer(char *line);
-/*
-** < lexer_tokenizer.c > */
-
-t_AST_type	tokentype_check(t_scan_node *node);
-int			quotes_index(const char *str);
-void		tokens_print(t_token tokens[]);
-void		del_tokens(t_token tokens[]);
 /*
 ** < scanner.c > */
 
@@ -74,6 +66,13 @@ t_res		metachar_scan(t_list **list, char **buf, char *str, int *idx);
 
 t_res		expansion_scan(t_list **list, char **buf, char *str, int *idx);
 t_res		dollar_scan(t_list **list, char **buf, char *str, int *idx);
+/*
+** < tokenizer.c > */
+
+t_AST_type	tokentype_check(t_scan_node *node);
+void		tokens_print(t_token tokens[]);
+void		del_tokens(t_token tokens[]);
+t_token		*tokenizer(t_list *scan_list);
 /*
 ** < util.c > */
 

@@ -1,59 +1,62 @@
 #include "minishell.h"
 
-static char	*new_quotes_remove(const char *str)
+static bool	is_pipeline_token_valid(t_AST_type type[])
 {
-	char	*new;
-	int		i;
-	char	last_quote;
-	bool	open;
-
-	new = new_str("");
-	open = false;
-	i = -1;
-	while (str[++i])
+	if (type[1] == PIPELINE && (type[0] != WORD || type[2] == PIPELINE))
 	{
-		if (!open && is_quotechar(str[i]))
-		{
-			open = true;
-			last_quote = str[i];
-			continue ;
-		}
-		if (open && last_quote == str[i])
-		{
-			open = false;
-			continue ;
-		}
-		ft_str_append(&new, str[i]);
+		printf(BRED "minishell: syntax error near unexpected token `|'\n" END);
+		return (false);
 	}
-	return (new);
+	if (type[1] == PIPELINE && type[2] == TYPE_END)
+	{
+		printf(BRED "minishell: syntax error near unexpected token `|'\n");
+		printf("multiline is not supported :(\n" END);
+		return (false);
+	}
+	return (true);
 }
 
-t_token	*tokenizer(t_list *scan_list)
+static bool	is_redirect_token_valid(t_AST_type type[], char *str)
 {
-	t_token			*tokens;
-	const int		len = ft_list_size(scan_list);
-	int				i;
-	t_list			*current;
-	t_scan_node		*node;
-
-	tokens = ft_calloc(sizeof(t_token), len);
-	if (!tokens)
-		return (NULL);
-	current = scan_list;
-	i = -1;
-	while (++i < len)
+	if (type[1] == REDIRECT && type[0] == REDIRECT)
 	{
-		node = (t_scan_node *)current->content;
-		tokens[i].type = tokentype_check(node);
-		if (!node->expansions)
-			tokens[i].text = new_quotes_remove(node->text);
-		else
-			tokens[i].text = new_str(node->text);
-		tokens[i].expansions = new_ast_expansions(node->expansions);
-		current = current->next;
+		printf(BRED "minishell: syntax error near unexpected token ");
+		printf("`%s'\n" END, str);
+		return (false);
 	}
-	del_list(&scan_list, del_scan_node);
-	return (tokens);
+	if (type[1] == REDIRECT && type[2] == TYPE_END)
+	{
+		printf(BRED
+			"minishell: syntax error near unexpected token `newline'\n" END);
+		return (false);
+	}
+	return (true);
+}
+
+static bool	is_tokens_valid(t_token tokens[])
+{
+	int			i;
+	t_AST_type	type[3];
+
+	i = -1;
+	if (tokens[++i].type == PIPELINE)
+	{
+		printf(BRED "minishell: syntax error near unexpected token `|'\n" END);
+		return (false);
+	}
+	while (tokens[++i].text)
+	{
+		type[0] = tokens[i - 1].type;
+		type[1] = tokens[i].type;
+		if (tokens[i + 1].text)
+			type[2] = tokens[i + 1].type;
+		else
+			type[2] = TYPE_END;
+		if (!is_pipeline_token_valid(type)
+			|| !is_redirect_token_valid(type, tokens[i].text))
+			return (false);
+	}
+	return (true);
 }
 
 t_token	*lexer(char *line)
@@ -66,6 +69,13 @@ t_token	*lexer(char *line)
 	if (scanner(&scan_list, line) == ERR)
 		del_list(&scan_list, del_scan_node);
 	else
+	{
 		tokens = tokenizer(scan_list);
+		if (!is_tokens_valid(tokens))
+		{
+			del_tokens(tokens);
+			return (NULL);
+		}
+	}
 	return (tokens);
 }
