@@ -1,6 +1,18 @@
 #ifndef LEXER_H
 # define LEXER_H
 
+typedef struct	s_expansion_scan_info
+{
+	char			**buf;
+	char			*str;
+	int				*idx;
+	int				start_i;
+	t_AST_expansion	**expansions;
+	int				begin;
+	int				end;
+
+}	t_expansion_scan_info;
+
 typedef struct s_scan_node
 {
 	char				*text;
@@ -47,6 +59,7 @@ void		scan_node_print(void *param);
 ** < scanner_util.c > */
 
 bool		is_quotes_open(char *last_quote, char *str);
+bool		is_brace_open(char *str);
 t_res		buf_to_list(t_list **list, char **buf);
 t_res		whitespace_scan(t_list **list, char **buf, char *str, int *idx);
 /*
@@ -54,9 +67,23 @@ t_res		whitespace_scan(t_list **list, char **buf, char *str, int *idx);
 
 t_res		metachar_scan(t_list **list, char **buf, char *str, int *idx);
 /*
+** < scanner_util3.c > */
+
+t_res		expansion_scan(t_list **list, char **buf, char *str, int *idx);
+t_res		dollar_scan(t_list **list, char **buf, char *str, int *idx);
+/*
 ** < util.c > */
 
 bool		is_metachar(char c);
 bool		is_whitespace(char c);
 bool		is_quotechar(char c);
+bool		is_alpha(char c);
+bool		is_digit(char c);
+/*
+** < util2.c > */
+
+bool		is_1stchar_valid(char c);
+bool		is_variable_char_valid(char c);
+bool		is_scan_continuos(char *buf, char c);
+bool		is_multi_expansions(t_expansion_scan_info info, int i);
 #endif
