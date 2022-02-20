@@ -36,12 +36,12 @@ static t_res	parent_proc(pid_t pid)
 }
 */
 
-void	api_exec(t_AST_COMMAND *cmd, t_dict *env)
+// FIXME: char *argv[] -> t_AST_COMMAND *cmd
+void	api_raw_exec(char *argv[], t_dict *env)
 {
-	(void)env; (void)cmd;
+	(void)env;
 
 	printf(HYEL "HAYO I'm child\n" END);
-	char *argv[] = {"/bin/ls", "-l", "/home/scarf/Repo", NULL};
 	char *envp[] = {NULL};
 	if (execve(argv[0], argv, envp) == OK)
 		exit(0);
@@ -69,16 +69,15 @@ static int	parent_proc(pid_t pid)
 	}
 }
 
-t_res	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env)
+// TODO: change it to use t_AST_COMMAND *cmd, t_dict *env
+t_res	api_exec_cmd(char **argv)
 {
 	pid_t	pid;
-
-	(void)env; (void)cmd;
 
 	pid = fork();
 
 	if (is_child(pid))
-		api_exec(NULL, NULL);
+		api_raw_exec(argv, NULL);
 	else if (is_parent(pid))
 	{
 		parent_proc(pid);

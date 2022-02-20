@@ -11,6 +11,7 @@
 t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect)
 {
 	const char	*file = redirect->text;
+	int			flag;
 	const int	flags[6] = {
 		O_RDONLY,
 		ERR,
@@ -18,8 +19,8 @@ t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect)
 		O_CREAT | O_WRONLY | O_TRUNC,
 		ERR,
 		ERR};
-	const int	flag = flags[redirect->op];
 
+	flag = flags[redirect->op];
 	if (flag == ERR)
 		return (ERR);
 	*fd_p = open(file, flag, 0644);

@@ -1,14 +1,7 @@
 #include "minishell.h"
 
-static void	test_exec(char **argv)
-{
-	if (execve(argv[0], argv, NULL) == OK)
-		exit(0);
-	printf(RED "Execve fail!\n" END);
-	exit(1);
-}
-
-static void	api_pipe(char **argv, t_dict *env) // TODO: change to t_AST_COMMAND *cmd,
+// FIXME: char *argv[] -> t_AST_COMMAND *cmd
+static void	api_pipe(char **argv, t_dict *env)
 {
 	(void)env;
 	pid_t	pid;
@@ -19,10 +12,9 @@ static void	api_pipe(char **argv, t_dict *env) // TODO: change to t_AST_COMMAND 
 	if (is_child(pid))
 	{
 		send_output_to_pipe(pipefd);
-		// api_exec(cmd, env);
-		test_exec(argv);
+		api_raw_exec(argv, NULL);
 	}
-	if (is_parent(pid)) // is waiting for child
+	if (is_parent(pid))
 	{
 		receive_input_from_pipe(pipefd);
 		waitpid(pid, NULL, WAIT_CHILD_END);
@@ -31,27 +23,18 @@ static void	api_pipe(char **argv, t_dict *env) // TODO: change to t_AST_COMMAND 
 		printf(RED "fork error\n" END);
 }
 
-t_res	api_exec_pipe(t_AST_PIPELINE *pipeline, t_dict *env)
+/* FIXME:
+	int size, char **argvs[]
+	-> t_AST_PIPELINE *pipeline, t_dict *env
+*/
+t_res	api_exec_pipe(int size, char **argvs[])
 {
 	int	i;
 
-	char **argvs[] = {
-			(char *[]){"/usr/bin/ls", "-l", ".", NULL},
-			(char *[]){"/usr/bin/wc", NULL},
-			(char *[]){"/usr/bin/wc", NULL},
-		};
-
-	(void)env; (void)pipeline; (void)i;
-	// i = -1;
-	// while ()
-	// {
-
-	// }
-	// test_exec(argvs[0]);
-	i = 0;
-	api_pipe(argvs[i], NULL);
-	// i = 1;
-	// test_exec(argvs[i]);
-	// wait(0);
+	i = -1;
+	while (++i < size - 1)
+		api_pipe(argvs[i], NULL);
+	api_exec_cmd(argvs[i]);
+	printf(BGRN "HAYO all pipe process finished\n" END);
 	return (OK);
 }
