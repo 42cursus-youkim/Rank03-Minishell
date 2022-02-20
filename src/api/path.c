@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char	*new_path_resolved(char *path, t_dict *env)
+static char	*new_path_resolved(char *path, t_dict *env)
 {
 	char	*new;
 
@@ -14,7 +14,7 @@ char	*new_path_resolved(char *path, t_dict *env)
 	return (new);
 }
 
-char	**new_raw_path(t_dict *env)
+static char	**new_raw_path(t_dict *env)
 {
 	const char	*pathstr = dict_get(env, "PATH");
 

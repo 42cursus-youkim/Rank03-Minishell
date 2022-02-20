@@ -46,7 +46,7 @@ $(LIBFT):
 	@make --no-print-directory all -C lib/ DFLAGS="$(DFLAGS)"
 
 %.o: %.c
-	@echo "   $(WU)$(<F)$(R) -> $(E)$(@F)"
+	@printf "$(Y)%-10s$(WU)$(<F)$(R) -> $(E)$(@F)\n" [$(subst src/,,$(*D))]
 	@$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
 
 $(NAME): $(OBJ) $(LIBFT)
