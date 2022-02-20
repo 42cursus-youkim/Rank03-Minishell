@@ -1,11 +1,11 @@
 #include "minishell.h"
 
-t_AST_type	tokentype_check(const char *str)
+t_AST_type	tokentype_check(t_scan_node *node)
 {
+	const char	*str = node->text;
+
 	if (is_str_equal(str, "|"))
 		return (PIPELINE);
-	if (is_str_equal(str, ";"))
-		return (COMMAND);
 	if (is_str_equal(str, "<") || is_str_equal(str, "<<")
 		|| is_str_equal(str, ">") || is_str_equal(str, ">>"))
 		return (REDIRECT);
@@ -31,22 +31,6 @@ int	quotes_index(const char *str)
 	return (ERR);
 }
 
-bool	is_expand_parameter(const char *str)
-{
-	const int	expand_i = ft_strchr_i(str, '$');
-	const int	single_i = ft_strchr_i(str, '\'');
-	const int	start_i = ft_strchr_i(str, '\"');
-	int			end_i;
-
-	if (start_i == ERR || expand_i == ERR
-		|| (single_i != ERR && start_i > single_i))
-		return (false);
-	end_i = ft_strchr_i(&str[start_i + 1], '\"') + start_i + 1;
-	if (expand_i > start_i && expand_i < end_i)
-		return (true);
-	return (false);
-}
-
 void	tokens_print(t_token tokens[])
 {
 	int			i;
@@ -56,8 +40,12 @@ void	tokens_print(t_token tokens[])
 
 	i = -1;
 	while (tokens[++i].text)
+	{
 		printf("[%2d] %-12s" BGRN "\t%s\n" END,
 			i, type_str[tokens[i].type], tokens[i].text);
+		if (tokens[i].expansions)
+			expansions_print(tokens[i].expansions);
+	}
 }
 
 void	del_tokens(t_token tokens[])
@@ -66,6 +54,9 @@ void	del_tokens(t_token tokens[])
 
 	i = -1;
 	while (tokens[++i].text)
+	{
 		free(tokens[i].text);
+		del_ast_expansions(tokens[i].expansions);
+	}
 	free(tokens);
 }

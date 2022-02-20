@@ -29,12 +29,15 @@ static void	del_prompt(t_prompt *prompt)
 
 static void	prompt_run_line(char *line)
 {
-	t_list	*scan_list;
+	t_token	*tokens;
 
-	scan_list = NULL;
-	if (scanner(&scan_list, line) == OK)
-		ft_list_print(scan_list, scan_node_print);
-	del_list(&scan_list, del_scan_node);
+	tokens = lexer(line);
+	if (tokens)
+	{
+		tokens_print(tokens);
+		printf(GRNB BWHT "GO PARSER" END "\n");
+		del_tokens(tokens);
+	}
 	free(line);
 }
 

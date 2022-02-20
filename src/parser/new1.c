@@ -25,7 +25,7 @@ t_AST_expansion	**new_ast_expansions(t_AST_expansion *expansions[])
 	{
 		i = -1;
 		while (expansions[++i])
-			expansions_append_free(&new, expansions[i]);
+			expansions_append(&new, expansions[i]);
 	}
 	return (new);
 }

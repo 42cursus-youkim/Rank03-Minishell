@@ -12,7 +12,7 @@ int	expansions_len(t_AST_expansion *expansions[])
 	return (i);
 }
 
-t_res	expansions_append_free(t_AST_expansion **parr[], t_AST_expansion *element)
+t_res	expansions_append(t_AST_expansion **parr[], t_AST_expansion *element)
 {
 	const int		arr_len = expansions_len(*parr);
 	t_AST_expansion	**new;
@@ -30,9 +30,17 @@ t_res	expansions_append_free(t_AST_expansion **parr[], t_AST_expansion *element)
 	new[i] = new_ast_expansion(
 			element->parameter, element->begin, element->end);
 	del_ast_expansions(*parr);
+	*parr = new;
+	return (OK);
+}
+
+t_res	expansions_append_free(
+	t_AST_expansion **parr[], t_AST_expansion *element)
+{
+	if (expansions_append(parr, element) == ERR)
+		return (ERR);
 	free(element->parameter);
 	free(element);
-	*parr = new;
 	return (OK);
 }
 
