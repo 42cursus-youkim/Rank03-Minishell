@@ -21,8 +21,9 @@ typedef struct s_scan_node
 
 typedef struct s_token
 {
-	t_AST_type	type;
-	char		*text;
+	t_AST_type			type;
+	char				*text;
+	t_AST_expansion		**expansions;
 }	t_token;
 
 //@func
@@ -30,21 +31,15 @@ typedef struct s_token
 ** < expansion.c > */
 
 int			expansions_len(t_AST_expansion *expansions[]);
-t_res		expansions_append_free(t_AST_expansion **parr[],
+t_res		expansions_append(t_AST_expansion **parr[],
+				t_AST_expansion *element);
+t_res		expansions_append_free( t_AST_expansion **parr[],
 				t_AST_expansion *element);
 void		expansions_print(t_AST_expansion *expansions[]);
 /*
 ** < lexer.c > */
 
-t_token		*tokenizer(char *arr[]);
-/*
-** < lexer_tokenizer.c > */
-
-t_AST_type	tokentype_check(const char *str);
-int			quotes_index(const char *str);
-bool		is_expand_parameter(const char *str);
-void		tokens_print(t_token tokens[]);
-void		del_tokens(t_token tokens[]);
+t_token		*lexer(char *line);
 /*
 ** < scanner.c > */
 
@@ -71,6 +66,13 @@ t_res		metachar_scan(t_list **list, char **buf, char *str, int *idx);
 
 t_res		expansion_scan(t_list **list, char **buf, char *str, int *idx);
 t_res		dollar_scan(t_list **list, char **buf, char *str, int *idx);
+/*
+** < tokenizer.c > */
+
+t_AST_type	tokentype_check(t_scan_node *node);
+void		tokens_print(t_token tokens[]);
+void		del_tokens(t_token tokens[]);
+t_token		*tokenizer(t_list *scan_list);
 /*
 ** < util.c > */
 

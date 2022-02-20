@@ -8,6 +8,7 @@ typedef enum e_AST_type
 	REDIRECT,
 	COMMAND,
 	SCRIPT,
+	TYPE_END = -1,
 }	t_AST_type;
 
 typedef enum e_redirect_op

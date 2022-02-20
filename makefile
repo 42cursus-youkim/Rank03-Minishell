@@ -19,9 +19,8 @@ HGEN     := hgen
 # ===== Packages =====
 PKGS     := prompt lexer parser api builtin tree
 
-lexerV   := lexer scanner expansion util util2 \
-			scanner_list scanner_util scanner_util2 scanner_util3 \
-			lexer_tokenizer
+lexerV   := lexer scanner expansion tokenizer util util2 \
+			scanner_list scanner_util scanner_util2 scanner_util3
 parserV  := new1 new2 del
 promptV  := prompt interrupt util
 apiV     := exec path
