@@ -26,6 +26,10 @@ typedef enum e_exitcode
 void	api_exec(t_AST_COMMAND *cmd, t_dict *env);
 t_res	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env);
 /*
+** < file.c > */
+
+t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect);
+/*
 ** < path.c > */
 
 char	*new_path_resolved(char *path, t_dict *env);
@@ -36,6 +40,12 @@ char	**new_path_with_name(t_dict *env, char *name);
 ** < pipe.c > */
 
 t_res	api_exec_pipe(t_AST_PIPELINE *pipeline, t_dict *env);
+/*
+** < redirect.c > */
+
+void	redirect_output(t_AST_NODE *redirect);
+void	redirect_input(t_AST_NODE *redirect);
+void	api_redirect(t_AST_NODE *redirect);
 /*
 ** < signal.c > */
 

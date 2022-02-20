@@ -24,7 +24,7 @@ lexerV   := lexer scanner expansion util \
 			lexer_tokenizer
 parserV  := new1 new2 del
 promptV  := prompt interrupt util
-apiV     := exec pipe signal path util
+apiV     := exec pipe signal path file redirect util
 builtinV := env util
 treeV    := repr1 repr2
 
