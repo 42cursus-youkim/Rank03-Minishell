@@ -46,6 +46,7 @@ typedef struct s_AST_COMMAND
 typedef struct s_AST_PIPELINE
 {
 	t_AST_COMMAND	**commands;
+	int				commands_len;
 }	t_AST_PIPELINE;
 
 typedef	t_res(t_nodefunc_f)(t_AST_NODE *node);

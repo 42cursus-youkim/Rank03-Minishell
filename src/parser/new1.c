@@ -41,7 +41,10 @@ t_AST_NODE	*new_ast_word(
 	node->op = NOT_REDIR;
 	node->type = WORD;
 	node->text = new_str(text);
-	node->expansions = expansions;
+	if (expansions)
+		node->expansions = new_ast_expansions(expansions);
+	else
+		node->expansions = NULL;
 	return (node);
 }
 
@@ -58,16 +61,16 @@ t_AST_NODE	*new_ast_redirect(
 	return (node);
 }
 
-t_AST_COMMAND	*new_ast_command(
-	t_AST_NODE *name, t_AST_NODE *prefixes[], t_AST_NODE *suffixes[])
-{
-	t_AST_COMMAND	*new;
+// t_AST_COMMAND	*new_ast_command(
+// 	t_AST_NODE *name, t_AST_NODE *prefixes[], t_AST_NODE *suffixes[])
+// {
+// 	t_AST_COMMAND	*new;
 
-	new = malloc(sizeof(t_AST_COMMAND));
-	if (!new)
-		return (NULL);
-	new->name = name;
-	new->prefixes = prefixes;
-	new->suffixes = suffixes;
-	return (new);
-}
+// 	new = malloc(sizeof(t_AST_COMMAND));
+// 	if (!new)
+// 		return (NULL);
+// 	new->name = name;
+// 	new->prefixes = prefixes;
+// 	new->suffixes = suffixes;
+// 	return (new);
+// }
