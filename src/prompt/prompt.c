@@ -29,14 +29,18 @@ static void	del_prompt(t_prompt *prompt)
 
 static void	prompt_run_line(char *line)
 {
-	t_token	*tokens;
+	t_token			*tokens;
+	t_AST_PIPELINE	*pipeline;
 
 	tokens = lexer(line);
 	if (tokens)
 	{
-		tokens_print(tokens);
-		printf(GRNB BWHT "GO PARSER" END "\n");
-		del_tokens(tokens);
+		pipeline = parser(tokens);
+		if (pipeline)
+		{
+			ast_pipeline_repr(pipeline, 0);
+			del_ast_pipeline(pipeline);
+		}
 	}
 	free(line);
 }
