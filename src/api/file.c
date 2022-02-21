@@ -15,8 +15,8 @@ t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect)
 	const int	flags[6] = {
 		O_RDONLY,
 		ERR,
-		O_CREAT | O_WRONLY | O_APPEND,
 		O_CREAT | O_WRONLY | O_TRUNC,
+		O_CREAT | O_WRONLY | O_APPEND,
 		ERR,
 		ERR};
 
