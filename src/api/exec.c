@@ -1,56 +1,59 @@
 #include "minishell.h"
 
-
-static void	api_exec_cmd_inner(t_AST_COMMAND *cmd, t_dict *env)
+/* FIXME:
+	char *argv[]
+	-> t_AST_COMMAND *cmd, t_dict *env
+*/
+void	api_raw_exec_temp(char *argv[], t_dict *env)
 {
-	int		i;
-	char	**envp;
-	char	**names;
-	(void)cmd;
+	(void)env;
 
-	names = new_path_with_name(env, "ls"); //cmd->name.text);
-	envp = new_arr_env(env);
-	i = -1;
-	while (names[++i])
-		execve(names[i], (char *[]){"~", NULL}, envp);
-	del_arr(envp);
+	printf(HYEL "HAYO I'm child\n" END);
+	char *envp[] = {NULL};
+	if (execve(argv[0], argv, envp) == OK)
+		exit(0);
+	printf(RED "Execve fail!\n" END);
+	exit(1);
 }
 
-bool	is_parent(pid_t pid)
+static int	parent_proc(pid_t pid)
 {
-	return (pid > 0);
-}
+	int	status;
+	int	exitcode;
 
-bool	is_child(pid_t pid)
-{
-	return (pid == 0);
-}
-
-void	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env)
-{
-	pid_t	pid;
-	int		status;
-	(void)cmd; (void)env;
-
-	pid = fork();
-	if (is_parent(pid))
+	printf(HGRN "HAYO I'm Parent process\n" END);
+	waitpid(pid, &status, 0);
+	exitcode = api_handle_status(status);
+	if (exitcode == OK)
 	{
-		printf("I'm parent and waiting for child\n");
-		// close(pipe[PIPE_WRITE]);
-		// dup2(pipe[PIPE_READ], STDIN_FILENO);
-		// FIXME: rewrite here later
-		waitpid(pid, &status, WNOHANG);
-		if (status == pid)
-			printf("child is successfully dead!\n");
-		else
-			printf("something's gone wrong\n");
-	}
-	else if (is_child(pid))
-	{
-		// close(pipe[PIPE_READ]);
-		printf("HAYO I'm child\n");
-		api_exec_cmd_inner(cmd, env);
+		printf(BGRN "HAYO child is successfully dead!\n" END);
+		return (OK);
 	}
 	else
-		printf("fork error\n");
+	{
+		printf(BRED "exitcode: %d\n" END, exitcode);
+		return (exitcode);
+	}
+}
+
+/* FIXME:
+	char *argv[]
+	-> t_AST_COMMAND *cmd, t_dict *env
+*/
+t_res	api_exec_cmd_temp(char *argv[])
+{
+	pid_t	pid;
+
+	pid = fork();
+
+	if (is_child(pid))
+		api_raw_exec_temp(argv, NULL);
+	else if (is_parent(pid))
+	{
+		parent_proc(pid);
+		return (OK);
+	}
+	else
+		printf(RED "fork error\n" END);
+	return (OK);
 }

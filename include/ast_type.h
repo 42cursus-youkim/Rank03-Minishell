@@ -13,11 +13,12 @@ typedef enum e_AST_type
 
 typedef enum e_redirect_op
 {
-	REDIR_INPUT,
-	REDIR_HEREDOC,
-	REDIR_OUTPUT,
-	REDIR_OUTPUT_APPEND,
-	NOT_REDIR,
+	REDIR_INPUT = 0,
+	REDIR_HEREDOC = 1,
+	REDIR_OUTPUT = 2,
+	REDIR_OUTPUT_APPEND = 3,
+	REDIR_HEREDOC_UNSET = -2,
+	NOT_REDIR = -1,
 }	t_redirect_op;
 
 typedef struct s_AST_expansion
@@ -46,5 +47,7 @@ typedef struct s_AST_PIPELINE
 {
 	t_AST_COMMAND	**commands;
 }	t_AST_PIPELINE;
+
+typedef	t_res(t_nodefunc_f)(t_AST_NODE *node);
 
 #endif

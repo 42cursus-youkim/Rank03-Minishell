@@ -23,7 +23,7 @@ lexerV   := lexer scanner expansion tokenizer util util2 \
 			scanner_list scanner_util scanner_util2 scanner_util3
 parserV  := new1 new2 del
 promptV  := prompt interrupt util
-apiV     := exec path
+apiV     := exec pipe signal path file redirect util
 builtinV := env util
 treeV    := repr1 repr2
 
@@ -45,7 +45,7 @@ $(LIBFT):
 	@make --no-print-directory all -C lib/ DFLAGS="$(DFLAGS)"
 
 %.o: %.c
-	@echo "   $(WU)$(<F)$(R) -> $(E)$(@F)"
+	@printf "$(Y)%-10s$(WU)$(<F)$(R) -> $(E)$(@F)\n" [$(subst src/,,$(*D))]
 	@$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
 
 $(NAME): $(OBJ) $(LIBFT)
@@ -81,10 +81,6 @@ docs:
 		done
 
 run: docs all
-	@./$(NAME)
-
-test: docs all
-	@$(call log, G, 🧪 Running Test)
 	@./$(NAME)
 
 leak: docs all cls
