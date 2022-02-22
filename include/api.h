@@ -26,11 +26,11 @@ typedef enum e_exitcode
 t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect);
 bool	is_file_exists(char *filename);
 bool	is_executable_exists(char *file, t_dict *env);
+char	*new_executable_from_env(char *file, t_dict *env);
 /*
 ** < path.c > */
 
 char	**new_names_from_path(char *name, t_dict *env);
-char	*new_executable_from_env(char *file, t_dict *env);
 /*
 ** < shell.c > */
 
