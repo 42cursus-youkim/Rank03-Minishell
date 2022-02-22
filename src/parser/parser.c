@@ -39,7 +39,7 @@ static t_AST_COMMAND	*command_parsing(t_token tokens[], int begin, int end)
 	int				suffix_i;
 
 	command_data_init(&data, tokens, begin, end);
-	command = new_command(tokens, data);
+	command = new_ast_command(tokens, data);
 	i = begin - 1;
 	prefix_i = 0;
 	suffix_i = 0;
@@ -78,7 +78,7 @@ static t_res	command_parsing_with_pipe(
 	return (OK);
 }
 
-t_AST_PIPELINE	*parser(t_token tokens[])
+t_AST_PIPELINE	*parser(t_token tokens[], t_dict *env)
 {
 	int				tokens_size;
 	const int		pipe_count = tokens_n_pipeline_count(&tokens_size, tokens);
@@ -97,6 +97,7 @@ t_AST_PIPELINE	*parser(t_token tokens[])
 	else
 		command_parsing_with_pipe(commands, tokens);
 	pipeline = new_ast_pipeline(commands, commands_len);
+	expander(pipeline, env);
 	del_tokens(tokens);
 	return (pipeline);
 }
