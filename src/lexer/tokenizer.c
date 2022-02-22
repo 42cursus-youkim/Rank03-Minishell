@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_AST_type	tokentype_check(t_scan_node *node)
+static t_AST_type	tokentype_check(t_scan_node *node)
 {
 	const char	*str = node->text;
 
@@ -42,7 +42,7 @@ void	del_tokens(t_token tokens[])
 	free(tokens);
 }
 
-static char	*new_quotes_remove(const char *str)
+char	*new_quotes_remove(const char *str)
 {
 	char	*new;
 	int		i;

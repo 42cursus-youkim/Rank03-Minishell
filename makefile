@@ -21,7 +21,7 @@ PKGS     := prompt lexer parser api builtin tree
 
 lexerV   := lexer scanner expansion tokenizer util util2 \
 			scanner_list scanner_util scanner_util2 scanner_util3
-parserV  := parser new1 new2 del util
+parserV  := parser new1 new2 del util expander
 promptV  := prompt interrupt util
 apiV     := exec pipe signal path file redirect util
 builtinV := env util

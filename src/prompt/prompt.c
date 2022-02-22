@@ -27,7 +27,7 @@ static void	del_prompt(t_prompt *prompt)
 	free(prompt->ps2);
 }
 
-static void	prompt_run_line(char *line)
+static void	prompt_run_line(char *line, t_dict *env)
 {
 	t_token			*tokens;
 	t_AST_PIPELINE	*pipeline;
@@ -35,7 +35,7 @@ static void	prompt_run_line(char *line)
 	tokens = lexer(line);
 	if (tokens)
 	{
-		pipeline = parser(tokens);
+		pipeline = parser(tokens, env);
 		if (pipeline)
 		{
 			ast_pipeline_repr(pipeline, 0);
@@ -45,7 +45,7 @@ static void	prompt_run_line(char *line)
 	free(line);
 }
 
-static void	prompt_loop(t_prompt *prompt)
+static void	prompt_loop(t_prompt *prompt, t_dict *env)
 {
 	char	*line;
 
@@ -59,16 +59,16 @@ static void	prompt_loop(t_prompt *prompt)
 		else if (!is_line_empty(line))
 		{
 			add_history(line);
-			prompt_run_line(line);
+			prompt_run_line(line, env);
 		}
 	}
 }
 
-void	prompt(void)
+void	prompt(t_dict *env)
 {
 	t_prompt	prompt;
 
 	prompt_init(&prompt);
-	prompt_loop(&prompt);
+	prompt_loop(&prompt, env);
 	del_prompt(&prompt);
 }

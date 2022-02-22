@@ -17,6 +17,10 @@ void			del_ast_node(t_AST_NODE *node);
 void			del_ast_command(t_AST_COMMAND *command);
 void			del_ast_pipeline(t_AST_PIPELINE *pipeline);
 /*
+** < expander.c > */
+
+t_res			expander(t_AST_PIPELINE *pipeline, t_dict *env);
+/*
 ** < new1.c > */
 
 t_AST_expansion	*new_ast_expansion(char *parameter, int begin, int end);
@@ -34,13 +38,13 @@ t_AST_PIPELINE	*new_ast_pipeline(t_AST_COMMAND *commands[],
 /*
 ** < parser.c > */
 
-t_AST_PIPELINE	*parser(t_token tokens[]);
+t_AST_PIPELINE	*parser(t_token tokens[], t_dict *env);
 /*
 ** < util.c > */
 
 t_redirect_op	redirection_option(char *str);
 int				tokens_n_pipeline_count(int *size, t_token tokens[]);
 int				commands_size(int pipe_count);
-void			command_data_init(t_command_data *data, t_token tokens[],
+void			command_data_init( t_command_data *data, t_token tokens[],
 					int begin, int end);
 #endif
