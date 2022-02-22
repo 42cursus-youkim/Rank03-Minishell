@@ -23,7 +23,10 @@ typedef enum e_exitcode
 /*
 ** < exec.c > */
 
-int		api_exec_cmd(t_AST_SCRIPTS *pipeline, t_shell *shell);
+int		ast_nodes_len(t_AST_NODE *nodes[]);
+char	**new_argv_from_cmd(char *executable, t_AST_COMMAND *cmd);
+void	child_proc_exec(t_AST_SCRIPTS *scripts, t_shell *shell);
+int		api_exec_cmd(t_AST_SCRIPTS *scripts, t_shell *shell);
 /*
 ** < file.c > */
 
@@ -42,7 +45,7 @@ void	api_create_redirect(t_AST_NODE *redirect);
 
 void	shell_init(t_shell *shell, char *envp[]);
 void	del_shell(t_shell *shell);
-void	api_exit(t_shell *shell, int exitcode);
+void	api_exit(t_shell *shell, t_AST_SCRIPTS *scripts, int exitcode);
 /*
 ** < signal.c > */
 

@@ -30,19 +30,19 @@ void	del_prompt(t_prompt *prompt)
 static void	prompt_run_line(char *line, t_shell *shell)
 {
 	t_token			*tokens;
-	t_AST_SCRIPTS	*pipeline;
+	t_AST_SCRIPTS	*scripts;
 
 	tokens = lexer(line);
 	free(line);
 	if (!tokens)
 		return ;
-	pipeline = parser(tokens, shell->env);
-	if (!pipeline)
+	scripts = parser(tokens, shell->env);
+	if (!scripts)
 		return ;
-	ast_script_repr(pipeline);
-	if (is_ast_command(pipeline))
-		api_exec_cmd(pipeline, shell);
-	del_ast_pipeline(pipeline);
+	ast_script_repr(scripts);
+	if (is_ast_command(scripts))
+		api_exec_cmd(scripts, shell);
+	del_ast_pipeline(scripts);
 }
 
 void	shell_prompt(t_shell *shell)

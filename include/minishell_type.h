@@ -13,9 +13,9 @@ typedef struct s_prompt
 
 typedef struct s_shell
 {
-	t_dict		*env;
-	t_prompt	prompt;
-	int			exitcode;
+	t_dict			*env;
+	t_prompt		prompt;
+	int				exitcode;
 }	t_shell;
 
 #endif

@@ -67,7 +67,9 @@ char	*new_executable_from_env(char *file, t_dict *env)
 	char	**path;
 	char	*executable;
 
-	if (!is_executable_exists(file, env))
+	if (is_file_exists(file))
+		return (new_str(file));
+	else if (!is_executable_exists(file, env))
 		return (NULL);
 	path = new_names_from_path(file, env);
 	i = -1;

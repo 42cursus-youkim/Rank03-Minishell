@@ -13,8 +13,11 @@ void	del_shell(t_shell *shell)
 	del_prompt(&shell->prompt);
 }
 
-void	api_exit(t_shell *shell, int exitcode)
+//	frees allocated memory from shell && exits with exitcode
+void	api_exit(t_shell *shell, t_AST_SCRIPTS *scripts, int exitcode)
 {
 	del_shell(shell);
+	if (scripts)
+		del_ast_pipeline(scripts);
 	exit(exitcode);
 }

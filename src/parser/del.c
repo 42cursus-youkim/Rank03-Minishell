@@ -47,7 +47,7 @@ void	del_ast_command(t_AST_COMMAND *command)
 
 void	del_ast_pipeline(t_AST_SCRIPTS *pipeline)
 {
-	int			i;
+	int	i;
 
 	i = -1;
 	while (pipeline->commands[++i])
