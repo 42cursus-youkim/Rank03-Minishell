@@ -38,7 +38,7 @@ static void	prompt_run_line(char *line)
 		pipeline = parser(tokens);
 		if (pipeline)
 		{
-			ast_pipeline_repr(pipeline, 0);
+			ast_script_repr(pipeline);
 			del_ast_pipeline(pipeline);
 		}
 	}

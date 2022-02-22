@@ -36,11 +36,16 @@ t_AST_PIPELINE	*new_ast_pipeline(t_AST_COMMAND *commands[],
 
 t_AST_PIPELINE	*parser(t_token tokens[]);
 /*
-** < util.c > */
+** < util1.c > */
 
 t_redirect_op	redirection_option(char *str);
 int				tokens_n_pipeline_count(int *size, t_token tokens[]);
 int				commands_size(int pipe_count);
-void			command_data_init(t_command_data *data, t_token tokens[],
+void			command_data_init( t_command_data *data, t_token tokens[],
 					int begin, int end);
+/*
+** < util2.c > */
+
+bool			is_ast_pipeline(t_AST_PIPELINE *pipeline);
+bool			is_ast_command(t_AST_PIPELINE *pipeline);
 #endif

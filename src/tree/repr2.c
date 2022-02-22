@@ -35,11 +35,6 @@ void	ast_pipeline_repr(t_AST_PIPELINE *pipeline, int level)
 	int			i;
 	const int	indent = level * INDENT_SIZE;
 
-	if (pipeline->commands_len == 1)
-	{
-		ast_command_repr(pipeline->commands[0], indent);
-		return ;
-	}
 	printf(BBLU "%*s🔗PIPELINE\n" END, indent, "");
 	if (pipeline->commands)
 	{
@@ -48,4 +43,12 @@ void	ast_pipeline_repr(t_AST_PIPELINE *pipeline, int level)
 		while (pipeline->commands[++i])
 			ast_command_repr(pipeline->commands[i], level + 2);
 	}
+}
+
+void	ast_script_repr(t_AST_PIPELINE *pipeline)
+{
+	if (is_ast_command(pipeline))
+		ast_command_repr(pipeline->commands[0], 0);
+	else if (is_ast_pipeline(pipeline))
+		ast_pipeline_repr(pipeline, 0);
 }

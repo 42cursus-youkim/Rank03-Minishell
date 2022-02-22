@@ -13,4 +13,5 @@ void	ast_node_repr(t_AST_NODE *node, int level);
 
 void	ast_command_repr(t_AST_COMMAND *cmd, int level);
 void	ast_pipeline_repr(t_AST_PIPELINE *pipeline, int level);
+void	ast_script_repr(t_AST_PIPELINE *pipeline);
 #endif
