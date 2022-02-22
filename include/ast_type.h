@@ -43,11 +43,11 @@ typedef struct s_AST_COMMAND
 	t_AST_NODE	**suffixes;
 }	t_AST_COMMAND;
 
-typedef struct s_AST_PIPELINE
+typedef struct s_AST_SCRIPTS
 {
 	t_AST_COMMAND	**commands;
 	int				commands_len;
-}	t_AST_PIPELINE;
+}	t_AST_SCRIPTS;
 
 typedef	t_res(t_nodefunc_f)(t_AST_NODE *node);
 

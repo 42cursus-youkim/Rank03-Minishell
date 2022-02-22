@@ -7,7 +7,7 @@
 // 	i = -1;
 // }
 
-static void	child_proc(t_AST_PIPELINE *pipeline, t_shell *shell)
+static void	child_proc(t_AST_SCRIPTS *pipeline, t_shell *shell)
 {
 	// t_AST_COMMAND	*cmd;
 	// char			**envp;
@@ -45,7 +45,7 @@ static int	parent_proc(pid_t pid)
 	}
 }
 
-int	api_exec_cmd(t_AST_PIPELINE *pipeline, t_shell *shell)
+int	api_exec_cmd(t_AST_SCRIPTS *pipeline, t_shell *shell)
 {
 	pid_t	pid;
 

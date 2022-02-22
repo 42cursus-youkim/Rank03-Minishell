@@ -30,7 +30,7 @@ void	ast_command_repr(t_AST_COMMAND *cmd, int level)
 	}
 }
 
-void	ast_pipeline_repr(t_AST_PIPELINE *pipeline, int level)
+void	ast_pipeline_repr(t_AST_SCRIPTS *pipeline, int level)
 {
 	int			i;
 	const int	indent = level * INDENT_SIZE;
@@ -45,7 +45,7 @@ void	ast_pipeline_repr(t_AST_PIPELINE *pipeline, int level)
 	}
 }
 
-void	ast_script_repr(t_AST_PIPELINE *pipeline)
+void	ast_script_repr(t_AST_SCRIPTS *pipeline)
 {
 	if (is_ast_command(pipeline))
 		ast_command_repr(pipeline->commands[0], 0);

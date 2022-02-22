@@ -23,7 +23,7 @@ typedef enum e_exitcode
 /*
 ** < exec.c > */
 
-int		api_exec_cmd(t_AST_PIPELINE *pipeline, t_shell *shell);
+int		api_exec_cmd(t_AST_SCRIPTS *pipeline, t_shell *shell);
 /*
 ** < file.c > */
 

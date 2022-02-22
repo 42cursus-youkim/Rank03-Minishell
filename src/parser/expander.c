@@ -81,7 +81,7 @@ static t_res	commands_expansion(t_AST_COMMAND *command, t_dict *env)
 	return (OK);
 }
 
-t_res	expander(t_AST_PIPELINE *pipeline, t_dict *env)
+t_res	expander(t_AST_SCRIPTS *pipeline, t_dict *env)
 {
 	int		i;
 

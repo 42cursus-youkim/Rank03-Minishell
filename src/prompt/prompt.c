@@ -30,7 +30,7 @@ void	del_prompt(t_prompt *prompt)
 static void	prompt_run_line(char *line, t_shell *shell)
 {
 	t_token			*tokens;
-	t_AST_PIPELINE	*pipeline;
+	t_AST_SCRIPTS	*pipeline;
 
 	tokens = lexer(line);
 	free(line);
