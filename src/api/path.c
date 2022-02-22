@@ -44,7 +44,7 @@ char	**new_path(t_dict *env)
 	-> [14] "/Users/youkim/.brew/bin/echo"
 	...
 */
-char	**new_path_with_name(t_dict *env, char *name)
+char	**new_path_with_name(char *name, t_dict *env)
 {
 	int		i;
 	char	**new;

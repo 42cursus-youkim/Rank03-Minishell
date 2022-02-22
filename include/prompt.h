@@ -20,7 +20,7 @@ void	prompt_new_line(int status);
 /*
 ** < prompt.c > */
 
-void	prompt(void);
+void	prompt(t_dict *env);
 /*
 ** < util.c > */
 
