@@ -24,7 +24,7 @@ lexerV   := lexer scanner expansion tokenizer util util2 \
 parserV  := parser new1 new2 del util1 util2 expander
 promptV  := prompt interrupt util
 apiV     := shell exec pipe redirect \
-			signal path file util
+			signal path file util1 util2
 builtinV := env util
 treeV    := repr1 repr2
 

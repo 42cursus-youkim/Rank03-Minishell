@@ -22,9 +22,3 @@ void	receive_input_from_pipe(t_fd pipefd[PIPE_SIZE])
 	dup2(pipefd[PIPE_READ], STDIN_FILENO);
 }
 
-bool	is_file_exists(char *filename)
-{
-	struct stat	buffer;
-
-	return (stat(filename, &buffer) == OK);
-}

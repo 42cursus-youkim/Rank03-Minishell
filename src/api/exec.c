@@ -1,44 +1,24 @@
 #include "minishell.h"
 
-
-// char	**new_api_resolved_argv(t_AST_COMMAND *cmd, t_dict *env)
+// char	**new_command_to_argv(t_AST_COMMAND *cmd)
 // {
-// 	char	**argv;
+// 	int	i;
 
-// 	names = n
-
-// 	argv = new_arr(NULL);
+// 	i = -1;
 // }
-
-// /* FIXME:
-// 	char *argv[]
-// 	-> t_AST_COMMAND *cmd, t_dict *env
-// */
-// void	api_raw_exec(t_AST_COMMAND *cmd, t_dict *env)
-// {
-// 	char	**argv;
-// 	(void)env;
-
-// 	printf(HYEL "HAYO I'm child\n" END);
-// 	argv = new_api_resolved_argv(cmd, env);
-// 	char *envp[] = {NULL};
-// 	if (execve(argv[0], argv, envp) == OK)
-// 		exit(0);
-// 	printf(RED "Execve fail!\n" END);
-// 	exit(1);
-// }
-
 
 static void	child_proc(t_AST_PIPELINE *pipeline, t_shell *shell)
 {
-	t_AST_COMMAND	*cmd;
+	// t_AST_COMMAND	*cmd;
+	// char			**envp;
 	char			*executable;
 
+	// cmd = pipeline->commands[0];
+	// envp = new_env_to_envp(shell->env);
 	printf(HYEL "HAYO I'm child\n" END);
-	cmd = pipeline->commands[0];
-	executable = new_executable_from_env(
-			cmd->name->text, shell->env);
+	executable = new_executable_from_env("ls", shell->env);
 	printf("%s\n", executable);
+	execve(executable, (char *[]){NULL}, (char *[]){NULL});
 	free(executable);
 	del_ast_pipeline(pipeline);
 	printf(BYEL "Hmmmmmmm\n" END);
