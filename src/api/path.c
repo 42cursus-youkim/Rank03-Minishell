@@ -23,7 +23,7 @@ static char	**new_raw_path(t_dict *env)
 	return (new_str_split(pathstr, ':'));
 }
 
-char	**new_path(t_dict *env)
+static char	**new_path(t_dict *env)
 {
 	int		i;
 	char	**raw;
@@ -45,7 +45,7 @@ char	**new_path(t_dict *env)
 	-> [14] "/Users/youkim/.brew/bin/echo"
 	...
 */
-char	**new_path_with_name(char *name, t_dict *env)
+static char	**new_path_with_name(char *name, t_dict *env)
 {
 	int		i;
 	char	**new;
@@ -59,4 +59,23 @@ char	**new_path_with_name(char *name, t_dict *env)
 				path[i], name, NULL}, '\0'));
 	del_arr(path);
 	return (new);
+}
+
+char	*new_executable_from_env(char *file, t_dict *env)
+{
+	int		i;
+	char	**path;
+	char	*executable;
+
+	path = new_path_with_name(file, env);
+	i = -1;
+	while (path[++i])
+		if (is_file_exists(path[i]))
+			break ;
+	if (path[i])
+		executable = new_str(path[i]);
+	else
+		executable = NULL;
+	del_arr(path);
+	return (executable);
 }

@@ -32,15 +32,14 @@
 static void	child_proc(t_AST_PIPELINE *pipeline, t_shell *shell)
 {
 	t_AST_COMMAND	*cmd;
-	char			*name;
-	char			**names;
+	char			*executable;
 
 	printf(HYEL "HAYO I'm child\n" END);
 	cmd = pipeline->commands[0];
-	name = cmd->name->text;
-	names = new_path_with_name(name, shell->env);
-	ft_arr_print(names);
-	del_arr(names);
+	executable = new_executable_from_env(
+			cmd->name->text, shell->env);
+	printf("%s\n", executable);
+	free(executable);
 	del_ast_pipeline(pipeline);
 	printf(BYEL "Hmmmmmmm\n" END);
 	api_exit(shell, EXIT_SUCCESS);

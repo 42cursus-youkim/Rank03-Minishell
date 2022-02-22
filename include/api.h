@@ -31,8 +31,7 @@ t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect);
 /*
 ** < path.c > */
 
-char	**new_path(t_dict *env);
-char	**new_path_with_name(char *name, t_dict *env);
+char	*new_executable_from_env(char *file, t_dict *env);
 /*
 ** < redirect.c > */
 
@@ -54,4 +53,5 @@ bool	is_parent(pid_t pid);
 bool	is_child(pid_t pid);
 void	send_output_to_pipe(t_fd pipefd[PIPE_SIZE]);
 void	receive_input_from_pipe(t_fd pipefd[PIPE_SIZE]);
+bool	is_file_exists(char *filename);
 #endif
