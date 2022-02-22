@@ -3,4 +3,19 @@
 
 typedef int	t_fd;
 
+typedef struct s_prompt
+{
+	char	*user;
+	char	*ps1;
+	char	*ps2;
+	char	*line;
+}	t_prompt;
+
+typedef struct s_shell
+{
+	t_dict		*env;
+	t_prompt	prompt;
+	int			exitcode;
+}	t_shell;
+
 #endif

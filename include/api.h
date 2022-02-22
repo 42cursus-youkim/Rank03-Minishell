@@ -14,17 +14,16 @@ typedef enum e_procflag
 
 typedef enum e_exitcode
 {
-	EXITCODE_OK = 0,
-	EXITCODE_GENERAL_ERR = 1,
-	EXITCODE_BUILTIN_ERR = 2,
-	EXITCODE_FATAL_ERR_CAUSED_BY_SIGNAL = 128,
+	EXIT_BUILTIN_ERR = 2,
+	EXIT_FATAL_ERR_CAUSED_BY_SIGNAL = 128,
 }	t_exitcode;
+
 
 //@func
 /*
 ** < exec.c > */
 
-t_res	api_exec_cmd(t_AST_PIPELINE *pipeline, t_dict *env, t_prompt *prompt);
+int		api_exec_cmd(t_AST_PIPELINE *pipeline, t_shell *shell);
 /*
 ** < file.c > */
 
@@ -38,6 +37,11 @@ char	**new_path_with_name(char *name, t_dict *env);
 ** < redirect.c > */
 
 void	api_create_redirect(t_AST_NODE *redirect);
+/*
+** < shell.c > */
+
+void	shell_init(t_shell *shell, char *envp[]);
+void	del_shell(t_shell *shell);
 /*
 ** < signal.c > */
 

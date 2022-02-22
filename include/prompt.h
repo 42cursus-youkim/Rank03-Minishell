@@ -4,13 +4,6 @@
 # define SIGN "\001"
 # define EIGN "\002"
 
-typedef struct s_prompt
-{
-	char	*user;
-	char	*ps1;
-	char	*ps2;
-}	t_prompt;
-
 //@func
 /*
 ** < interrupt.c > */
@@ -20,8 +13,9 @@ void	prompt_new_line(int status);
 /*
 ** < prompt.c > */
 
+void	prompt_init(t_prompt *prompt);
 void	del_prompt(t_prompt *prompt);
-void	prompt(t_dict *env);
+void	shell_prompt(t_shell *shell);
 /*
 ** < util.c > */
 

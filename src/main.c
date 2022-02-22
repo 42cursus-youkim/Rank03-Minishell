@@ -2,12 +2,12 @@
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_dict	*env;
+	t_shell	shell;
 
 	(void)argc;
 	(void)argv;
-	env = new_env(envp);
-	prompt(env);
-	del_dict(env);
+	shell_init(&shell, envp);
+	shell_prompt(&shell);
+	del_shell(&shell);
 	return (0);
 }

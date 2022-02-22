@@ -7,7 +7,7 @@ static int	api_handle_signaled_status(int status)
 	if (sig == SIGQUIT)
 		ft_write(1, HRED "QUIT: 3\n" END);
 	printf("returns 128 + %d\n", sig);
-	return (EXITCODE_FATAL_ERR_CAUSED_BY_SIGNAL + sig);
+	return (EXIT_FATAL_ERR_CAUSED_BY_SIGNAL + sig);
 }
 
 int	api_handle_status(int status)
@@ -20,5 +20,5 @@ int	api_handle_status(int status)
 	else if (WIFSIGNALED(status))
 		return (api_handle_signaled_status(status));
 	else
-		return (EXITCODE_GENERAL_ERR);
+		return (EXIT_FAILURE);
 }

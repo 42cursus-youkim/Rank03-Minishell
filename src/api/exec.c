@@ -29,7 +29,7 @@
 // }
 
 
-static void	child_proc(t_AST_PIPELINE *pipeline, t_dict *env, t_prompt *prompt)
+static void	child_proc(t_AST_PIPELINE *pipeline, t_shell *shell)
 {
 	// t_AST_COMMAND	*cmd;
 	// char			*name;
@@ -38,12 +38,11 @@ static void	child_proc(t_AST_PIPELINE *pipeline, t_dict *env, t_prompt *prompt)
 	printf(HYEL "HAYO I'm child\n" END);
 	// cmd = pipeline->commands[0];
 	// name = cmd->name->text;
-	// names = new_path_with_name(name, env);
+	// names = new_path_with_name(name, shell->env);
 	// ft_arr_print(names);
 	// del_arr(names);
-	del_prompt(prompt);
 	del_ast_pipeline(pipeline);
-	del_dict(env);
+	del_shell(shell);
 	printf(BYEL "Hmmmmmmm\n" END);
 	exit(0);
 }
@@ -68,22 +67,15 @@ static int	parent_proc(pid_t pid)
 	}
 }
 
-/* FIXME:
-	char *argv[]
-	-> t_AST_COMMAND *cmd, t_dict *env
-*/
-t_res	api_exec_cmd(t_AST_PIPELINE *pipeline, t_dict *env, t_prompt *prompt)
+int	api_exec_cmd(t_AST_PIPELINE *pipeline, t_shell *shell)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (is_child(pid))
-		child_proc(pipeline, env, prompt);
+		child_proc(pipeline, shell);
 	else if (is_parent(pid))
-	{
-		parent_proc(pid);
-		return (OK);
-	}
+		return (parent_proc(pid));
 	else
 		printf(RED "fork error\n" END);
 	return (OK);

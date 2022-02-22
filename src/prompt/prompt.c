@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void	prompt_init(t_prompt *prompt)
+void	prompt_init(t_prompt *prompt)
 {
 	rl_catch_signals = 0;
 	signal(SIGINT, prompt_new_line);
@@ -27,30 +27,33 @@ void	del_prompt(t_prompt *prompt)
 	free(prompt->ps2);
 }
 
-static void	prompt_run_line(char *line, t_dict *env, t_prompt *prompt)
+static void	prompt_run_line(char *line, t_shell *shell)
 {
 	t_token			*tokens;
 	t_AST_PIPELINE	*pipeline;
-	(void)env;
+
 	tokens = lexer(line);
 	if (tokens)
 	{
-		pipeline = parser(tokens, env);
+		pipeline = parser(tokens, shell->env);
 		if (pipeline)
 		{
 			ast_script_repr(pipeline);
 			if (is_ast_command(pipeline))
-				api_exec_cmd(pipeline, env, prompt);
+				api_exec_cmd(pipeline, shell);
 			del_ast_pipeline(pipeline);
 		}
 	}
 	free(line);
 }
 
-static void	prompt_loop(t_prompt *prompt, t_dict *env)
+void	shell_prompt(t_shell *shell)
 {
-	char	*line;
+	char		*line;
+	t_prompt	*prompt;
 
+	prompt = &shell->prompt;
+	line = prompt->line;
 	while (true)
 	{
 		line = readline(prompt->ps1);
@@ -61,16 +64,7 @@ static void	prompt_loop(t_prompt *prompt, t_dict *env)
 		else if (!is_line_empty(line))
 		{
 			add_history(line);
-			prompt_run_line(line, env, prompt);
+			prompt_run_line(line, shell);
 		}
 	}
-}
-
-void	prompt(t_dict *env)
-{
-	t_prompt	prompt;
-
-	prompt_init(&prompt);
-	prompt_loop(&prompt, env);
-	del_prompt(&prompt);
 }
