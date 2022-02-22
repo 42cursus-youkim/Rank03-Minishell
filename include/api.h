@@ -40,6 +40,5 @@ void	api_exit(t_shell *shell, t_AST_SCRIPTS *scripts, int exitcode);
 /*
 ** < signal.c > */
 
-char	*bool_to_str(bool b);
 int		api_handle_status(int status);
 #endif

@@ -10,20 +10,11 @@ static int	api_handle_signaled_status(int status)
 	return (EXIT_FATAL_ERR_CAUSED_BY_SIGNAL + sig);
 }
 
-char	*bool_to_str(bool b)
-{
-	static char	*value[] = {
-		BRED "false" END,
-		HGRN "true" END};
-
-	return (value[b]);
-}
-
 int	api_handle_status(int status)
 {
-	printf("WIFEXITED(status): %s\n", bool_to_str(WIFEXITED(status)));
-	printf("WIFSIGNALED(status): %s\n", bool_to_str(WIFSIGNALED(status)));
-	printf("WTERMSIG(status): %s\n", bool_to_str(WTERMSIG(status)));
+	printf("WIFEXITED(status): %s\n", ft_bool_to_str(WIFEXITED(status)));
+	printf("WIFSIGNALED(status): %s\n", ft_bool_to_str(WIFSIGNALED(status)));
+	printf("WTERMSIG(status): %s\n", ft_bool_to_str(WTERMSIG(status)));
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
