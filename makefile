@@ -85,7 +85,7 @@ run: docs all
 
 leak: docs all cls
 	@$(call log, Y, 🧪 Running Leak Test)
-	@colour-valgrind $(VFLAGS) ./$(NAME)
+	@valgrind $(VFLAGS) ./$(NAME)
 
 supp: docs all cls
 	@$(call log, Y, Creating Leak Suppressions,...)
