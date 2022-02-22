@@ -24,7 +24,7 @@ typedef enum e_exitcode
 /*
 ** < exec.c > */
 
-t_res	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env);
+t_res	api_exec_cmd(t_AST_PIPELINE *pipeline, t_dict *env, t_prompt *prompt);
 /*
 ** < file.c > */
 

@@ -20,6 +20,7 @@ void	prompt_new_line(int status);
 /*
 ** < prompt.c > */
 
+void	del_prompt(t_prompt *prompt);
 void	prompt(t_dict *env);
 /*
 ** < util.c > */

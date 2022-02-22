@@ -29,16 +29,22 @@
 // }
 
 
-static void	child_proc(t_AST_COMMAND *cmd, t_dict *env)
+static void	child_proc(t_AST_PIPELINE *pipeline, t_dict *env, t_prompt *prompt)
 {
-	char	*text;
-	char	**names;
+	// t_AST_COMMAND	*cmd;
+	// char			*name;
+	// char			**names;
 
 	printf(HYEL "HAYO I'm child\n" END);
-	text = cmd->name->text;
-	names = new_path_with_name(text, env);
-	ft_arr_print(names);
-	del_arr(names);
+	// cmd = pipeline->commands[0];
+	// name = cmd->name->text;
+	// names = new_path_with_name(name, env);
+	// ft_arr_print(names);
+	// del_arr(names);
+	del_prompt(prompt);
+	del_ast_pipeline(pipeline);
+	del_dict(env);
+	printf(BYEL "Hmmmmmmm\n" END);
 	exit(0);
 }
 
@@ -66,14 +72,13 @@ static int	parent_proc(pid_t pid)
 	char *argv[]
 	-> t_AST_COMMAND *cmd, t_dict *env
 */
-t_res	api_exec_cmd(t_AST_COMMAND *cmd, t_dict *env)
+t_res	api_exec_cmd(t_AST_PIPELINE *pipeline, t_dict *env, t_prompt *prompt)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (is_child(pid))
-		child_proc(cmd, env);
-		// api_raw_exec_temp(cmd, NULL);
+		child_proc(pipeline, env, prompt);
 	else if (is_parent(pid))
 	{
 		parent_proc(pid);

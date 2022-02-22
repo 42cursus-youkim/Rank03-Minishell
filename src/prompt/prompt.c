@@ -21,17 +21,17 @@ static void	prompt_init(t_prompt *prompt)
 	- user: stores result of getenv(); should not be freed
 	- ps1, ps2: freed
 */
-static void	del_prompt(t_prompt *prompt)
+void	del_prompt(t_prompt *prompt)
 {
 	free(prompt->ps1);
 	free(prompt->ps2);
 }
 
-static void	prompt_run_line(char *line, t_dict *env)
+static void	prompt_run_line(char *line, t_dict *env, t_prompt *prompt)
 {
 	t_token			*tokens;
 	t_AST_PIPELINE	*pipeline;
-
+	(void)env;
 	tokens = lexer(line);
 	if (tokens)
 	{
@@ -40,7 +40,7 @@ static void	prompt_run_line(char *line, t_dict *env)
 		{
 			ast_script_repr(pipeline);
 			if (is_ast_command(pipeline))
-				api_exec_cmd(pipeline->commands[0], env);
+				api_exec_cmd(pipeline, env, prompt);
 			del_ast_pipeline(pipeline);
 		}
 	}
@@ -61,7 +61,7 @@ static void	prompt_loop(t_prompt *prompt, t_dict *env)
 		else if (!is_line_empty(line))
 		{
 			add_history(line);
-			prompt_run_line(line, env);
+			prompt_run_line(line, env, prompt);
 		}
 	}
 }
