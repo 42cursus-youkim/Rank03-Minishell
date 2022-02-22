@@ -48,7 +48,12 @@ static t_res	node_expansion(t_AST_NODE *node, t_dict *env)
 {
 	char	**text_split;
 
-	if (!node->expansions[0])
+	if (node->op == REDIR_HEREDOC)
+	{
+		del_ast_expansions(node->expansions);
+		node->expansions = NULL;
+	}
+	if (!node->expansions || !node->expansions[0])
 		return (UNSET);
 	text_split = new_arr((char *[]){NULL});
 	expansions_to_array(&text_split, node);

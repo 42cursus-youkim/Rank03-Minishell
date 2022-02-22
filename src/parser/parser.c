@@ -39,7 +39,7 @@ static t_AST_COMMAND	*command_parsing(t_token tokens[], int begin, int end)
 	int				suffix_i;
 
 	command_data_init(&data, tokens, begin, end);
-	command = new_command(tokens, data);
+	command = new_ast_command(tokens, data);
 	i = begin - 1;
 	prefix_i = 0;
 	suffix_i = 0;
