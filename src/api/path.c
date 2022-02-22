@@ -34,6 +34,7 @@ char	**new_path(t_dict *env)
 	i = -1;
 	while (raw[++i])
 		ft_arr_append_free(&path, new_path_resolved(raw[i], env));
+	del_arr(raw);
 	return (path);
 }
 
