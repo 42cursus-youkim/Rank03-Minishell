@@ -1,15 +1,5 @@
 #include "minishell.h"
 
-int	ast_nodes_len(t_AST_NODE *nodes[])
-{
-	int	i;
-
-	i = 0;
-	while (nodes[i])
-		i++;
-	return (i);
-}
-
 char	**new_argv_from_cmd(char *executable, t_AST_COMMAND *cmd)
 {
 	int			i;

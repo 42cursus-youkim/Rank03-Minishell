@@ -9,3 +9,13 @@ bool	is_ast_command(t_AST_SCRIPTS *pipeline)
 {
 	return (pipeline->commands_len == 1);
 }
+
+int	ast_nodes_len(t_AST_NODE *nodes[])
+{
+	int	i;
+
+	i = 0;
+	while (nodes[i])
+		i++;
+	return (i);
+}

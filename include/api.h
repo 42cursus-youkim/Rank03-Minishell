@@ -21,25 +21,16 @@ typedef enum e_exitcode
 
 //@func
 /*
-** < exec.c > */
-
-int		ast_nodes_len(t_AST_NODE *nodes[]);
-char	**new_argv_from_cmd(char *executable, t_AST_COMMAND *cmd);
-void	child_proc_exec(t_AST_SCRIPTS *scripts, t_shell *shell);
-int		api_exec_cmd(t_AST_SCRIPTS *scripts, t_shell *shell);
-/*
 ** < file.c > */
 
 t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect);
+bool	is_file_exists(char *filename);
+bool	is_executable_exists(char *file, t_dict *env);
 /*
 ** < path.c > */
 
 char	**new_names_from_path(char *name, t_dict *env);
 char	*new_executable_from_env(char *file, t_dict *env);
-/*
-** < redirect.c > */
-
-void	api_create_redirect(t_AST_NODE *redirect);
 /*
 ** < shell.c > */
 
@@ -49,17 +40,6 @@ void	api_exit(t_shell *shell, t_AST_SCRIPTS *scripts, int exitcode);
 /*
 ** < signal.c > */
 
+char	*bool_to_str(bool b);
 int		api_handle_status(int status);
-/*
-** < util1.c > */
-
-bool	is_parent(pid_t pid);
-bool	is_child(pid_t pid);
-void	send_output_to_pipe(t_fd pipefd[PIPE_SIZE]);
-void	receive_input_from_pipe(t_fd pipefd[PIPE_SIZE]);
-/*
-** < util2.c > */
-
-bool	is_file_exists(char *filename);
-bool	is_executable_exists(char *file, t_dict *env);
 #endif

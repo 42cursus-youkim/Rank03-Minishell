@@ -26,6 +26,7 @@
 # include "parser.h"
 # include "prompt.h"
 # include "api.h"
+# include "exec.h"
 # include "builtin.h"
 # include "tree.h"
 // # include "get_next_line.h"

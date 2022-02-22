@@ -52,4 +52,5 @@ void			command_data_init( t_command_data *data, t_token tokens[],
 
 bool			is_ast_pipeline(t_AST_SCRIPTS *pipeline);
 bool			is_ast_command(t_AST_SCRIPTS *pipeline);
+int				ast_nodes_len(t_AST_NODE *nodes[]);
 #endif
