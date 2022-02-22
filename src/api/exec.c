@@ -31,20 +31,19 @@
 
 static void	child_proc(t_AST_PIPELINE *pipeline, t_shell *shell)
 {
-	// t_AST_COMMAND	*cmd;
-	// char			*name;
-	// char			**names;
+	t_AST_COMMAND	*cmd;
+	char			*name;
+	char			**names;
 
 	printf(HYEL "HAYO I'm child\n" END);
-	// cmd = pipeline->commands[0];
-	// name = cmd->name->text;
-	// names = new_path_with_name(name, shell->env);
-	// ft_arr_print(names);
-	// del_arr(names);
+	cmd = pipeline->commands[0];
+	name = cmd->name->text;
+	names = new_path_with_name(name, shell->env);
+	ft_arr_print(names);
+	del_arr(names);
 	del_ast_pipeline(pipeline);
-	del_shell(shell);
 	printf(BYEL "Hmmmmmmm\n" END);
-	exit(0);
+	api_exit(shell, EXIT_SUCCESS);
 }
 
 static int	parent_proc(pid_t pid)

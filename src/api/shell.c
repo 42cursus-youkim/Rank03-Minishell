@@ -12,3 +12,9 @@ void	del_shell(t_shell *shell)
 	del_dict(shell->env);
 	del_prompt(&shell->prompt);
 }
+
+void	api_exit(t_shell *shell, int exitcode)
+{
+	del_shell(shell);
+	exit(exitcode);
+}

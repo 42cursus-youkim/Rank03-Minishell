@@ -33,18 +33,16 @@ static void	prompt_run_line(char *line, t_shell *shell)
 	t_AST_PIPELINE	*pipeline;
 
 	tokens = lexer(line);
-	if (tokens)
-	{
-		pipeline = parser(tokens, shell->env);
-		if (pipeline)
-		{
-			ast_script_repr(pipeline);
-			if (is_ast_command(pipeline))
-				api_exec_cmd(pipeline, shell);
-			del_ast_pipeline(pipeline);
-		}
-	}
 	free(line);
+	if (!tokens)
+		return ;
+	pipeline = parser(tokens, shell->env);
+	if (!pipeline)
+		return ;
+	ast_script_repr(pipeline);
+	if (is_ast_command(pipeline))
+		api_exec_cmd(pipeline, shell);
+	del_ast_pipeline(pipeline);
 }
 
 void	shell_prompt(t_shell *shell)

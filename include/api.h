@@ -42,6 +42,7 @@ void	api_create_redirect(t_AST_NODE *redirect);
 
 void	shell_init(t_shell *shell, char *envp[]);
 void	del_shell(t_shell *shell);
+void	api_exit(t_shell *shell, int exitcode);
 /*
 ** < signal.c > */
 
