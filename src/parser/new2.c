@@ -11,7 +11,7 @@ static t_AST_NODE	**new_prefixes_n_suffixes(int size)
 	return (new);
 }
 
-t_AST_COMMAND	*new_command(t_token tokens[], t_command_data data)
+t_AST_COMMAND	*new_ast_command(t_token tokens[], t_command_data data)
 {
 	t_AST_COMMAND	*new;
 

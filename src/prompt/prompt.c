@@ -35,7 +35,7 @@ static void	prompt_run_line(char *line, t_dict *env, t_prompt *prompt)
 	tokens = lexer(line);
 	if (tokens)
 	{
-		pipeline = parser(tokens);
+		pipeline = parser(tokens, env);
 		if (pipeline)
 		{
 			ast_script_repr(pipeline);

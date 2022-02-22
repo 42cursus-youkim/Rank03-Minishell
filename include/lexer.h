@@ -69,9 +69,9 @@ t_res		dollar_scan(t_list **list, char **buf, char *str, int *idx);
 /*
 ** < tokenizer.c > */
 
-t_AST_type	tokentype_check(t_scan_node *node);
 void		tokens_print(t_token tokens[]);
 void		del_tokens(t_token tokens[]);
+char		*new_quotes_remove(const char *str);
 t_token		*tokenizer(t_list *scan_list);
 /*
 ** < util.c > */
