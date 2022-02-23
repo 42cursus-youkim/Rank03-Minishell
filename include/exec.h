@@ -3,9 +3,12 @@
 
 //@func
 /*
-** < exec.c > */
+** < argv.c > */
 
 char	**new_argv_from_cmd(char *executable, t_AST_COMMAND *cmd);
+/*
+** < exec.c > */
+
 void	child_proc_exec(t_AST_SCRIPT *scripts, t_shell *shell);
 int		api_exec_cmd(t_AST_SCRIPT *scripts, t_shell *shell);
 /*
