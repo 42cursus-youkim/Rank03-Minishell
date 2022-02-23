@@ -15,7 +15,7 @@ typedef struct s_shell
 {
 	t_dict			*env;
 	t_prompt		prompt;
-	int				exitcode;
+	t_AST_SCRIPT	*script;
 }	t_shell;
 
 #endif

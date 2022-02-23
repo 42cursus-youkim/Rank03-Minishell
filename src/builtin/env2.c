@@ -1,5 +1,10 @@
 #include "minishell.h"
 
+void	env_set_exitcode(t_dict *env, int exitcode)
+{
+	ft_str_replace(&env->exitcode_str, new_itoa(exitcode));
+}
+
 void	env_set(t_dict *env, char *str)
 {
 	int		eq_idx;
@@ -20,17 +25,6 @@ char	*env_get(t_dict *env, char *key)
 	return (dict_get_default(env, key, ""));
 }
 
-t_dict	*new_env(char *envp[])
-{
-	int		i;
-	t_dict	*env;
-
-	i = -1;
-	env = new_dict(free);
-	while (envp[++i])
-		env_set(env, envp[i]);
-	return (env);
-}
 
 void	env_print(t_dict *env)
 {
@@ -49,25 +43,4 @@ void	env_print(t_dict *env)
 			item->key, (char *)item->value);
 	}
 	free(items);
-}
-
-char	**new_env_to_envp(t_dict *env)
-{
-	int		i;
-	t_ditem	*item;
-	char	**envp;
-
-	envp = ft_calloc(sizeof(char *), env->size);
-	if (!envp)
-		return (NULL);
-	i = -1;
-	while (++i < env->capacity)
-	{
-		item = env->items[i];
-		if (!item)
-			continue ;
-		envp[item->order] = new_str_join((char *[]){
-				item->key, item->value, NULL}, '=');
-	}
-	return (envp);
 }
