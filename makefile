@@ -13,17 +13,18 @@ LIBFT    := lib/libft.a
 # ===== Test & Debugging =====
 DFLAGS	 :=  -g #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
 VFLAGS   := --leak-check=full --show-leak-kinds=all \
-			--track-origins=yes
+			--track-origins=yes --suppressions=./supp.txt
 HGEN     := hgen
 
 # ===== Packages =====
-PKGS     := prompt lexer parser api builtin tree
+PKGS     := prompt lexer parser exec api builtin tree
 
 lexerV   := lexer scanner expansion tokenizer util util2 \
 			scanner_list scanner_util scanner_util2 scanner_util3
-parserV  := parser new1 new2 del util expander
+parserV  := parser new1 new2 del util1 util2 expander
 promptV  := prompt interrupt util
-apiV     := exec pipe signal path file redirect util
+apiV     := shell signal path file
+execV    := exec pipe redirect argv util
 builtinV := env util
 treeV    := repr1 repr2
 
@@ -85,11 +86,13 @@ run: docs all
 
 leak: docs all cls
 	@$(call log, Y, 🧪 Running Leak Test)
-	@colour-valgrind $(VFLAGS) ./$(NAME)
+	@valgrind $(VFLAGS) ./$(NAME)
 
 supp: docs all cls
 	@$(call log, Y, Creating Leak Suppressions,...)
-	@valgrind $(VFLAGS) --gen-suppressions=all ./$(NAME)
+	@valgrind $(VFLAGS) \
+		--log-file=supp2.txt\
+		--gen-suppressions=all ./$(NAME)
 
 .PHONY: all re clean fclean test red docs $(LIBFT)
 

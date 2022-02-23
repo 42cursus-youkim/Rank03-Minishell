@@ -25,6 +25,7 @@ typedef struct s_ditem
 
 typedef struct s_dict
 {
+	char	*exitcode_str;
 	int		size;
 	int		capacity;
 	t_ditem	**items;

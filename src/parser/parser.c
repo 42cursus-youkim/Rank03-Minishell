@@ -78,12 +78,12 @@ static t_res	command_parsing_with_pipe(
 	return (OK);
 }
 
-t_AST_PIPELINE	*parser(t_token tokens[], t_dict *env)
+t_AST_SCRIPT	*parser(t_token tokens[], t_dict *env)
 {
 	int				tokens_size;
 	const int		pipe_count = tokens_n_pipeline_count(&tokens_size, tokens);
 	const int		commands_len = commands_size(pipe_count);
-	t_AST_PIPELINE	*pipeline;
+	t_AST_SCRIPT	*script;
 	t_AST_COMMAND	**commands;
 
 	commands = ft_calloc(sizeof(t_AST_COMMAND *), commands_len);
@@ -96,8 +96,8 @@ t_AST_PIPELINE	*parser(t_token tokens[], t_dict *env)
 		commands[0] = command_parsing(tokens, 0, tokens_size);
 	else
 		command_parsing_with_pipe(commands, tokens);
-	pipeline = new_ast_pipeline(commands, commands_len);
-	expander(pipeline, env);
+	script = new_ast_script(commands, commands_len);
+	expander(script, env);
 	del_tokens(tokens);
-	return (pipeline);
+	return (script);
 }

@@ -19,14 +19,14 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# include "minishell_type.h"
-
 # include "ast_type.h"
+# include "minishell_type.h"
 
 # include "lexer.h"
 # include "parser.h"
 # include "prompt.h"
 # include "api.h"
+# include "exec.h"
 # include "builtin.h"
 # include "tree.h"
 // # include "get_next_line.h"

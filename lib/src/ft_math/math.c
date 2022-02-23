@@ -47,3 +47,12 @@ char	*new_itoa(int n)
 	}
 	return (str);
 }
+
+char	*ft_bool_to_str(bool b)
+{
+	static char	*value[] = {
+		BRED "false" END,
+		HGRN "true" END};
+
+	return (value[b]);
+}

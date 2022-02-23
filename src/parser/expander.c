@@ -61,7 +61,7 @@ static t_res	node_expansion(t_AST_NODE *node, t_dict *env)
 	return (OK);
 }
 
-static t_res	commands_expansion(t_AST_COMMAND *command, t_dict *env)
+t_res	commands_expansion(t_AST_COMMAND *command, t_dict *env)
 {
 	int	i;
 
@@ -81,12 +81,12 @@ static t_res	commands_expansion(t_AST_COMMAND *command, t_dict *env)
 	return (OK);
 }
 
-t_res	expander(t_AST_PIPELINE *pipeline, t_dict *env)
+t_res	expander(t_AST_SCRIPT *script, t_dict *env)
 {
 	int		i;
 
 	i = -1;
-	while (pipeline->commands[++i])
-		commands_expansion(pipeline->commands[i], env);
+	while (script->commands[++i])
+		commands_expansion(script->commands[i], env);
 	return (OK);
 }

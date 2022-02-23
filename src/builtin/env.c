@@ -15,6 +15,8 @@ void	env_set(t_dict *env, char *str)
 
 char	*env_get(t_dict *env, char *key)
 {
+	if (is_str_equal(key, "?"))
+		return (env->exitcode_str);
 	return (dict_get_default(env, key, ""));
 }
 
@@ -49,7 +51,7 @@ void	env_print(t_dict *env)
 	free(items);
 }
 
-char	**new_arr_env(t_dict *env)
+char	**new_env_to_envp(t_dict *env)
 {
 	int		i;
 	t_ditem	*item;

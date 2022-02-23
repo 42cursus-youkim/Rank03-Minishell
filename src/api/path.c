@@ -23,7 +23,7 @@ static char	**new_raw_path(t_dict *env)
 	return (new_str_split(pathstr, ':'));
 }
 
-char	**new_path(t_dict *env)
+static char	**new_path(t_dict *env)
 {
 	int		i;
 	char	**raw;
@@ -34,6 +34,7 @@ char	**new_path(t_dict *env)
 	i = -1;
 	while (raw[++i])
 		ft_arr_append_free(&path, new_path_resolved(raw[i], env));
+	del_arr(raw);
 	return (path);
 }
 
@@ -44,7 +45,7 @@ char	**new_path(t_dict *env)
 	-> [14] "/Users/youkim/.brew/bin/echo"
 	...
 */
-char	**new_path_with_name(t_dict *env, char *name)
+char	**new_names_from_path(char *name, t_dict *env)
 {
 	int		i;
 	char	**new;
