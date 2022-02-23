@@ -32,3 +32,13 @@ bool	is_multi_expansions(t_expansion_scan_info info, int i)
 		return (true);
 	return (false);
 }
+
+t_res	free_arr_n_return(char *arr[], t_res result)
+{
+	int	i;
+
+	i = -1;
+	while (arr[++i])
+		free(arr[i]);
+	return (result);
+}

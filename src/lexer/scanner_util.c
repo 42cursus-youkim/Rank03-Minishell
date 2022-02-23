@@ -45,15 +45,42 @@ bool	is_brace_open(char *str)
 	return (open);
 }
 
+t_res	list_element_create(
+	t_list **element, char *buf, t_AST_expansion **expansions)
+{
+	char		*str;
+	t_scan_node	*content;
+
+	*element = NULL;
+	str = new_str(buf);
+	if (!str)
+		return (error_msg_return(MALLOC_ERROR_MSG));
+	content = new_scan_node(str, expansions);
+	if (!content)
+		return (free_n_return(&str, error_msg_return(MALLOC_ERROR_MSG)));
+	*element = new_list(content);
+	if (!element)
+	{
+		del_scan_node(content);
+		return (error_msg_return(MALLOC_ERROR_MSG));
+	}
+	return (OK);
+}
+
 t_res	buf_to_list(t_list **list, char **buf)
 {
 	const int	buf_len = ft_strlen(*buf);
+	t_list		*list_element;
 
 	if (buf_len == 0)
 		return (UNSET);
-	ft_list_append(list, new_list(new_scan_node(new_str(*buf), NULL)));
+	if (list_element_create(&list_element, *buf, NULL) == ERR)
+		return (free_n_return(buf, ERR));
+	ft_list_append(list, list_element);
 	free(*buf);
 	*buf = new_str("");
+	if (!*buf)
+		return (error_msg_return(MALLOC_ERROR_MSG));
 	return (OK);
 }
 
@@ -64,7 +91,8 @@ t_res	whitespace_scan(t_list **list, char **buf, char *str, int *idx)
 	i = *idx;
 	if (is_whitespace(str[i]) && !is_quotes_open(NULL, *buf))
 	{
-		buf_to_list(list, buf);
+		if (buf_to_list(list, buf) == ERR)
+			return (ERR);
 		while (is_whitespace(str[++i]))
 			;
 		*idx = --i;

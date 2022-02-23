@@ -8,6 +8,11 @@ t_AST_expansion	*new_ast_expansion(char *parameter, int begin, int end)
 	if (!expansion)
 		return (NULL);
 	expansion->parameter = new_str(parameter);
+	if (!expansion->parameter)
+	{
+		free(expansion);
+		return (NULL);
+	}
 	expansion->begin = begin;
 	expansion->end = end;
 	return (expansion);
@@ -25,7 +30,13 @@ t_AST_expansion	**new_ast_expansions(t_AST_expansion *expansions[])
 	{
 		i = -1;
 		while (expansions[++i])
-			expansions_append(&new, expansions[i]);
+		{
+			if (expansions_append(&new, expansions[i]) == ERR)
+			{
+				del_ast_expansions(new);
+				return (NULL);
+			}
+		}
 	}
 	return (new);
 }
@@ -60,17 +71,3 @@ t_AST_NODE	*new_ast_redirect(
 	node->type = REDIRECT;
 	return (node);
 }
-
-// t_AST_COMMAND	*new_ast_command(
-// 	t_AST_NODE *name, t_AST_NODE *prefixes[], t_AST_NODE *suffixes[])
-// {
-// 	t_AST_COMMAND	*new;
-
-// 	new = malloc(sizeof(t_AST_COMMAND));
-// 	if (!new)
-// 		return (NULL);
-// 	new->name = name;
-// 	new->prefixes = prefixes;
-// 	new->suffixes = suffixes;
-// 	return (new);
-// }

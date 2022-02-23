@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static t_res	free_n_return(char **str, t_res result)
+t_res	free_n_return(char **str, t_res result)
 {
 	free(*str);
 	return (result);
@@ -8,36 +8,55 @@ static t_res	free_n_return(char **str, t_res result)
 
 static t_res	error_unclosed(char c, char **buf)
 {
-	printf(BRED "minishell: unclosed quote(%c): ", c);
-	printf("multiline is not supported :(\n" END);
-	return (free_n_return(buf, ERR));
+	char	*quote_str;
+
+	quote_str = (char []){'(', c, ')', ':', ' ', '\0'};
+	return (free_n_return(buf, error_msg_return((char *[]){
+				MINISHELL,
+				QUOTE_ERROR,
+				quote_str,
+				MULTILINE_ERROR,
+				END,
+				NULL})));
+}
+
+static t_res	scan_last_check(t_list **scan_list, char **buf)
+{
+	char	last_quote;
+
+	if (is_quotes_open(&last_quote, *buf))
+		return (error_unclosed(last_quote, buf));
+	if (buf_to_list(scan_list, buf) == ERR)
+		return (ERR);
+	free(*buf);
+	return (OK);
 }
 
 static t_res	scanner_loop(t_list **scan_list, char *line, char **buf, int *i)
 {
 	t_res	scan_res;
-	char	last_quote;
 
 	while (line[++*i])
 	{
-		if (whitespace_scan(scan_list, buf, line, i) == OK)
+		scan_res = whitespace_scan(scan_list, buf, line, i);
+		if (scan_res == OK)
 			continue ;
+		if (scan_res == ERR)
+			return (ERR);
 		scan_res = dollar_scan(scan_list, buf, line, i);
 		if (scan_res == OK)
 			continue ;
 		if (scan_res == ERR)
-			return (free_n_return(buf, ERR));
+			return (ERR);
 		scan_res = metachar_scan(scan_list, buf, line, i);
 		if (scan_res == OK)
 			continue ;
 		if (scan_res == ERR)
-			return (free_n_return(buf, ERR));
-		ft_str_append(buf, line[*i]);
+			return (ERR);
+		if (ft_str_append(buf, line[*i]) == ERR)
+			return (free_n_return(buf, error_msg_return(MALLOC_ERROR_MSG)));
 	}
-	if (is_quotes_open(&last_quote, *buf))
-		return (error_unclosed(last_quote, buf));
-	buf_to_list(scan_list, buf);
-	return (free_n_return(buf, OK));
+	return (scan_last_check(scan_list, buf));
 }
 
 t_res	scanner(t_list **scan_list, char *line)
@@ -46,6 +65,8 @@ t_res	scanner(t_list **scan_list, char *line)
 	int		i;
 
 	buf = new_str("");
+	if (!buf)
+		return (error_msg_return(MALLOC_ERROR_MSG));
 	i = -1;
 	return (scanner_loop(scan_list, line, &buf, &i));
 }
