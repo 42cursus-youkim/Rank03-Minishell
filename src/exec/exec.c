@@ -2,18 +2,10 @@
 
 void	child_proc_exec(t_AST_COMMAND *cmd, t_shell *shell)
 {
-	char			**argv;
-	char			**envp;
-	char			*executable;
+	t_context	context;
 
-	executable = new_executable_from_env(cmd->name->text, shell->env);
-	argv = new_argv_from_cmd(executable, cmd);
-	envp = new_env_to_envp(shell->env);
-	if (execve(executable, argv, envp) == OK)
-		return ;
-	del_arr(envp);
-	del_arr(argv);
-	free(executable);
+	context_init(&context, cmd, shell->env);
+	context_run_and_free(&context);
 	api_exit(shell, EXIT_FAILURE);
 }
 

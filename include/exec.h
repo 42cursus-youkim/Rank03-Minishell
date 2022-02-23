@@ -7,7 +7,7 @@ typedef struct s_context
 	t_fd	io_output;
 	char	*executable;
 	char	**argv;
-	char	**env;
+	char	**envp;
 }	t_context;
 
 //@func
@@ -15,6 +15,11 @@ typedef struct s_context
 ** < argv.c > */
 
 char	**new_argv_from_cmd(char *executable, t_AST_COMMAND *cmd);
+/*
+** < context.c > */
+
+void	context_init(t_context *context, t_AST_COMMAND *cmd, t_dict *env);
+t_res	context_run_and_free(t_context *context);
 /*
 ** < exec.c > */
 
