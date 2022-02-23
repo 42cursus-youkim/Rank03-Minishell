@@ -42,9 +42,6 @@ SRC      := $(call choose_modules, $(PKGS))
 OBJ      := $(SRC:%.c=%.o)
 
 # ===== Rules =====
-$(LIBFT):
-	@make --no-print-directory all -C lib/ DFLAGS="$(DFLAGS)"
-
 %.o: %.c
 	@printf "$(Y)%-10s$(WU)$(<F)$(R) -> $(E)$(@F)\n" [$(subst src/,,$(*D))]
 	@$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
@@ -52,6 +49,9 @@ $(LIBFT):
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(INC) $(LIB) $^ -o $@
 	@$(call log, V, 🚀 linked with flag $(R)$(DFLAGS)$(E)$(CFLAGS))
+
+$(LIBFT):
+	@make --no-print-directory all -C lib/ DFLAGS="$(DFLAGS)"
 
 all: $(NAME)
 
@@ -94,7 +94,7 @@ supp: docs all cls
 		--log-file=supp2.txt\
 		--gen-suppressions=all ./$(NAME)
 
-.PHONY: all re clean fclean test red docs $(LIBFT)
+.PHONY: $(NAME) all re clean fclean test red docs $(LIBFT)
 
 # ===== Colors =====
 cls:
