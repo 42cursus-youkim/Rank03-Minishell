@@ -15,6 +15,8 @@ void	env_set(t_dict *env, char *str)
 
 char	*env_get(t_dict *env, char *key)
 {
+	if (is_str_equal(key, "?"))
+		return (env->exitcode_str);
 	return (dict_get_default(env, key, ""));
 }
 

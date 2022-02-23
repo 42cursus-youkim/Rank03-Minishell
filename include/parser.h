@@ -15,11 +15,12 @@ typedef struct s_command_data
 void			del_ast_expansions(t_AST_expansion *expansions[]);
 void			del_ast_node(t_AST_NODE *node);
 void			del_ast_command(t_AST_COMMAND *command);
-void			del_ast_pipeline(t_AST_SCRIPTS *pipeline);
+void			del_ast_script(t_AST_SCRIPT *script);
 /*
 ** < expander.c > */
 
-t_res			expander(t_AST_SCRIPTS *pipeline, t_dict *env);
+t_res			commands_expansion(t_AST_COMMAND *command, t_dict *env);
+t_res			expander(t_AST_SCRIPT *script, t_dict *env);
 /*
 ** < new1.c > */
 
@@ -33,12 +34,11 @@ t_AST_NODE		*new_ast_redirect( const char *text,
 ** < new2.c > */
 
 t_AST_COMMAND	*new_ast_command(t_token tokens[], t_command_data data);
-t_AST_SCRIPTS	*new_ast_pipeline(t_AST_COMMAND *commands[],
-					int commands_len);
+t_AST_SCRIPT	*new_ast_script(t_AST_COMMAND *commands[], int commands_len);
 /*
 ** < parser.c > */
 
-t_AST_SCRIPTS	*parser(t_token tokens[], t_dict *env);
+t_AST_SCRIPT	*parser(t_token tokens[], t_dict *env);
 /*
 ** < util1.c > */
 
@@ -50,7 +50,7 @@ void			command_data_init( t_command_data *data, t_token tokens[],
 /*
 ** < util2.c > */
 
-bool			is_ast_pipeline(t_AST_SCRIPTS *pipeline);
-bool			is_ast_command(t_AST_SCRIPTS *pipeline);
+bool			is_ast_pipeline(t_AST_SCRIPT *script);
+bool			is_ast_command(t_AST_SCRIPT *script);
 int				ast_nodes_len(t_AST_NODE *nodes[]);
 #endif

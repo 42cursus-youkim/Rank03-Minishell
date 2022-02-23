@@ -18,7 +18,7 @@ char	**new_argv_from_cmd(char *executable, t_AST_COMMAND *cmd)
 	return (argv);
 }
 
-void	child_proc_exec(t_AST_SCRIPTS *scripts, t_shell *shell)
+void	child_proc_exec(t_AST_SCRIPT *scripts, t_shell *shell)
 {
 	t_AST_COMMAND	*cmd;
 	char			**argv;
@@ -37,7 +37,7 @@ void	child_proc_exec(t_AST_SCRIPTS *scripts, t_shell *shell)
 	api_exit(shell, scripts, EXIT_FAILURE);
 }
 
-static void	child_proc(t_AST_SCRIPTS *scripts, t_shell *shell)
+static void	child_proc(t_AST_SCRIPT *scripts, t_shell *shell)
 {
 	t_AST_COMMAND	*cmd;
 	char			*text;
@@ -80,7 +80,7 @@ static int	parent_proc(pid_t pid, t_shell *shell)
 	}
 }
 
-int	api_exec_cmd(t_AST_SCRIPTS *scripts, t_shell *shell)
+int	api_exec_cmd(t_AST_SCRIPT *scripts, t_shell *shell)
 {
 	pid_t	pid;
 

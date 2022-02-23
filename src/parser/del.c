@@ -45,13 +45,13 @@ void	del_ast_command(t_AST_COMMAND *command)
 	free(command);
 }
 
-void	del_ast_pipeline(t_AST_SCRIPTS *pipeline)
+void	del_ast_script(t_AST_SCRIPT *script)
 {
 	int	i;
 
 	i = -1;
-	while (pipeline->commands[++i])
-		del_ast_command(pipeline->commands[i]);
-	free(pipeline->commands);
-	free(pipeline);
+	while (script->commands[++i])
+		del_ast_command(script->commands[i]);
+	free(script->commands);
+	free(script);
 }

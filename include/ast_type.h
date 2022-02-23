@@ -47,7 +47,7 @@ typedef struct s_AST_SCRIPTS
 {
 	t_AST_COMMAND	**commands;
 	int				commands_len;
-}	t_AST_SCRIPTS;
+}	t_AST_SCRIPT;
 
 typedef	t_res(t_nodefunc_f)(t_AST_NODE *node);
 

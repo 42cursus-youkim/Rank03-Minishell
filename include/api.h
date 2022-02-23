@@ -36,7 +36,7 @@ char	**new_names_from_path(char *name, t_dict *env);
 
 void	shell_init(t_shell *shell, char *envp[]);
 void	del_shell(t_shell *shell);
-void	api_exit(t_shell *shell, t_AST_SCRIPTS *scripts, int exitcode);
+void	api_exit(t_shell *shell, t_AST_SCRIPT *scripts, int exitcode);
 /*
 ** < signal.c > */
 

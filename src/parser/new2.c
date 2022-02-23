@@ -28,14 +28,14 @@ t_AST_COMMAND	*new_ast_command(t_token tokens[], t_command_data data)
 	return (new);
 }
 
-t_AST_SCRIPTS	*new_ast_pipeline(t_AST_COMMAND *commands[], int commands_len)
+t_AST_SCRIPT	*new_ast_script(t_AST_COMMAND *commands[], int commands_len)
 {
-	t_AST_SCRIPTS	*pipeline;
+	t_AST_SCRIPT	*script;
 
-	pipeline = malloc(sizeof(t_AST_SCRIPTS));
-	if (!pipeline)
+	script = malloc(sizeof(t_AST_SCRIPT));
+	if (!script)
 		return (NULL);
-	pipeline->commands = commands;
-	pipeline->commands_len = commands_len;
-	return (pipeline);
+	script->commands = commands;
+	script->commands_len = commands_len;
+	return (script);
 }
