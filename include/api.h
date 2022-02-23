@@ -18,7 +18,6 @@ typedef enum e_exitcode
 	EXIT_FATAL_ERR_CAUSED_BY_SIGNAL = 128,
 }	t_exitcode;
 
-
 //@func
 /*
 ** < file.c > */
@@ -34,9 +33,11 @@ char	**new_names_from_path(char *name, t_dict *env);
 /*
 ** < shell.c > */
 
+void	shell_clear_script(t_shell *shell);
+void	shell_replace_script(t_shell *shell, t_AST_SCRIPT *script);
 void	shell_init(t_shell *shell, char *envp[]);
 void	del_shell(t_shell *shell);
-void	api_exit(t_shell *shell, t_AST_SCRIPT *scripts, int exitcode);
+void	api_exit(t_shell *shell, int exitcode);
 /*
 ** < signal.c > */
 

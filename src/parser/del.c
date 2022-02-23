@@ -45,6 +45,9 @@ void	del_ast_command(t_AST_COMMAND *command)
 	free(command);
 }
 
+/*	avoid using it alone!
+	should be only called by t_shell methods
+*/
 void	del_ast_script(t_AST_SCRIPT *script)
 {
 	int	i;
