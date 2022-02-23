@@ -24,7 +24,8 @@ static bool	is_redirect_token_valid(t_AST_type type[], char *str)
 		printf("`%s'\n" END, str);
 		return (false);
 	}
-	if (type[1] == REDIRECT && type[2] == TYPE_END)
+	if ((type[0] == REDIRECT && type[1] == TYPE_END)
+		|| (type[1] == REDIRECT && type[2] == TYPE_END))
 	{
 		printf(BRED
 			"minishell: syntax error near unexpected token `newline'\n" END);
@@ -33,25 +34,30 @@ static bool	is_redirect_token_valid(t_AST_type type[], char *str)
 	return (true);
 }
 
+static void	type_arr_init(t_AST_type type[3], t_token tokens[], int i)
+{
+	if (!i)
+		type[0] = TYPE_START;
+	else
+		type[0] = tokens[i - 1].type;
+	type[1] = tokens[i].type;
+	if (tokens[i + 1].text)
+		type[2] = tokens[i + 1].type;
+	else
+		type[2] = TYPE_END;
+}
+
 static bool	is_tokens_valid(t_token tokens[])
 {
 	int			i;
 	t_AST_type	type[3];
 
-	i = -1;
-	if (tokens[++i].type == PIPELINE)
-	{
-		printf(BRED "minishell: syntax error near unexpected token `|'\n" END);
+	if (!tokens)
 		return (false);
-	}
+	i = -1;
 	while (tokens[++i].text)
 	{
-		type[0] = tokens[i - 1].type;
-		type[1] = tokens[i].type;
-		if (tokens[i + 1].text)
-			type[2] = tokens[i + 1].type;
-		else
-			type[2] = TYPE_END;
+		type_arr_init(type, tokens, i);
 		if (!is_pipeline_token_valid(type)
 			|| !is_redirect_token_valid(type, tokens[i].text))
 			return (false);
