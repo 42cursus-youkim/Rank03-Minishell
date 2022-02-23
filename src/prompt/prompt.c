@@ -44,6 +44,7 @@ static void	prompt_run_line(char *line, t_shell *shell)
 	if (is_ast_command(shell->script))
 		api_exec_cmd_at(shell, 0);
 	shell_clear_script(shell);
+	printf("exit status in env: %s\n", env_get(shell->env, "?"));
 }
 
 void	shell_prompt(t_shell *shell)

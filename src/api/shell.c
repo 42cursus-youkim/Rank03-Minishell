@@ -23,7 +23,7 @@ void	shell_init(t_shell *shell, char *envp[])
 
 void	del_shell(t_shell *shell)
 {
-	del_dict(shell->env);
+	del_env(shell->env);
 	del_prompt(&shell->prompt);
 	shell_clear_script(shell);
 }

@@ -33,7 +33,7 @@ static void	child_proc(t_shell *shell, int index)
 	}
 }
 
-static int	parent_proc(pid_t pid)
+static int	parent_proc(pid_t pid, t_dict *env)
 {
 	int	status;
 	int	exitcode;
@@ -41,6 +41,7 @@ static int	parent_proc(pid_t pid)
 	printf(HGRN "HAYO I'm Parent process\n" END);
 	waitpid(pid, &status, 0);
 	exitcode = api_handle_status(status);
+	env_set_exitcode(env, exitcode);
 	if (exitcode == OK)
 	{
 		printf(BGRN "HAYO child is successfully dead!\n" END);
@@ -61,7 +62,7 @@ int	api_exec_cmd_at(t_shell *shell, int index)
 	if (is_child(pid))
 		child_proc(shell, index);
 	else if (is_parent(pid))
-		return (parent_proc(pid));
+		return (parent_proc(pid, shell->env));
 	else
 		printf(RED "fork error\n" END);
 	return (OK);
