@@ -14,6 +14,8 @@ int	ast_nodes_len(t_AST_NODE *nodes[])
 {
 	int	i;
 
+	if (!nodes)
+		return (ERR);
 	i = 0;
 	while (nodes[i])
 		i++;
