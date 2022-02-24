@@ -29,6 +29,7 @@
 # include "exec.h"
 # include "builtin.h"
 # include "tree.h"
+# include "error.h"
 // # include "get_next_line.h"
 
 #endif

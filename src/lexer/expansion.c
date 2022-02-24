@@ -29,6 +29,11 @@ t_res	expansions_append(t_AST_expansion **parr[], t_AST_expansion *element)
 				(*parr)[i]->parameter, (*parr)[i]->begin, (*parr)[i]->end);
 	new[i] = new_ast_expansion(
 			element->parameter, element->begin, element->end);
+	if (!new[i])
+	{
+		del_ast_expansions(new);
+		return (ERR);
+	}
 	del_ast_expansions(*parr);
 	*parr = new;
 	return (OK);
