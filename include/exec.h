@@ -19,7 +19,7 @@ char	**new_argv_from_cmd(char *executable, t_AST_COMMAND *cmd);
 ** < context.c > */
 
 void	context_init(t_context *context, t_AST_COMMAND *cmd, t_dict *env);
-t_res	context_run_and_free(t_context *context);
+void	del_context(t_context *context);
 /*
 ** < exec.c > */
 
