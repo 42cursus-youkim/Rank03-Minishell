@@ -24,5 +24,8 @@ t_res	expansion_location_init(t_expansion_scan_info *info, int *i)
 	if (ft_str_extend(info->buf, (char []){'$', info->str[++*i], '\0'}) == ERR)
 		return (free_n_return(info->buf, error_msg_return(MALLOC_ERROR_MSG)));
 	info->end = -1;
+	if (info->str[*i] == '?')
+		if (expansions_update_with_brace(info, *i, false) == ERR)
+			return (ERR);
 	return (OK);
 }
