@@ -29,3 +29,14 @@ t_res	expansion_location_init(t_expansion_scan_info *info, int *i)
 			return (ERR);
 	return (OK);
 }
+
+bool	is_multi_expansions(t_expansion_scan_info info, int i)
+{
+	char	last_quote;
+
+	if (info.str[i] == '$' && is_1stchar_valid(info.str[i + 1])
+		&& (!is_quotes_open(&last_quote, *info.buf) || last_quote != '\'')
+		&& !is_brace_open(*info.buf))
+		return (true);
+	return (false);
+}

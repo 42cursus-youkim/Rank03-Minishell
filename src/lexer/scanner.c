@@ -1,11 +1,5 @@
 #include "minishell.h"
 
-t_res	free_n_return(char **str, t_res result)
-{
-	free(*str);
-	return (result);
-}
-
 static t_res	error_unclosed(char c, char **buf)
 {
 	char	*quote_str;
