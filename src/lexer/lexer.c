@@ -12,8 +12,8 @@ static bool	is_pipeline_token_valid(t_AST_type type[])
 	{
 		error_msg_return(
 			(char *[]){
-				BRED, MINISHELL, SYNTAX_ERROR, " `|'\n",
-				MULTILINE_ERROR, END, NULL});
+			BRED, MINISHELL, SYNTAX_ERROR, " `|'\n",
+			MULTILINE_ERROR, END, NULL});
 		return (false);
 	}
 	return (true);
@@ -25,7 +25,7 @@ static bool	is_redirect_token_valid(t_AST_type type[], char *str)
 	{
 		error_msg_return(
 			(char *[]){
-				BRED, MINISHELL, SYNTAX_ERROR, " `", str, "'\n", END, NULL});
+			BRED, MINISHELL, SYNTAX_ERROR, " `", str, "'\n", END, NULL});
 		return (false);
 	}
 	if ((type[0] == REDIRECT && type[1] == TYPE_END)
@@ -33,7 +33,7 @@ static bool	is_redirect_token_valid(t_AST_type type[], char *str)
 	{
 		error_msg_return(
 			(char *[]){
-				BRED, MINISHELL, SYNTAX_ERROR, " `newline'\n", END, NULL});
+			BRED, MINISHELL, SYNTAX_ERROR, " `newline'\n", END, NULL});
 		return (false);
 	}
 	return (true);
@@ -88,5 +88,6 @@ t_token	*lexer(char *line)
 			return (NULL);
 		}
 	}
+	free(line);
 	return (tokens);
 }

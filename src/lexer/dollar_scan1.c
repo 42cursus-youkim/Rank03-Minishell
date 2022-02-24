@@ -8,7 +8,7 @@ static t_res	expansion_last_check(t_expansion_scan_info *info, int *i)
 		free(*info->buf);
 		return (error_msg_return(
 				(char *[]){
-					BRED, MINISHELL, BRACE_ERROR, MULTILINE_ERROR, NULL}));
+				BRED, MINISHELL, BRACE_ERROR, MULTILINE_ERROR, NULL}));
 	}
 	if (info->end < info->begin)
 		if (expansions_update_with_brace(info, *i - 1, false) == ERR)

@@ -33,12 +33,15 @@ static void	prompt_run_line(char *line, t_shell *shell)
 	t_AST_SCRIPT	*script;
 
 	tokens = lexer(line);
-	free(line);
 	if (!tokens)
 		return ;
-	script = parser(tokens, shell->env);
+	script = parser(tokens);
 	if (!script)
+	{
+		error_malloc_msg();
 		return ;
+	}
+	expander(script, shell->env);
 	shell_replace_script(shell, script);
 	ast_script_repr(shell->script);
 	if (is_ast_command(shell->script))
