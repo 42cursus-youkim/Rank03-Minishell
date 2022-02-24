@@ -37,7 +37,9 @@ char	**new_names_from_path(char *name, t_dict *env);
 ** < redirect.c > */
 
 t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect);
-void	cmd_open_redirect(t_AST_COMMAND *cmd, t_shell *shell);
+void	cmd_try_open_redirect( t_AST_NODE *node, t_AST_COMMAND *cmd,
+			t_shell *shell);
+void	cmd_open_redirects(t_AST_COMMAND *cmd, t_shell *shell);
 void	shell_open_redirects(t_shell *shell);
 /*
 ** < shell.c > */

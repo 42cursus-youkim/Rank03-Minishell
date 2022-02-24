@@ -25,5 +25,4 @@ t_fd	shell_heredoc(t_shell *shell, char *eof)
 	}
 	close(pipefd[PIPE_WRITE]);
 	return (pipefd[PIPE_READ]);
-	// dup2(pipefd[0], STDIN_FILENO); <- use to connect
 }

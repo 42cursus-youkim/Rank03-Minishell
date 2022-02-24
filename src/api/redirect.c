@@ -65,38 +65,50 @@ t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect)
 	return (OK);
 }
 
+//	TODO: refactor later, this is very dirty
+void	cmd_try_open_redirect(
+	t_AST_NODE *node, t_AST_COMMAND *cmd, t_shell *shell)
+{
+	t_fd	*fd_p;
+
+	if (node->type != REDIRECT)
+		return ;
+	if (node->op == REDIR_HEREDOC || node->op == REDIR_INPUT)
+		fd_p = &cmd->io_input;
+	else if (node->op == REDIR_OUTPUT || node->op == REDIR_OUTPUT_APPEND)
+		fd_p = &cmd->io_output;
+	else
+		return ;
+	// printf("[redirect] %s\n", node->text);
+	if (node->op == REDIR_HEREDOC)
+	{
+		if (*fd_p > STDERR_FILENO)
+			close(*fd_p);
+		*fd_p = shell_heredoc(shell, node->text);
+	}
+	else
+		api_open(fd_p, node);
+}
+
 //	TODO: move functions below to suitable place?
 /*	Opens fd, save to cmd and create file if needed
 	does NOT connect fd to STDIN/STDOUT,
 	that's done on command execution
 */
-void	cmd_open_redirect(t_AST_COMMAND *cmd, t_shell *shell)
+void	cmd_open_redirects(t_AST_COMMAND *cmd, t_shell *shell)
 {
 	int			i;
-	t_AST_NODE	*node;
+	const int	prefix_len = ast_nodes_len(cmd->prefixes);
 	const int	suffix_len = ast_nodes_len(cmd->suffixes);
 
-	// const int	prefix_len = ast_nodes_len(cmd->prefixes);
-
-	// i = -1;
-	// while (++i < prefix_len)
-	// 	api_open(&cmd->io_input, cmd->prefixes[i]->text);
+	i = -1;
+	while (++i < prefix_len)
+		cmd_try_open_redirect(
+			cmd->prefixes[i], cmd, shell);
 	i = -1;
 	while (++i < suffix_len)
-	{
-		node = cmd->suffixes[i];
-		if (node->type == REDIRECT)
-		{
-			if (node->op == REDIR_HEREDOC)
-			{
-				if (cmd->io_output > STDERR_FILENO)
-					close(cmd->io_output);
-				cmd->io_output = shell_heredoc(shell, node->text);
-			}
-			else
-				api_open(&cmd->io_output, node);
-		}
-	}
+		cmd_try_open_redirect(
+			cmd->suffixes[i], cmd, shell);
 }
 
 void	shell_open_redirects(t_shell *shell)
@@ -106,6 +118,6 @@ void	shell_open_redirects(t_shell *shell)
 
 	i = -1;
 	while (++i < len)
-		cmd_open_redirect(
+		cmd_open_redirects(
 			shell->script->commands[i], shell);
 }
