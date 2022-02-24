@@ -1,7 +1,7 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-typedef struct	s_expansion_scan_info
+typedef struct s_expansion_scan_info
 {
 	char			**buf;
 	char			*str;
@@ -12,6 +12,13 @@ typedef struct	s_expansion_scan_info
 	int				end;
 
 }	t_expansion_scan_info;
+
+typedef struct s_metastr
+{
+	char	*str;
+	char	*prev;
+	int		i;
+}	t_metastr;
 
 typedef struct s_scan_node
 {
@@ -28,6 +35,16 @@ typedef struct s_token
 
 //@func
 /*
+** < dollar_scan1.c > */
+
+t_res		dollar_scan(t_list **list, char **buf, char *str, int *idx);
+/*
+** < dollar_scan2.c > */
+
+t_res		expansions_update_with_brace( t_expansion_scan_info *info, int end,
+				bool brace);
+t_res		expansion_location_init(t_expansion_scan_info *info, int *i);
+/*
 ** < expansion.c > */
 
 int			expansions_len(t_AST_expansion *expansions[]);
@@ -41,8 +58,19 @@ void		expansions_print(t_AST_expansion *expansions[]);
 
 t_token		*lexer(char *line);
 /*
+** < metachar_scan1.c > */
+
+t_res		metachar_scan(t_list **list, char **buf, char *str, int *idx);
+/*
+** < metachar_scan2.c > */
+
+t_res		metachar_attachable(char **pstr, char prev_c, char c);
+t_res		metastr_init(t_metastr *metastr, char c);
+bool		is_prev_metachar_attachable(char *str);
+/*
 ** < scanner.c > */
 
+t_res		free_n_return(char **str, t_res result);
 t_res		scanner(t_list **scan_list, char *line);
 /*
 ** < scanner_list.c > */
@@ -55,17 +83,10 @@ void		scan_node_print(void *param);
 
 bool		is_quotes_open(char *last_quote, char *str);
 bool		is_brace_open(char *str);
+t_res		list_element_create( t_list **element, char *buf,
+				t_AST_expansion **expansions);
 t_res		buf_to_list(t_list **list, char **buf);
 t_res		whitespace_scan(t_list **list, char **buf, char *str, int *idx);
-/*
-** < scanner_util2.c > */
-
-t_res		metachar_scan(t_list **list, char **buf, char *str, int *idx);
-/*
-** < scanner_util3.c > */
-
-t_res		expansion_scan(t_list **list, char **buf, char *str, int *idx);
-t_res		dollar_scan(t_list **list, char **buf, char *str, int *idx);
 /*
 ** < tokenizer.c > */
 
@@ -88,4 +109,5 @@ bool		is_1stchar_valid(char c);
 bool		is_variable_char_valid(char c);
 bool		is_scan_continuos(char *buf, char c);
 bool		is_multi_expansions(t_expansion_scan_info info, int i);
+t_res		free_arr_n_return(char *arr[], t_res result);
 #endif
