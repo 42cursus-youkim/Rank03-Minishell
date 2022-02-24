@@ -41,7 +41,8 @@ static void	prompt_run_line(char *line, t_shell *shell)
 		error_malloc_msg();
 		return ;
 	}
-	expander(script, shell->env);
+	if (expander(script, shell->env) == ERR)
+		return ;
 	shell_replace_script(shell, script);
 	ast_script_repr(shell->script);
 	if (is_ast_command(shell->script))

@@ -18,10 +18,14 @@ void			del_ast_command(t_AST_COMMAND *command);
 void			del_ast_commands(t_AST_COMMAND *commands[]);
 void			del_ast_script(t_AST_SCRIPT *script);
 /*
-** < expander.c > */
+** < expander1.c > */
 
 t_res			commands_expansion(t_AST_COMMAND *command, t_dict *env);
 t_res			expander(t_AST_SCRIPT *script, t_dict *env);
+/*
+** < expander2.c > */
+
+t_res			expansions_to_array(char **parr[], t_AST_NODE *node);
 /*
 ** < new1.c > */
 

@@ -23,7 +23,7 @@ lexerV   := lexer expansion util util2 \
 			scanner scanner_list scanner_util \
 			dollar_scan1 dollar_scan2 metachar_scan1 metachar_scan2 \
 			tokenizer tokenizer_util
-parserV  := parser new1 new2 del util1 util2 expander
+parserV  := parser new1 new2 del util1 util2 expander1 expander2
 promptV  := prompt interrupt util
 apiV     := shell signal path file
 execV    := context exec pipe redirect argv util

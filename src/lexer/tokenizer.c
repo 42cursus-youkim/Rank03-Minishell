@@ -27,7 +27,10 @@ char	*new_quotes_remove(const char *str)
 
 	new = new_str("");
 	if (!new)
+	{
+		error_malloc_msg();
 		return (NULL);
+	}
 	open = false;
 	i = -1;
 	while (str[++i])
