@@ -33,6 +33,7 @@ static void	prompt_run_line(char *line, t_shell *shell)
 	t_AST_SCRIPT	*script;
 
 	tokens = lexer(line);
+	free(line);
 	if (!tokens)
 		return ;
 	script = parser(tokens);

@@ -88,6 +88,5 @@ t_token	*lexer(char *line)
 			return (NULL);
 		}
 	}
-	free(line);
 	return (tokens);
 }
