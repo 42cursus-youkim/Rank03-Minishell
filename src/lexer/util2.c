@@ -2,7 +2,7 @@
 
 bool	is_1stchar_valid(char c)
 {
-	if (is_alpha(c) || c == '_' || c == '{')
+	if (is_alpha(c) || c == '_' || c == '{' || c == '?')
 		return (true);
 	return (false);
 }
