@@ -27,6 +27,8 @@ void	del_prompt(t_prompt *prompt)
 	free(prompt->ps2);
 }
 
+
+
 static void	prompt_run_line(char *line, t_shell *shell)
 {
 	t_token			*tokens;

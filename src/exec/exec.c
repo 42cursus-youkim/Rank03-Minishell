@@ -6,7 +6,7 @@ void	child_proc_exec(t_AST_COMMAND *cmd, t_shell *shell)
 
 	context_init(&context, cmd, shell->env);
 	if (execve(context.executable, context.argv, context.envp) == OK)
-		return (OK);
+		return ;
 	del_context(&context);
 	api_exit(shell, EXIT_FAILURE);
 }
@@ -18,8 +18,9 @@ static void	child_proc(t_shell *shell, int index)
 
 	cmd = shell->script->commands[index];
 	text = cmd->name->text;
-	if (is_builtin(text))
-		return ((void)builtins_exec(cmd, shell));
+	// if (is_builtin(text))
+	// 	printf("will do it later\n");
+		// return ((void)builtins_exec(cmd, shell));
 	if (is_executable_exists(text, shell->env))
 		return ((void)child_proc_exec(cmd, shell));
 	else

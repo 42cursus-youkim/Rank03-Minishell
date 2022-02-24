@@ -26,10 +26,6 @@ void	del_context(t_context *context);
 void	child_proc_exec(t_AST_COMMAND *cmd, t_shell *shell);
 int		api_exec_cmd_at(t_shell *shell, int index);
 /*
-** < redirect.c > */
-
-void	api_create_redirect(t_AST_NODE *redirect);
-/*
 ** < util.c > */
 
 bool	is_parent(pid_t pid);

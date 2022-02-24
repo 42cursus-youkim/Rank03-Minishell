@@ -14,10 +14,6 @@ typedef enum e_builtin
 
 //@func
 /*
-** < builtin.c > */
-
-void		builtins_exec(t_AST_COMMAND *cmd, t_shell *shell);
-/*
 ** < env1.c > */
 
 t_dict		*new_env(char *envp[]);

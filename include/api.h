@@ -27,9 +27,17 @@ bool	is_file_exists(char *filename);
 bool	is_executable_exists(char *file, t_dict *env);
 char	*new_executable_from_env(char *file, t_dict *env);
 /*
+** < heredoc.c > */
+
+t_fd	shell_heredoc(t_shell *shell, char *eof);
+/*
 ** < path.c > */
 
 char	**new_names_from_path(char *name, t_dict *env);
+/*
+** < redirect.c > */
+
+void	api_create_redirect(t_AST_NODE *redirect);
 /*
 ** < shell.c > */
 
