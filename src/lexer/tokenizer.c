@@ -14,7 +14,7 @@ t_res	quotes_remove_loop(char **new, char *last_quote, bool *open, char c)
 		return (OK);
 	}
 	if (ft_str_append(new, c) == ERR)
-		return (free_n_return(new, error_msg_return(MALLOC_ERROR_MSG)));
+		return (free_n_return(new, error_malloc_msg()));
 	return (OK);
 }
 
@@ -45,10 +45,10 @@ t_res	node_tokenize(t_token *tokens[], t_scan_node *node, int i)
 	else
 		(*tokens)[i].text = new_str(node->text);
 	if (!(*tokens)[i].text)
-		return (error_msg_return(MALLOC_ERROR_MSG));
+		return (error_malloc_msg());
 	(*tokens)[i].expansions = new_ast_expansions(node->expansions);
 	if (!(*tokens)[i].expansions)
-		return (error_msg_return(MALLOC_ERROR_MSG));
+		return (error_malloc_msg());
 	return (OK);
 }
 

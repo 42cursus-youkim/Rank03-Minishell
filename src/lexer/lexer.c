@@ -4,13 +4,16 @@ static bool	is_pipeline_token_valid(t_AST_type type[])
 {
 	if (type[1] == PIPELINE && (type[0] != WORD || type[2] == PIPELINE))
 	{
-		printf(BRED "minishell: syntax error near unexpected token `|'\n" END);
+		error_msg_return(
+			(char *[]){BRED, MINISHELL, SYNTAX_ERROR, " `|'\n", END, NULL});
 		return (false);
 	}
 	if (type[1] == PIPELINE && type[2] == TYPE_END)
 	{
-		printf(BRED "minishell: syntax error near unexpected token `|'\n");
-		printf("multiline is not supported :(\n" END);
+		error_msg_return(
+			(char *[]){
+				BRED, MINISHELL, SYNTAX_ERROR, " `|'\n",
+				MULTILINE_ERROR, END, NULL});
 		return (false);
 	}
 	return (true);
@@ -20,15 +23,17 @@ static bool	is_redirect_token_valid(t_AST_type type[], char *str)
 {
 	if (type[1] == REDIRECT && type[0] == REDIRECT)
 	{
-		printf(BRED "minishell: syntax error near unexpected token ");
-		printf("`%s'\n" END, str);
+		error_msg_return(
+			(char *[]){
+				BRED, MINISHELL, SYNTAX_ERROR, " `", str, "'\n", END, NULL});
 		return (false);
 	}
 	if ((type[0] == REDIRECT && type[1] == TYPE_END)
 		|| (type[1] == REDIRECT && type[2] == TYPE_END))
 	{
-		printf(BRED
-			"minishell: syntax error near unexpected token `newline'\n" END);
+		error_msg_return(
+			(char *[]){
+				BRED, MINISHELL, SYNTAX_ERROR, " `newline'\n", END, NULL});
 		return (false);
 	}
 	return (true);
@@ -52,8 +57,6 @@ static bool	is_tokens_valid(t_token tokens[])
 	int			i;
 	t_AST_type	type[3];
 
-	if (!tokens)
-		return (false);
 	i = -1;
 	while (tokens[++i].text)
 	{
@@ -77,6 +80,8 @@ t_token	*lexer(char *line)
 	else
 	{
 		tokens = tokenizer(scan_list);
+		if (!tokens)
+			return (NULL);
 		if (!is_tokens_valid(tokens))
 		{
 			del_tokens(tokens);
