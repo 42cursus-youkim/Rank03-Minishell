@@ -15,4 +15,5 @@ void	*ft_calloc(size_t size, size_t count);
 ** < write.c > */
 
 int		ft_write(int fd, const char *str);
+int		ft_writes(int fd, char *arr[]);
 #endif
