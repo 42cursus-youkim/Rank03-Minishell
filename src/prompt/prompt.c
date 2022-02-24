@@ -27,8 +27,6 @@ void	del_prompt(t_prompt *prompt)
 	free(prompt->ps2);
 }
 
-
-
 static void	prompt_run_line(char *line, t_shell *shell)
 {
 	t_token			*tokens;
@@ -43,6 +41,7 @@ static void	prompt_run_line(char *line, t_shell *shell)
 		return ;
 	shell_replace_script(shell, script);
 	ast_script_repr(shell->script);
+	shell_open_redirects(shell);
 	if (is_ast_command(shell->script))
 		api_exec_cmd_at(shell, 0);
 	shell_clear_script(shell);

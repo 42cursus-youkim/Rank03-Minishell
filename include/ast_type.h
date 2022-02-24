@@ -1,6 +1,8 @@
 #ifndef AST_TYPE_H
 # define AST_TYPE_H
 
+typedef int	t_fd;
+
 typedef enum e_AST_type
 {
 	WORD = 0,
@@ -18,7 +20,6 @@ typedef enum e_redirect_op
 	REDIR_HEREDOC = 1,
 	REDIR_OUTPUT = 2,
 	REDIR_OUTPUT_APPEND = 3,
-	REDIR_HEREDOC_UNSET = -2,
 	NOT_REDIR = -1,
 }	t_redirect_op;
 
@@ -42,6 +43,8 @@ typedef struct s_AST_COMMAND
 	t_AST_NODE	*name;
 	t_AST_NODE	**prefixes;
 	t_AST_NODE	**suffixes;
+	t_fd		io_input;
+	t_fd		io_output;
 }	t_AST_COMMAND;
 
 typedef struct s_AST_SCRIPTS
@@ -49,7 +52,5 @@ typedef struct s_AST_SCRIPTS
 	t_AST_COMMAND	**commands;
 	int				commands_len;
 }	t_AST_SCRIPT;
-
-typedef	t_res(t_nodefunc_f)(t_AST_NODE *node);
 
 #endif

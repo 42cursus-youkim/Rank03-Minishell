@@ -22,7 +22,6 @@ typedef enum e_exitcode
 /*
 ** < file.c > */
 
-t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect);
 bool	is_file_exists(char *filename);
 bool	is_executable_exists(char *file, t_dict *env);
 char	*new_executable_from_env(char *file, t_dict *env);
@@ -37,7 +36,9 @@ char	**new_names_from_path(char *name, t_dict *env);
 /*
 ** < redirect.c > */
 
-void	api_create_redirect(t_AST_NODE *redirect);
+t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect);
+void	cmd_open_redirect(t_AST_COMMAND *cmd, t_shell *shell);
+void	shell_open_redirects(t_shell *shell);
 /*
 ** < shell.c > */
 
