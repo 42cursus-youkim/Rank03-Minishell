@@ -45,16 +45,21 @@ void	del_ast_command(t_AST_COMMAND *command)
 	free(command);
 }
 
+void	del_ast_commands(t_AST_COMMAND *commands[])
+{
+	int	i;
+
+	i = -1;
+	while (commands[++i])
+		del_ast_command(commands[i]);
+	free(commands);
+}
+
 /*	avoid using it alone!
 	should be only called by t_shell methods
 */
 void	del_ast_script(t_AST_SCRIPT *script)
 {
-	int	i;
-
-	i = -1;
-	while (script->commands[++i])
-		del_ast_command(script->commands[i]);
-	free(script->commands);
+	del_ast_commands(script->commands);
 	free(script);
 }

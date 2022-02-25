@@ -36,8 +36,13 @@ static void	prompt_run_line(char *line, t_shell *shell)
 	free(line);
 	if (!tokens)
 		return ;
-	script = parser(tokens, shell->env);
+	script = parser(tokens);
 	if (!script)
+	{
+		error_malloc_msg();
+		return ;
+	}
+	if (expander(script, shell->env) == ERR)
 		return ;
 	shell_replace_script(shell, script);
 	ast_script_repr(shell->script);

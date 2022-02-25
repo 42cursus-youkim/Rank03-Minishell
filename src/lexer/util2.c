@@ -22,15 +22,10 @@ bool	is_scan_continuos(char *buf, char c)
 	return (true);
 }
 
-bool	is_multi_expansions(t_expansion_scan_info info, int i)
+t_res	free_n_return(char **str, t_res result)
 {
-	char	last_quote;
-
-	if (info.str[i] == '$' && is_1stchar_valid(info.str[i + 1])
-		&& (!is_quotes_open(&last_quote, *info.buf) || last_quote != '\'')
-		&& !is_brace_open(*info.buf))
-		return (true);
-	return (false);
+	free(*str);
+	return (result);
 }
 
 t_res	free_arr_n_return(char *arr[], t_res result)
