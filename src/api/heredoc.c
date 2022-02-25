@@ -3,15 +3,16 @@
 /*	get input for heredoc
 	returns opened fd that points to it
 */
-t_fd	shell_heredoc(t_shell *shell, char *eof)
+t_fd	shell_heredoc(char *ps, const char *eof)
 {
 	char	*line;
 	t_fd	pipefd[PIPE_SIZE];
 
-	pipe(pipefd);
+	if (pipe(pipefd) == ERR)
+		return (ERR);
 	while (true)
 	{
-		line = readline(shell->prompt.ps2);
+		line = readline(ps);
 		if (is_str_equal(line, eof))
 		{
 			free(line);

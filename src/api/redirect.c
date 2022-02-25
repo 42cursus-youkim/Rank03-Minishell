@@ -43,13 +43,13 @@
 	REDIR_OUTPUT_APPEND = 3,
 	NOT_REDIR = -1,
 */
-t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect)
+t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect, t_shell *shell)
 {
 	const char	*file = redirect->text;
 	int			flag;
 	const int	flags[5] = {
 		O_RDONLY,
-		ERR,
+		OK,
 		O_CREAT | O_WRONLY | O_TRUNC,
 		O_CREAT | O_WRONLY | O_APPEND,
 		ERR};
@@ -59,7 +59,10 @@ t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect)
 		return (ERR);
 	if (*fd_p > STDERR_FILENO)
 		close(*fd_p);
-	*fd_p = open(file, flag, 0644);
+	if (redirect->op == REDIR_HEREDOC)
+		*fd_p = shell_heredoc(shell->prompt.ps2, file);
+	else
+		*fd_p = open(file, flag, 0644);
 	if (*fd_p == ERR)
 		return (ERR);
 	return (OK);
@@ -79,15 +82,7 @@ void	cmd_try_open_redirect(
 		fd_p = &cmd->io_output;
 	else
 		return ;
-	// printf("[redirect] %s\n", node->text);
-	if (node->op == REDIR_HEREDOC)
-	{
-		if (*fd_p > STDERR_FILENO)
-			close(*fd_p);
-		*fd_p = shell_heredoc(shell, node->text);
-	}
-	else
-		api_open(fd_p, node);
+	api_open(fd_p, node, shell);
 }
 
 //	TODO: move functions below to suitable place?

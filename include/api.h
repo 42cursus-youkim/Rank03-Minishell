@@ -28,7 +28,7 @@ char	*new_executable_from_env(char *file, t_dict *env);
 /*
 ** < heredoc.c > */
 
-t_fd	shell_heredoc(t_shell *shell, char *eof);
+t_fd	shell_heredoc(char *ps, const char *eof);
 /*
 ** < path.c > */
 
@@ -36,7 +36,7 @@ char	**new_names_from_path(char *name, t_dict *env);
 /*
 ** < redirect.c > */
 
-t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect);
+t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect, t_shell *shell);
 void	cmd_try_open_redirect( t_AST_NODE *node, t_AST_COMMAND *cmd,
 			t_shell *shell);
 void	cmd_open_redirects(t_AST_COMMAND *cmd, t_shell *shell);
