@@ -14,6 +14,21 @@ void	shell_replace_script(t_shell *shell, t_AST_SCRIPT *script)
 	shell->script = script;
 }
 
+int	shell_exec_script(t_shell *shell)
+{
+	int	exitcode;
+
+	exitcode = EXIT_FAILURE;
+	shell_open_redirects(shell);
+	if (is_ast_command(shell->script))
+		exitcode = api_exec_cmd_at(shell, 0);
+	else if (is_ast_pipeline(shell->script))
+		exitcode = api_exec_pipe(shell);
+	if (DEBUG && exitcode != OK)
+		printf(BRED "exitcode: %d\n" END, exitcode);
+	return (exitcode);
+}
+
 void	shell_init(t_shell *shell, char *envp[])
 {
 	shell->env = new_env(envp);
@@ -28,9 +43,3 @@ void	del_shell(t_shell *shell)
 	shell_clear_script(shell);
 }
 
-//	frees allocated memory from shell && exits with exitcode
-void	api_exit(t_shell *shell, int exitcode)
-{
-	del_shell(shell);
-	exit(exitcode);
-}

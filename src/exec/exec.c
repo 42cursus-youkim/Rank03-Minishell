@@ -25,37 +25,34 @@ void	child_proc(t_shell *shell, int index)
 		return ((void)any_exec(cmd, shell));
 	else
 	{
+		// error_msg_return((char *[]){BRED, MINISHELL, NULL})
 		printf(RED "cannot find executable %s\n" END, text);
-		api_exit(shell, EXIT_FAILURE);
+		api_exit(shell, EXIT_COMMAND_NOT_IN_PATH);
 	}
 }
 
-int	parent_proc(pid_t pid, t_dict *env)
+//	save exitcode as string to env, also returns exitcode as int
+int	api_handle_exitcode(t_dict *env, int status)
 {
-	int	status;
-	int	exitcode;
+	const int	exitcode = api_handle_status(status);
 
-	waitpid(pid, &status, 0);
-	exitcode = api_handle_status(status);
 	env_set_exitcode(env, exitcode);
-	if (exitcode == OK)
-		return (OK);
-	else
-	{
-		printf(BRED "exitcode: %d\n" END, exitcode);
-		return (exitcode);
-	}
+	return (exitcode);
 }
 
 int	api_exec_cmd_at(t_shell *shell, int index)
 {
+	int	status;
 	pid_t	pid;
 
 	pid = fork();
 	if (is_child(pid))
 		child_proc(shell, index);
 	else if (is_parent(pid))
-		return (parent_proc(pid, shell->env));
+	{
+		waitpid(pid, &status, 0);
+		return (api_handle_exitcode(shell->env, status));
+	}
 	else
 		printf(RED "fork error\n" END);
 	return (OK);

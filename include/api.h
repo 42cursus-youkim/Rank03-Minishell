@@ -9,12 +9,12 @@ typedef enum e_procflag
 	INPUT = 0,
 	OUTPUT = 1,
 	TEMP = 1,
-	WAIT_UNTIL_CHILD_END = 0,
 }	t_procflag;
 
 typedef enum e_exitcode
 {
-	EXIT_BUILTIN_ERR = 2,
+	EXIT_BUILTINS_ERR = 2,
+	EXIT_COMMAND_NOT_IN_PATH = 127,
 	EXIT_FATAL_ERR_CAUSED_BY_SIGNAL = 128,
 }	t_exitcode;
 
@@ -42,11 +42,15 @@ void	shell_open_redirects(t_shell *shell);
 
 void	shell_clear_script(t_shell *shell);
 void	shell_replace_script(t_shell *shell, t_AST_SCRIPT *script);
+int		shell_exec_script(t_shell *shell);
 void	shell_init(t_shell *shell, char *envp[]);
 void	del_shell(t_shell *shell);
-void	api_exit(t_shell *shell, int exitcode);
 /*
 ** < signal.c > */
 
 int		api_handle_status(int status);
+/*
+** < util.c > */
+
+void	api_exit(t_shell *shell, int exitcode);
 #endif
