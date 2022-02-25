@@ -30,6 +30,8 @@
 # include "builtin.h"
 # include "tree.h"
 # include "error.h"
+
+# define DEBUG 0
 // # include "get_next_line.h"
 
 #endif
