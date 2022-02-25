@@ -40,11 +40,8 @@ static void	api_exec_pipe_internal(t_shell *shell)
 		api_exec_pipe_at(shell, i, pids);
 	i = -1;
 	while (++i < len)
-	{
-		// printf("waiting for %d\n", pids[i]);
-		waitpid(pids[i], &status, 0); //
-		// printf("%d:exitcode: %d\n", i, api_handle_status(status));
-	}
+		waitpid(pids[i], &status, 0);
+	free(pids);
 	api_exit(shell,
 		api_handle_exitcode(shell->env, status));
 }
@@ -56,9 +53,7 @@ int	api_exec_pipe(t_shell *shell)
 
 	pid = fork();
 	if (is_child(pid))
-	{
 		api_exec_pipe_internal(shell);
-	}
 	else if (is_parent(pid))
 	{
 		waitpid(pid, &status, 0);

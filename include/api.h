@@ -9,12 +9,12 @@ typedef enum e_procflag
 	INPUT = 0,
 	OUTPUT = 1,
 	TEMP = 1,
-	WAIT_UNTIL_CHILD_END = 0,
 }	t_procflag;
 
 typedef enum e_exitcode
 {
-	EXIT_BUILTIN_ERR = 2,
+	EXIT_BUILTINS_ERR = 2,
+	EXIT_COMMAND_NOT_IN_PATH = 127,
 	EXIT_FATAL_ERR_CAUSED_BY_SIGNAL = 128,
 }	t_exitcode;
 

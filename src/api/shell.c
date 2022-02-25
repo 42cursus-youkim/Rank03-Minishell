@@ -24,7 +24,8 @@ int	shell_exec_script(t_shell *shell)
 		exitcode = api_exec_cmd_at(shell, 0);
 	else if (is_ast_pipeline(shell->script))
 		exitcode = api_exec_pipe(shell);
-	printf(BRED "exitcode: %d\n" END, exitcode);
+	if (DEBUG && exitcode != OK)
+		printf(BRED "exitcode: %d\n" END, exitcode);
 	return (exitcode);
 }
 

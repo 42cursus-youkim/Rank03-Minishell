@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+//	FIXME: use ft_writes internally
 t_res	error_msg_return(char *message[])
 {
 	const int	len = ft_arr_len(message);
