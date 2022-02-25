@@ -19,16 +19,20 @@ char	**new_argv_from_cmd(char *executable, t_AST_COMMAND *cmd);
 ** < context.c > */
 
 void	context_init(t_context *context, t_AST_COMMAND *cmd, t_dict *env);
-t_res	context_run_and_free(t_context *context);
+void	cmd_connect_redirects(t_AST_COMMAND *cmd);
+void	del_context(t_context *context);
 /*
 ** < exec.c > */
 
 void	child_proc_exec(t_AST_COMMAND *cmd, t_shell *shell);
+void	child_proc(t_shell *shell, int index);
+int		api_handle_exitcode(t_dict *env, int status);
 int		api_exec_cmd_at(t_shell *shell, int index);
 /*
-** < redirect.c > */
+** < pipe.c > */
 
-void	api_create_redirect(t_AST_NODE *redirect);
+t_res	api_exec_pipe_at(t_shell *shell, int index, int pids[]);
+int		api_exec_pipe(t_shell *shell);
 /*
 ** < util.c > */
 

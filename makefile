@@ -25,9 +25,9 @@ lexerV   := lexer expansion util util2 \
 			tokenizer tokenizer_util
 parserV  := parser new1 new2 del util1 util2 expander1 expander2
 promptV  := prompt interrupt util
-apiV     := shell signal path file
-execV    := context exec pipe redirect argv util
-builtinV := env1 env2 util
+apiV     := shell redirect signal path file util
+execV    := context exec pipe argv util
+builtinV := builtin echo env1 env2 util
 treeV    := repr1 repr2
 errorV   := error
 
@@ -45,9 +45,6 @@ SRC      := $(call choose_modules, $(PKGS))
 OBJ      := $(SRC:%.c=%.o)
 
 # ===== Rules =====
-$(LIBFT):
-	@make --no-print-directory all -C lib/ DFLAGS="$(DFLAGS)"
-
 %.o: %.c
 	@printf "$(Y)%-10s$(WU)$(<F)$(R) -> $(E)$(@F)\n" [$(subst src/,,$(*D))]
 	@$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
@@ -55,6 +52,9 @@ $(LIBFT):
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(INC) $(LIB) $^ -o $@
 	@$(call log, V, 🚀 linked with flag $(R)$(DFLAGS)$(E)$(CFLAGS))
+
+$(LIBFT):
+	@make --no-print-directory all -C lib/ DFLAGS="$(DFLAGS)"
 
 all: $(NAME)
 
@@ -97,7 +97,7 @@ supp: docs all cls
 		--log-file=supp2.txt\
 		--gen-suppressions=all ./$(NAME)
 
-.PHONY: all re clean fclean test red docs $(LIBFT)
+.PHONY: $(NAME) all re clean fclean test red docs $(LIBFT)
 
 # ===== Colors =====
 cls:

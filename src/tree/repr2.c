@@ -51,4 +51,5 @@ void	ast_script_repr(t_AST_SCRIPT *script)
 		ast_command_repr(script->commands[0], 0);
 	else if (is_ast_pipeline(script))
 		ast_pipeline_repr(script, 0);
+	printf(END "\n");
 }

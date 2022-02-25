@@ -1,42 +1,65 @@
 #include "minishell.h"
 
-// /* FIXME:
-// 	char *argv[]
-// 	-> t_AST_COMMAND *cmd, t_dict *env
-// */
-// static void	api_pipe_temp(char **argv)
-// {
-// 	pid_t	pid;
-// 	t_fd	pipefd[PIPE_SIZE];
 
-// 	pipe(pipefd);
-// 	pid = fork();
-// 	if (is_child(pid))
-// 	{
-// 		send_output_to_pipe(pipefd);
-// 		api_raw_exec_temp(argv, NULL);
-// 	}
-// 	if (is_parent(pid))
-// 	{
-// 		receive_input_from_pipe(pipefd);
-// 		waitpid(pid, NULL, WAIT_UNTIL_CHILD_END);
-// 	}
-// 	else
-// 		printf(RED "fork error\n" END);
-// }
+t_res	api_exec_pipe_at(t_shell *shell, int index, int pids[])
+{
+	pid_t		pid;
+	t_fd		pipefd[PIPE_SIZE];
+	const int	len = shell->script->commands_len;
 
-// /* FIXME:
-// 	int size, char **argvs[]
-// 	-> t_AST_PIPELINE *pipeline, t_dict *env
-// */
-// t_res	api_exec_pipe_temp(int size, char **argvs[])
-// {
-// 	int	i;
+	pipe(pipefd);
+	pid = fork();
+	if (is_child(pid))
+	{
+		if (index < len - 1)
+			send_output_to_pipe(pipefd);
+		child_proc(shell, index);
+		close(pipefd[PIPE_WRITE]);
+	}
+	else if (is_parent(pid))
+	{
+		pids[index] = pid;
+		if (index < len -1)
+			receive_input_from_pipe(pipefd);
+	}
+	else
+		printf(RED "fork error\n" END);
+	return (OK);
+}
 
-// 	i = -1;
-// 	while (++i < size - 1)
-// 		api_pipe_temp(argvs[i]);
-// 	api_exec_cmd_temp(argvs[i]);
-// 	printf(BGRN "HAYO all pipe process finished\n" END);
-// 	return (OK);
-// }
+static void	api_exec_pipe_internal(t_shell *shell)
+{
+	int			i;
+	int			*pids;
+	int 		status;
+	const int	len = shell->script->commands_len;
+
+	pids = ft_calloc(sizeof(pid_t), len);
+	i = -1;
+	while (++i < len)
+		api_exec_pipe_at(shell, i, pids);
+	i = -1;
+	while (++i < len)
+		waitpid(pids[i], &status, 0);
+	free(pids);
+	api_exit(shell,
+		api_handle_exitcode(shell->env, status));
+}
+
+int	api_exec_pipe(t_shell *shell)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (is_child(pid))
+		api_exec_pipe_internal(shell);
+	else if (is_parent(pid))
+	{
+		waitpid(pid, &status, 0);
+		return (api_handle_exitcode(shell->env, status));
+	}
+	else
+		printf(RED "fork error\n" END);
+	return (ERR);
+}

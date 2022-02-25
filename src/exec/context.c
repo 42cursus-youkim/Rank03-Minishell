@@ -2,18 +2,23 @@
 
 void	context_init(t_context *context, t_AST_COMMAND *cmd, t_dict *env)
 {
+	cmd_connect_redirects(cmd);
 	context->executable = new_executable_from_env(cmd->name->text, env);
 	context->argv = new_argv_from_cmd(context->executable, cmd);
 	context->envp = new_env_to_envp(env);
 }
 
-//	Always return ERR
-t_res	context_run_and_free(t_context *context)
+void	cmd_connect_redirects(t_AST_COMMAND *cmd)
 {
-	if (execve(context->executable, context->argv, context->envp) == OK)
-		return (OK);
+	if (cmd->io_input != UNSET)
+		dup2(cmd->io_input, STDIN_FILENO);
+	if (cmd->io_output != UNSET)
+		dup2(cmd->io_output, STDOUT_FILENO);
+}
+
+void	del_context(t_context *context)
+{
 	del_arr(context->envp);
 	del_arr(context->argv);
 	free(context->executable);
-	return (ERR);
 }

@@ -12,9 +12,12 @@ static int	api_handle_signaled_status(int status)
 
 int	api_handle_status(int status)
 {
-	printf("WIFEXITED(status): %s\n", ft_bool_to_str(WIFEXITED(status)));
-	printf("WIFSIGNALED(status): %s\n", ft_bool_to_str(WIFSIGNALED(status)));
-	printf("WTERMSIG(status): %s\n", ft_bool_to_str(WTERMSIG(status)));
+	if (DEBUG)
+		printf(BLUHB BWHT "|exit?|sig? | sig |" END
+			"\n|%-16s|%-16s| %-3d |\n",
+			ft_bool_to_str(WIFEXITED(status)),
+			ft_bool_to_str(WIFSIGNALED(status)),
+			WTERMSIG(status));
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))

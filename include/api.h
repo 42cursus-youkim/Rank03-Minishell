@@ -9,12 +9,12 @@ typedef enum e_procflag
 	INPUT = 0,
 	OUTPUT = 1,
 	TEMP = 1,
-	WAIT_UNTIL_CHILD_END = 0,
 }	t_procflag;
 
 typedef enum e_exitcode
 {
-	EXIT_BUILTIN_ERR = 2,
+	EXIT_BUILTINS_ERR = 2,
+	EXIT_COMMAND_NOT_IN_PATH = 127,
 	EXIT_FATAL_ERR_CAUSED_BY_SIGNAL = 128,
 }	t_exitcode;
 
@@ -22,7 +22,6 @@ typedef enum e_exitcode
 /*
 ** < file.c > */
 
-t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect);
 bool	is_file_exists(char *filename);
 bool	is_executable_exists(char *file, t_dict *env);
 char	*new_executable_from_env(char *file, t_dict *env);
@@ -31,15 +30,27 @@ char	*new_executable_from_env(char *file, t_dict *env);
 
 char	**new_names_from_path(char *name, t_dict *env);
 /*
+** < redirect.c > */
+
+t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect, t_shell *shell);
+void	cmd_try_open_redirect( t_AST_NODE *node, t_AST_COMMAND *cmd,
+			t_shell *shell);
+void	cmd_open_redirects(t_AST_COMMAND *cmd, t_shell *shell);
+void	shell_open_redirects(t_shell *shell);
+/*
 ** < shell.c > */
 
 void	shell_clear_script(t_shell *shell);
 void	shell_replace_script(t_shell *shell, t_AST_SCRIPT *script);
+int		shell_exec_script(t_shell *shell);
 void	shell_init(t_shell *shell, char *envp[]);
 void	del_shell(t_shell *shell);
-void	api_exit(t_shell *shell, int exitcode);
 /*
 ** < signal.c > */
 
 int		api_handle_status(int status);
+/*
+** < util.c > */
+
+void	api_exit(t_shell *shell, int exitcode);
 #endif

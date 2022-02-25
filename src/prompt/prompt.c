@@ -38,18 +38,14 @@ static void	prompt_run_line(char *line, t_shell *shell)
 		return ;
 	script = parser(tokens);
 	if (!script)
-	{
-		error_malloc_msg();
-		return ;
-	}
+		return ((void)error_malloc_msg());
 	if (expander(script, shell->env) == ERR)
 		return ;
 	shell_replace_script(shell, script);
-	ast_script_repr(shell->script);
-	if (is_ast_command(shell->script))
-		api_exec_cmd_at(shell, 0);
+	if (DEBUG)
+		ast_script_repr(shell->script);
+	shell_exec_script(shell);
 	shell_clear_script(shell);
-	printf("exit status in env: %s\n", env_get(shell->env, "?"));
 }
 
 void	shell_prompt(t_shell *shell)
