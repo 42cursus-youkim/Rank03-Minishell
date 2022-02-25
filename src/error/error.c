@@ -10,3 +10,9 @@ t_res	error_msg_return(char *message[])
 		printf("%s", message[i]);
 	return (ERR);
 }
+
+t_res	error_malloc_msg(void)
+{
+	return (error_msg_return(
+		(char *[]){BRED, MINISHELL, MALLOC_ERROR, END, NULL}));
+}

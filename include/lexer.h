@@ -44,6 +44,7 @@ t_res		dollar_scan(t_list **list, char **buf, char *str, int *idx);
 t_res		expansions_update_with_brace( t_expansion_scan_info *info, int end,
 				bool brace);
 t_res		expansion_location_init(t_expansion_scan_info *info, int *i);
+bool		is_multi_expansions(t_expansion_scan_info info, int i);
 /*
 ** < expansion.c > */
 
@@ -70,7 +71,6 @@ bool		is_prev_metachar_attachable(char *str);
 /*
 ** < scanner.c > */
 
-t_res		free_n_return(char **str, t_res result);
 t_res		scanner(t_list **scan_list, char *line);
 /*
 ** < scanner_list.c > */
@@ -90,10 +90,17 @@ t_res		whitespace_scan(t_list **list, char **buf, char *str, int *idx);
 /*
 ** < tokenizer.c > */
 
+t_res		quotes_remove_loop(char **new, char *last_quote, bool *open,
+				char c);
+char		*new_quotes_remove(const char *str);
+t_res		node_tokenize(t_token *tokens[], t_scan_node *node, int i);
+t_token		*tokenizer(t_list *scan_list);
+/*
+** < tokenizer_util.c > */
+
+t_AST_type	tokentype_check(t_scan_node *node);
 void		tokens_print(t_token tokens[]);
 void		del_tokens(t_token tokens[]);
-char		*new_quotes_remove(const char *str);
-t_token		*tokenizer(t_list *scan_list);
 /*
 ** < util.c > */
 
@@ -108,6 +115,6 @@ bool		is_digit(char c);
 bool		is_1stchar_valid(char c);
 bool		is_variable_char_valid(char c);
 bool		is_scan_continuos(char *buf, char c);
-bool		is_multi_expansions(t_expansion_scan_info info, int i);
+t_res		free_n_return(char **str, t_res result);
 t_res		free_arr_n_return(char *arr[], t_res result);
 #endif

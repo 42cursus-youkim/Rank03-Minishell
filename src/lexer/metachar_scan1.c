@@ -17,15 +17,14 @@ static t_res	metastr_append(
 		*prev_pstr = *pstr;
 		*pstr = new_str((char []){c, '\0'});
 		if (!*pstr)
-			return (free_n_return(prev_pstr,
-					error_msg_return(MALLOC_ERROR_MSG)));
+			return (free_n_return(prev_pstr, error_malloc_msg()));
 		return (OK);
 	}
 	else
 	{
-		return (free_arr_n_return((char *[]){*prev_pstr, *pstr, NULL},
-			error_msg_return((char *[]){
-				MINISHELL, SYNTAX_ERROR, " `", *pstr, "'\n", END, NULL})));
+		error_msg_return((char *[]){BRED, MINISHELL, SYNTAX_ERROR,
+			" `", *pstr, "'\n", END, NULL});
+		return (free_arr_n_return((char *[]){*prev_pstr, *pstr, NULL}, ERR));
 	}
 }
 
@@ -79,7 +78,7 @@ t_res	metachar_scan(t_list **list, char **buf, char *str, int *idx)
 		if (buf_to_list(list, buf) == ERR)
 			return (ERR);
 		if (metachar_valid_check(list, str, idx) == ERR)
-			return (ERR);
+			return (free_n_return(buf, ERR));
 		return (OK);
 	}
 	return (UNSET);

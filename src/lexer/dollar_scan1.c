@@ -7,7 +7,8 @@ static t_res	expansion_last_check(t_expansion_scan_info *info, int *i)
 		del_ast_expansions(info->expansions);
 		free(*info->buf);
 		return (error_msg_return(
-				(char *[]){MINISHELL, BRACE_ERROR, MULTILINE_ERROR, NULL}));
+				(char *[]){
+				BRED, MINISHELL, BRACE_ERROR, MULTILINE_ERROR, NULL}));
 	}
 	if (info->end < info->begin)
 		if (expansions_update_with_brace(info, *i - 1, false) == ERR)
@@ -21,8 +22,7 @@ static t_res	brace_closed_n_other_check(t_expansion_scan_info *info, int *i)
 		if (expansions_update_with_brace(info, *i, true) == ERR)
 			return (ERR);
 	if (ft_str_append(info->buf, info->str[*i]) == ERR)
-		return (free_n_return(info->buf,
-				error_msg_return(MALLOC_ERROR_MSG)));
+		return (free_n_return(info->buf, error_malloc_msg()));
 	return (OK);
 }
 
@@ -68,7 +68,7 @@ static t_res	expansion_scan(t_list **list, char **buf, char *str, int *idx)
 		return (UNSET);
 	info.expansions = new_ast_expansions((t_AST_expansion *[]){NULL});
 	if (!info.expansions)
-		return (free_n_return(buf, error_msg_return(MALLOC_ERROR_MSG)));
+		return (free_n_return(buf, error_malloc_msg()));
 	if (expansion_location_init(&info, &i) == ERR)
 		return (ERR);
 	if (expansion_scan_loop(&info, &i) == ERR)
@@ -100,7 +100,7 @@ t_res	dollar_scan(t_list **list, char **buf, char *str, int *idx)
 		free(*buf);
 		*buf = new_str("");
 		if (!buf)
-			return (error_msg_return(MALLOC_ERROR_MSG));
+			return (error_malloc_msg());
 		return (OK);
 	}
 	return (UNSET);

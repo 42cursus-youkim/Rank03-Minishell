@@ -5,7 +5,7 @@ t_res	metachar_attachable(char **pstr, char prev_c, char c)
 	if (prev_c != '|' && ft_strlen(*pstr) == 1 && c == prev_c)
 	{
 		if (ft_str_append(pstr, c) == ERR)
-			return (free_n_return(pstr, error_msg_return(MALLOC_ERROR_MSG)));
+			return (free_n_return(pstr, error_malloc_msg()));
 		return (OK);
 	}
 	return (UNSET);
@@ -15,11 +15,10 @@ t_res	metastr_init(t_metastr *metastr, char c)
 {
 	metastr->str = new_str((char []){c, '\0'});
 	if (!metastr->str)
-		return (error_msg_return(MALLOC_ERROR_MSG));
+		return (error_malloc_msg());
 	metastr->prev = new_str("");
 	if (!metastr->prev)
-		return (free_n_return(&metastr->str,
-				error_msg_return(MALLOC_ERROR_MSG)));
+		return (free_n_return(&metastr->str, error_malloc_msg()));
 	return (OK);
 }
 

@@ -32,14 +32,6 @@ int	tokens_n_pipeline_count(int *size, t_token tokens[])
 	return (count);
 }
 
-int	commands_size(int pipe_count)
-{
-	if (pipe_count)
-		return (pipe_count + 1);
-	else
-		return (1);
-}
-
 void	command_data_init(
 	t_command_data *data, t_token tokens[], int begin, int end)
 {
@@ -68,4 +60,16 @@ void	command_data_init(
 				data->num_suffix++;
 		}
 	}
+}
+
+int	ast_nodes_len(t_AST_NODE *nodes[])
+{
+	int	i;
+
+	if (!nodes)
+		return (ERR);
+	i = 0;
+	while (nodes[i])
+		i++;
+	return (i);
 }

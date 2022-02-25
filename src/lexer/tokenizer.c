@@ -1,45 +1,21 @@
 #include "minishell.h"
 
-static t_AST_type	tokentype_check(t_scan_node *node)
+t_res	quotes_remove_loop(char **new, char *last_quote, bool *open, char c)
 {
-	const char	*str = node->text;
-
-	if (is_str_equal(str, "|"))
-		return (PIPELINE);
-	if (is_str_equal(str, "<") || is_str_equal(str, "<<")
-		|| is_str_equal(str, ">") || is_str_equal(str, ">>"))
-		return (REDIRECT);
-	return (WORD);
-}
-
-void	tokens_print(t_token tokens[])
-{
-	int			i;
-	const char	*type_str[] = {
-		BWHT "💬 WORD", BBLU "🔗 PIPELINE",
-		BYEL "🔁 REDIRECT", BRED "🔥 COMMAND"};
-
-	i = -1;
-	while (tokens[++i].text)
+	if (!*open && is_quotechar(c))
 	{
-		printf("[%2d] %-12s" BGRN "\t%s\n" END,
-			i, type_str[tokens[i].type], tokens[i].text);
-		if (tokens[i].expansions)
-			expansions_print(tokens[i].expansions);
+		*open = true;
+		*last_quote = c;
+		return (OK);
 	}
-}
-
-void	del_tokens(t_token tokens[])
-{
-	int	i;
-
-	i = -1;
-	while (tokens[++i].text)
+	if (*open && *last_quote == c)
 	{
-		free(tokens[i].text);
-		del_ast_expansions(tokens[i].expansions);
+		*open = false;
+		return (OK);
 	}
-	free(tokens);
+	if (ft_str_append(new, c) == ERR)
+		return (free_n_return(new, error_malloc_msg()));
+	return (OK);
 }
 
 char	*new_quotes_remove(const char *str)
@@ -50,24 +26,33 @@ char	*new_quotes_remove(const char *str)
 	bool	open;
 
 	new = new_str("");
+	if (!new)
+	{
+		error_malloc_msg();
+		return (NULL);
+	}
 	open = false;
 	i = -1;
 	while (str[++i])
 	{
-		if (!open && is_quotechar(str[i]))
-		{
-			open = true;
-			last_quote = str[i];
-			continue ;
-		}
-		if (open && last_quote == str[i])
-		{
-			open = false;
-			continue ;
-		}
-		ft_str_append(&new, str[i]);
+		if (quotes_remove_loop(&new, &last_quote, &open, str[i]) == ERR)
+			return (NULL);
 	}
 	return (new);
+}
+
+t_res	node_tokenize(t_token *tokens[], t_scan_node *node, int i)
+{
+	if (!node->expansions)
+		(*tokens)[i].text = new_quotes_remove(node->text);
+	else
+		(*tokens)[i].text = new_str(node->text);
+	if (!(*tokens)[i].text)
+		return (error_malloc_msg());
+	(*tokens)[i].expansions = new_ast_expansions(node->expansions);
+	if (!(*tokens)[i].expansions)
+		return (error_malloc_msg());
+	return (OK);
 }
 
 t_token	*tokenizer(t_list *scan_list)
@@ -87,11 +72,12 @@ t_token	*tokenizer(t_list *scan_list)
 	{
 		node = (t_scan_node *)current->content;
 		tokens[i].type = tokentype_check(node);
-		if (!node->expansions)
-			tokens[i].text = new_quotes_remove(node->text);
-		else
-			tokens[i].text = new_str(node->text);
-		tokens[i].expansions = new_ast_expansions(node->expansions);
+		if (node_tokenize(&tokens, node, i) == ERR)
+		{
+			del_list(&scan_list, del_scan_node);
+			del_tokens(tokens);
+			return (NULL);
+		}
 		current = current->next;
 	}
 	del_list(&scan_list, del_scan_node);
