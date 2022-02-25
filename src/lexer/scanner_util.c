@@ -84,18 +84,18 @@ t_res	buf_to_list(t_list **list, char **buf)
 	return (OK);
 }
 
-t_res	whitespace_scan(t_list **list, char **buf, char *str, int *idx)
+t_res	whitespace_scan(t_list **list, t_scan_data *data)
 {
 	int	i;
 
-	i = *idx;
-	if (is_whitespace(str[i]) && !is_quotes_open(NULL, *buf))
+	i = data->idx;
+	if (is_whitespace(data->line[i]) && !is_quotes_open(NULL, data->buf))
 	{
-		if (buf_to_list(list, buf) == ERR)
+		if (buf_to_list(list, &data->buf) == ERR)
 			return (ERR);
-		while (is_whitespace(str[++i]))
+		while (is_whitespace(data->line[++i]))
 			;
-		*idx = --i;
+		data->idx = --i;
 		return (OK);
 	}
 	return (UNSET);

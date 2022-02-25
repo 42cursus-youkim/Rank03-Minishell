@@ -1,84 +1,91 @@
 #include "minishell.h"
 
+static t_res	metastr_append_error(t_metastr *metastr, t_scan_data *data)
+{
+	error_with_exitcode((char *[]){BRED, MINISHELL, SYNTAX_ERROR,
+		" `", metastr->str, "'\n", END, NULL}, data->env, 2);
+	data->env_flag = true;
+	return (free_arr_n_return((char *[]){
+			metastr->prev, metastr->str, NULL}, ERR));
+}
+
 static t_res	metastr_append(
-	t_list **list, char **prev_pstr, char **pstr, char c)
+	t_list **list, t_metastr *metastr, char c, t_scan_data *data)
 {
 	t_list	*list_element;
 
-	if (is_prev_metachar_attachable(*prev_pstr))
+	if (is_prev_metachar_attachable(metastr->prev))
 	{
-		if (list_element_create(&list_element, *pstr, NULL) == ERR)
+		if (list_element_create(&list_element, metastr->str, NULL) == ERR)
 			return (free_arr_n_return(
-					(char *[]){*prev_pstr, *pstr, NULL}, ERR));
+					(char *[]){metastr->prev, metastr->str, NULL}, ERR));
 		ft_list_append(list, list_element);
 		if (!c)
 			return (UNSET);
-		free(*prev_pstr);
-		*prev_pstr = *pstr;
-		*pstr = new_str((char []){c, '\0'});
-		if (!*pstr)
-			return (free_n_return(prev_pstr, error_malloc_msg()));
+		free(metastr->prev);
+		metastr->prev = metastr->str;
+		metastr->str = new_str((char []){c, '\0'});
+		if (!metastr->str)
+			return (free_n_return(&metastr->prev, error_malloc_msg()));
 		return (OK);
 	}
 	else
-	{
-		error_msg_return((char *[]){BRED, MINISHELL, SYNTAX_ERROR,
-			" `", *pstr, "'\n", END, NULL});
-		return (free_arr_n_return((char *[]){*prev_pstr, *pstr, NULL}, ERR));
-	}
+		return (metastr_append_error(metastr, data));
 }
 
 static t_res	metachar_last_check(
-	t_list **list, char *str, int *idx, t_metastr *metastr)
+	t_list **list, t_scan_data *data, t_metastr *metastr)
 {
 	t_list	*list_element;
 
-	if (str[metastr->i] && is_prev_metachar_attachable(metastr->prev))
+	if (data->line[metastr->i] && is_prev_metachar_attachable(metastr->prev))
 	{
 		if (list_element_create(&list_element, metastr->str, NULL) == ERR)
 			return (free_arr_n_return(
 					(char *[]){metastr->prev, metastr->str, NULL}, ERR));
 		ft_list_append(list, list_element);
 	}
-	*idx = --(metastr->i);
+	data->idx = --(metastr->i);
 	free(metastr->str);
 	free(metastr->prev);
 	return (OK);
 }
 
-static t_res	metachar_valid_check(t_list **list, char *str, int *idx)
+static t_res	metachar_valid_check(t_list **list, t_scan_data *data)
 {
 	t_metastr	metastr;
 	t_res		res;
 
-	metastr.i = *idx;
-	if (metastr_init(&metastr, str[metastr.i]) == ERR)
+	metastr.i = data->idx;
+	if (metastr_init(&metastr, data->line[metastr.i]) == ERR)
 		return (ERR);
-	while (is_metachar(str[++metastr.i]) || !str[metastr.i])
+	while (is_metachar(data->line[++metastr.i]) || !data->line[metastr.i])
 	{
 		res = metachar_attachable(
-				&metastr.str, str[metastr.i - 1], str[metastr.i]);
+				&metastr.str, data->line[metastr.i - 1], data->line[metastr.i]);
 		if (res == OK)
 			continue ;
 		if (res == ERR)
 			return (free_n_return(&metastr.prev, ERR));
-		res = metastr_append(list, &metastr.prev, &metastr.str, str[metastr.i]);
+		res = metastr_append(
+				list, &metastr, data->line[metastr.i], data);
 		if (res == UNSET)
 			break ;
 		if (res == ERR)
 			return (ERR);
 	}
-	return (metachar_last_check(list, str, idx, &metastr));
+	return (metachar_last_check(list, data, &metastr));
 }
 
-t_res	metachar_scan(t_list **list, char **buf, char *str, int *idx)
+t_res	metachar_scan(t_list **list, t_scan_data *data)
 {
-	if (is_metachar(str[*idx]) && !is_quotes_open(NULL, *buf))
+	if (is_metachar(data->line[data->idx])
+		&& !is_quotes_open(NULL, data->buf))
 	{
-		if (buf_to_list(list, buf) == ERR)
+		if (buf_to_list(list, &data->buf) == ERR)
 			return (ERR);
-		if (metachar_valid_check(list, str, idx) == ERR)
-			return (free_n_return(buf, ERR));
+		if (metachar_valid_check(list, data) == ERR)
+			return (free_n_return(&data->buf, ERR));
 		return (OK);
 	}
 	return (UNSET);

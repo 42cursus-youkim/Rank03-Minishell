@@ -32,15 +32,18 @@ static void	prompt_run_line(char *line, t_shell *shell)
 	t_token			*tokens;
 	t_AST_SCRIPT	*script;
 
-	tokens = lexer(line);
+	tokens = lexer(line, shell->env);
 	free(line);
 	if (!tokens)
 		return ;
 	script = parser(tokens);
 	if (!script)
+	{
+		env_set_exitcode(shell->env, EXIT_FAILURE);
 		return ((void)error_malloc_msg());
+	}
 	if (expander(script, shell->env) == ERR)
-		return ;
+		return ((void)env_set_exitcode(shell->env, EXIT_FAILURE));
 	shell_replace_script(shell, script);
 	if (DEBUG)
 		ast_script_repr(shell->script);

@@ -26,6 +26,7 @@ t_res			expander(t_AST_SCRIPT *script, t_dict *env);
 ** < expander2.c > */
 
 t_res			expansions_to_array(char **parr[], t_AST_NODE *node);
+bool			is_substitution_valid(char *str);
 /*
 ** < new1.c > */
 
