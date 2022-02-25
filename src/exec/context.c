@@ -2,7 +2,7 @@
 
 void	context_init(t_context *context, t_AST_COMMAND *cmd, t_dict *env)
 {
-	cmd_connect_redirects(cmd);
+	// cmd_connect_redeirects(cmd);
 	context->executable = new_executable_from_env(cmd->name->text, env);
 	context->argv = new_argv_from_cmd(context->executable, cmd);
 	context->envp = new_env_to_envp(env);

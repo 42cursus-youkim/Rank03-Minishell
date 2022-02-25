@@ -11,7 +11,7 @@ void	child_proc_exec(t_AST_COMMAND *cmd, t_shell *shell)
 	api_exit(shell, EXIT_FAILURE);
 }
 
-static void	child_proc(t_shell *shell, int index)
+void	child_proc(t_shell *shell, int index)
 {
 	t_AST_COMMAND	*cmd;
 	char			*text;
@@ -25,12 +25,12 @@ static void	child_proc(t_shell *shell, int index)
 		return ((void)child_proc_exec(cmd, shell));
 	else
 	{
-		printf("cannot find executable %s\n", text);
+		printf(RED "cannot find executable %s\n" END, text);
 		api_exit(shell, EXIT_FAILURE);
 	}
 }
 
-static int	parent_proc(pid_t pid, t_dict *env)
+int	parent_proc(pid_t pid, t_dict *env)
 {
 	int	status;
 	int	exitcode;
@@ -39,9 +39,7 @@ static int	parent_proc(pid_t pid, t_dict *env)
 	exitcode = api_handle_status(status);
 	env_set_exitcode(env, exitcode);
 	if (exitcode == OK)
-	{
 		return (OK);
-	}
 	else
 	{
 		printf(BRED "exitcode: %d\n" END, exitcode);

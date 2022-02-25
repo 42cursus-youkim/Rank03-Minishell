@@ -49,6 +49,8 @@ static void	prompt_run_line(char *line, t_shell *shell)
 	shell_open_redirects(shell);
 	if (is_ast_command(shell->script))
 		api_exec_cmd_at(shell, 0);
+	else if (is_ast_pipeline(shell->script))
+		api_exec_pipe(shell);
 	shell_clear_script(shell);
 }
 

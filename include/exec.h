@@ -25,7 +25,14 @@ void	del_context(t_context *context);
 ** < exec.c > */
 
 void	child_proc_exec(t_AST_COMMAND *cmd, t_shell *shell);
+void	child_proc(t_shell *shell, int index);
+int		parent_proc(pid_t pid, t_dict *env);
 int		api_exec_cmd_at(t_shell *shell, int index);
+/*
+** < pipe.c > */
+
+t_res	api_exec_pipe_at(t_shell *shell, int index);
+int		api_exec_pipe(t_shell *shell);
 /*
 ** < util.c > */
 
