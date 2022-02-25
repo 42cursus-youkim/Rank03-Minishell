@@ -42,11 +42,15 @@ void	shell_open_redirects(t_shell *shell);
 
 void	shell_clear_script(t_shell *shell);
 void	shell_replace_script(t_shell *shell, t_AST_SCRIPT *script);
+int		shell_exec_script(t_shell *shell);
 void	shell_init(t_shell *shell, char *envp[]);
 void	del_shell(t_shell *shell);
-void	api_exit(t_shell *shell, int exitcode);
 /*
 ** < signal.c > */
 
 int		api_handle_status(int status);
+/*
+** < util.c > */
+
+void	api_exit(t_shell *shell, int exitcode);
 #endif

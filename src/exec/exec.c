@@ -38,13 +38,7 @@ int	parent_proc(pid_t pid, t_dict *env)
 	waitpid(pid, &status, 0);
 	exitcode = api_handle_status(status);
 	env_set_exitcode(env, exitcode);
-	if (exitcode == OK)
-		return (OK);
-	else
-	{
-		printf(BRED "exitcode: %d\n" END, exitcode);
-		return (exitcode);
-	}
+	return (exitcode);
 }
 
 int	api_exec_cmd_at(t_shell *shell, int index)

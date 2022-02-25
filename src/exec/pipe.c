@@ -26,6 +26,7 @@ int	api_exec_pipe(t_shell *shell)
 {
 	int			i;
 	pid_t		pid;
+	int			exitcode;
 	t_fd		pipefd[PIPE_SIZE];
 	const int	len = shell->script->commands_len;
 
@@ -36,8 +37,8 @@ int	api_exec_pipe(t_shell *shell)
 		i = -1;
 		while (++i < len - 1)
 			api_exec_pipe_at(shell, i);
-		api_exec_cmd_at(shell, i);
-		api_exit(shell, EXIT_SUCCESS);
+		exitcode = api_exec_cmd_at(shell, i);
+		api_exit(shell, exitcode);
 	}
 	else if (is_parent(pid))
 		return (parent_proc(pid, shell->env));
