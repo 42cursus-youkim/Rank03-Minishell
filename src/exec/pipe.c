@@ -1,6 +1,8 @@
 #include "minishell.h"
 
-
+/*	pids are malloced and then forked,
+	therefore must be freed INSIDE CHILD process  too
+*/
 t_res	api_exec_pipe_at(t_shell *shell, int index, int pids[])
 {
 	pid_t		pid;
@@ -11,15 +13,15 @@ t_res	api_exec_pipe_at(t_shell *shell, int index, int pids[])
 	pid = fork();
 	if (is_child(pid))
 	{
-		if (index < len - 1)
+		free(pids);
+		if (!is_pipe_last(index, len))
 			send_output_to_pipe(pipefd);
 		child_proc(shell, index);
-		close(pipefd[PIPE_WRITE]);
 	}
 	else if (is_parent(pid))
 	{
 		pids[index] = pid;
-		if (index < len -1)
+		if (!is_pipe_last(index, len))
 			receive_input_from_pipe(pipefd);
 	}
 	else

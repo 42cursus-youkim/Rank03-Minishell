@@ -38,6 +38,7 @@ int		api_exec_pipe(t_shell *shell);
 
 bool	is_parent(pid_t pid);
 bool	is_child(pid_t pid);
+bool	is_pipe_last(int index, int length);
 void	send_output_to_pipe(t_fd pipefd[PIPE_SIZE]);
 void	receive_input_from_pipe(t_fd pipefd[PIPE_SIZE]);
 #endif
