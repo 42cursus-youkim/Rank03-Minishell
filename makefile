@@ -25,7 +25,7 @@ lexerV   := lexer expansion util util2 \
 			tokenizer tokenizer_util
 parserV  := parser new1 new2 del util1 util2 expander1 expander2
 promptV  := prompt interrupt util
-apiV     := shell heredoc redirect signal path file
+apiV     := shell redirect signal path file
 execV    := context exec pipe argv util
 builtinV := builtin echo env1 env2 util
 treeV    := repr1 repr2

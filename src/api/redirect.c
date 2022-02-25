@@ -1,40 +1,32 @@
 #include "minishell.h"
-// static void	redirect_output(t_AST_NODE *redirect)
-// {
-// 	int		fd;
 
-// 	if (api_open(&fd, redirect) == ERR)
-// 		return ;
-// 	dup2(fd, STDOUT_FILENO);
-// }
+/*	get input for heredoc
+	returns opened fd that points to it
+*/
+static t_fd	shell_heredoc(char *ps, const char *eof)
+{
+	char	*line;
+	t_fd	pipefd[PIPE_SIZE];
 
-// static void	redirect_input(t_AST_NODE *redirect)
-// {
-// 	int		fd;
-
-// 	if (api_open(&fd, redirect) == ERR)
-// 		return ;
-// 	dup2(STDIN_FILENO, fd);
-// }
-
-// void	api_create_redirect(t_AST_NODE *redirect)
-// {
-// 	const t_redirect_op	op = redirect->op;
-
-// 	if (op == NOT_REDIR)
-// 		return ;
-// 	else if (op == REDIR_OUTPUT || op == REDIR_OUTPUT_APPEND)
-// 		redirect_output(redirect);
-// 	else if (op == REDIR_INPUT)
-// 		redirect_input(redirect);
-// 	else if (op == REDIR_HEREDOC || op == REDIR_HEREDOC_UNSET)
-// 		printf(RED "Not implemented" END);
-// }
-
-// void	api_open_redirect(t_AST_NODE *node, t_AST_COMMAND *cmd)
-// {
-
-// }
+	if (pipe(pipefd) == ERR)
+		return (ERR);
+	while (true)
+	{
+		line = readline(ps);
+		if (is_str_equal(line, eof))
+		{
+			free(line);
+			break ;
+		}
+		else
+		{
+			ft_writes(pipefd[PIPE_WRITE], (char *[]){line, "\n", NULL});
+			free(line);
+		}
+	}
+	close(pipefd[PIPE_WRITE]);
+	return (pipefd[PIPE_READ]);
+}
 
 /*	currently:
 	REDIR_INPUT = 0,
