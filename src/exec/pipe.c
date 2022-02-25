@@ -15,7 +15,7 @@ t_res	api_exec_pipe_at(t_shell *shell, int index)
 	else if (is_parent(pid))
 	{
 		receive_input_from_pipe(pipefd);
-		return (parent_proc(pid, shell->env));
+		// return (parent_proc(pid, shell->env));
 	}
 	else
 		printf(RED "fork error\n" END);
@@ -30,6 +30,8 @@ int	api_exec_pipe(t_shell *shell)
 	t_fd		pipefd[PIPE_SIZE];
 	const int	len = shell->script->commands_len;
 
+	int status;
+
 	pipe(pipefd);
 	pid = fork();
 	if (is_child(pid))
@@ -37,7 +39,12 @@ int	api_exec_pipe(t_shell *shell)
 		i = -1;
 		while (++i < len - 1)
 			api_exec_pipe_at(shell, i);
-		exitcode = api_exec_cmd_at(shell, i);
+		api_exec_cmd_at(shell, i);
+		i = -1;
+		while (++i < len)
+			waitpid(-1, &status, 0);
+		exitcode = api_handle_status(status);
+		env_set_exitcode(shell->env, exitcode);
 		api_exit(shell, exitcode);
 	}
 	else if (is_parent(pid))
