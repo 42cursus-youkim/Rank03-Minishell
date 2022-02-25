@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-void	child_proc_exec(t_AST_COMMAND *cmd, t_shell *shell)
+//	Used by child_proc
+void	any_exec(t_AST_COMMAND *cmd, t_shell *shell)
 {
 	t_context	context;
 
@@ -18,11 +19,10 @@ void	child_proc(t_shell *shell, int index)
 
 	cmd = shell->script->commands[index];
 	text = cmd->name->text;
-	// if (is_builtin(text))
-	// 	printf("will do it later\n");
-		// return ((void)builtins_exec(cmd, shell));
+	if (is_builtin(text))
+		return ((void)builtins_exec(cmd, shell));
 	if (is_executable_exists(text, shell->env))
-		return ((void)child_proc_exec(cmd, shell));
+		return ((void)any_exec(cmd, shell));
 	else
 	{
 		printf(RED "cannot find executable %s\n" END, text);
