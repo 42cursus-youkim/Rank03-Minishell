@@ -9,6 +9,7 @@ void	builtin_cd(t_context *context, t_shell *shell)
 	}
 	//	TODO: check path is valid
 	printf("new pwd: %s\n", context->argv[1]);
-	chdir(context->argv[1]);
+	if (chdir(context->argv[1]) == ERR)
+		error_syscall("cd");
 	dict_set(shell->env, "PWD", getcwd(NULL, 0));
 }
