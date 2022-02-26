@@ -48,7 +48,7 @@ int			builtin_pwd(t_context *context, t_shell *shell);
 /*
 ** < unset.c > */
 
-void		builtin_unset();
+int			builtin_unset(t_context *context, t_shell *shell);
 /*
 ** < util.c > */
 

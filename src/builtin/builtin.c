@@ -1,14 +1,5 @@
 #include "minishell.h"
 
-static int	TODO(t_context *context, t_shell *shell)
-{
-	(void)context;
-	(void)shell;
-	printf(BBLU "TODO\n" END);
-	return (EXIT_BUILTINS_ERR);
-}
-
-
 //	does not use fork
 int	builtin_run(t_AST_COMMAND *cmd, t_shell *shell)
 {
@@ -20,9 +11,8 @@ int	builtin_run(t_AST_COMMAND *cmd, t_shell *shell)
 		builtin_cd,
 		builtin_pwd,
 		builtin_export,
-		TODO, // builtin_unset,
+		builtin_unset,
 		builtin_env,
-		TODO, // builtin_exit
 	};
 
 	if (builtin == BUILTIN_EXIT)
