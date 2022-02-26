@@ -1,19 +1,47 @@
 #include "minishell.h"
 
+bool	is_opt_nonewline_valid(char *str, bool *is_newline_p)
+{
+	int	i;
+
+	if (str[0] != '-')
+		return (false);
+	i = 0;
+	while (str[++i])
+		if (str[i] != 'n')
+			return (false);
+	*is_newline_p = false;
+	return (true);
+}
+
+void	echo_inner(int i, int len, char *str)
+{
+	ft_write(STDOUT_FILENO, str);
+	if (i != len)
+		ft_write(STDOUT_FILENO, " ");
+}
+
 void	builtin_echo(t_context *context)
 {
 	int			i;
 	const int	len = ft_arr_len(context->argv) - 1;
-	// bool	is_newline;
+	bool		is_newline;
+	bool		is_listen_opt;
 
+	is_newline = true;
+	is_listen_opt = true;
 	if (len == ERR)
 		return ;
 	i = 0;
-	while (++i <= len)
+	while (++i <= len && is_listen_opt)
 	{
-		ft_write(STDOUT_FILENO, context->argv[i]);
-		if (i != len)
-			ft_write(STDOUT_FILENO, " ");
+		is_listen_opt = is_opt_nonewline_valid(context->argv[i], &is_newline);
+		if (!is_listen_opt)
+			echo_inner(i, len, context->argv[i]);
 	}
-	ft_write(STDOUT_FILENO, "\n");
+	--i;
+	while (++i <= len)
+		echo_inner(i, len, context->argv[i]);
+	if (is_newline)
+		ft_write(STDOUT_FILENO, "\n");
 }

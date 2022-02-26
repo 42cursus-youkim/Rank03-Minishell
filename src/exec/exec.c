@@ -25,7 +25,6 @@ void	child_proc(t_shell *shell, int index)
 		return ((void)any_exec(cmd, shell));
 	else
 	{
-		// error_msg_return((char *[]){BRED, MINISHELL, NULL})
 		printf(RED "cannot find executable %s\n" END, text);
 		api_exit(shell, EXIT_COMMAND_NOT_IN_PATH);
 	}
