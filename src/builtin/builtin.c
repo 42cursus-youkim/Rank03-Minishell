@@ -19,7 +19,7 @@ int	builtin_run(t_AST_COMMAND *cmd, t_shell *shell)
 		builtin_echo,
 		builtin_cd,
 		builtin_pwd,
-		TODO, // builtin_export,
+		builtin_export,
 		TODO, // builtin_unset,
 		builtin_env,
 		TODO, // builtin_exit

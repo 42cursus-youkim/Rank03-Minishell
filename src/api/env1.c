@@ -40,3 +40,22 @@ char	**new_env_to_envp(t_dict *env)
 	}
 	return (envp);
 }
+
+void	env_print(t_dict *env)
+{
+	int		id;
+	t_ditem	*item;
+	t_ditem	**items;
+
+	items = new_dict_kv_ordered(env);
+	if (!items)
+		return ;
+	id = -1;
+	while (++id < env->size)
+	{
+		item = items[id];
+		printf(BHYEL "%-s" END "=" HGRN "%s\n" END,
+			item->key, (char *)item->value);
+	}
+	free(items);
+}
