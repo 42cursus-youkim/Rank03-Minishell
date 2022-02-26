@@ -29,7 +29,7 @@
 # include "exec.h"
 # include "builtin.h"
 # include "tree.h"
-# include "error.h"
+# include "errormsg.h"
 
 # define DEBUG 0
 // # include "get_next_line.h"

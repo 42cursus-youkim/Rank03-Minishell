@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_builtin	which_builtin(char *str)
+t_builtin	which_builtin(const char *str)
 {
 	int			i;
 	const char	*builtins[] = {
@@ -14,13 +14,18 @@ t_builtin	which_builtin(char *str)
 	};
 
 	i = -1;
-	while (++i < 6)
+	while (++i < 7)
 		if (is_str_equal(builtins[i], str))
 			return (i);
 	return (ERR);
 }
 
-bool	is_builtin(char *str)
+bool	is_builtin(const char *str)
 {
 	return ((int)which_builtin(str) != ERR);
+}
+
+bool	is_opt(char *str)
+{
+	return (ft_strlen(str) > 1 && str[0] == '-');
 }

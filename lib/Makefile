@@ -16,13 +16,14 @@ HGEN     := hgen
 TEST     := test
 
 # ===== Packages =====
-PKGS     := string dict system ft_math list
+PKGS     := ft_string dict system ft_math list error
 
-stringV  := new util util2 array array2 split join
-dictV    := new del util hash set get expand print status
+ft_stringV  := new util util2 array array2 split join
+dictV    := new del util hash set get drop expand print status
 systemV  := calloc write
 ft_mathV := math
 listV    := list
+errorV   := error
 
 # ===== Macros =====
 define choose_modules

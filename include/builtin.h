@@ -12,23 +12,47 @@ typedef enum e_builtin
 	BUILTIN_EXIT
 }	t_builtin;
 
+typedef int(*t_builtinfunc_f)(t_context *context, t_shell *shell);
+
 //@func
 /*
-** < env1.c > */
+** < builtin.c > */
 
-t_dict		*new_env(char *envp[]);
-void		del_env(t_dict *env);
-char		**new_env_to_envp(t_dict *env);
+int			builtin_run(t_AST_COMMAND *cmd, t_shell *shell);
 /*
-** < env2.c > */
+** < cd.c > */
 
-void		env_set_exitcode(t_dict *env, int exitcode);
-void		env_set(t_dict *env, char *str);
-char		*env_get(t_dict *env, char *key);
-void		env_print(t_dict *env);
+int			builtin_cd(t_context *context, t_shell *shell);
+/*
+** < checks.c > */
+
+t_res		check_no_opt(char *argv[], char *category);
+t_res		check_arg_no_more_than( char *argv[], char *category, int max);
+t_res		check_no_opt_arg(char *argv[], char *category);
+/*
+** < echo.c > */
+
+int			builtin_echo(t_context *context, t_shell *shell);
+/*
+** < env.c > */
+
+int			builtin_env(t_context *context, t_shell *shell);
+/*
+** < export.c > */
+
+int			builtin_export(t_context *context, t_shell *shell);
+/*
+** < pwd.c > */
+
+int			builtin_pwd(t_context *context, t_shell *shell);
+/*
+** < unset.c > */
+
+int			builtin_unset(t_context *context, t_shell *shell);
 /*
 ** < util.c > */
 
-t_builtin	which_builtin(char *str);
-bool		is_builtin(char *str);
+t_builtin	which_builtin(const char *str);
+bool		is_builtin(const char *str);
+bool		is_opt(char *str);
 #endif

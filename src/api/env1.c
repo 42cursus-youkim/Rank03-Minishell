@@ -6,6 +6,7 @@ t_dict	*new_env(char *envp[])
 	t_dict	*env;
 
 	env = new_dict(free);
+	env->exitcode = EXIT_SUCCESS;
 	env->exitcode_str = new_itoa(EXIT_SUCCESS);
 	i = -1;
 	while (envp[++i])
@@ -38,4 +39,25 @@ char	**new_env_to_envp(t_dict *env)
 				item->key, item->value, NULL}, '=');
 	}
 	return (envp);
+}
+
+void	env_print(t_dict *env)
+{
+	int		id;
+	t_ditem	*item;
+	t_ditem	**items;
+
+	items = new_dict_kv_ordered(env);
+	if (!items)
+		return ;
+	id = -1;
+	while (++id < env->size)
+	{
+		item = items[id];
+		if (!item || !item->key)
+			continue ;
+		printf(BHYEL "%-s" END "=" HGRN "%s\n" END,
+			item->key, (char *)item->value);
+	}
+	free(items);
 }

@@ -13,11 +13,12 @@ LIBFT    := lib/libft.a
 # ===== Test & Debugging =====
 DFLAGS	 :=  -g #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
 VFLAGS   := --leak-check=full --show-leak-kinds=all \
-			--track-origins=yes --suppressions=./supp.txt
+			--track-origins=yes --suppressions=./supp_mac.txt \
+			--suppressions=./supp.txt
 HGEN     := hgen
 
 # ===== Packages =====
-PKGS     := prompt lexer parser exec api builtin tree error
+PKGS     := prompt lexer parser exec api builtin tree errormsg
 
 lexerV   := lexer expansion util util2 \
 			scanner scanner_list scanner_util \
@@ -25,11 +26,11 @@ lexerV   := lexer expansion util util2 \
 			tokenizer tokenizer_util
 parserV  := parser new1 new2 del util1 util2 expander1 expander2
 promptV  := prompt interrupt util
-apiV     := shell redirect signal path file util
+apiV     := shell redirect signal path file util env1 env2
 execV    := context exec pipe argv util
-builtinV := builtin echo env1 env2 util
+builtinV := builtin cd echo env export unset pwd util checks
 treeV    := repr1 repr2
-errorV   := error
+errormsgV:= error
 
 # ===== Macros =====
 define choose_modules

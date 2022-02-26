@@ -25,6 +25,7 @@ typedef struct s_ditem
 
 typedef struct s_dict
 {
+	int		exitcode;
 	char	*exitcode_str;
 	int		size;
 	int		capacity;
@@ -37,8 +38,12 @@ typedef struct s_dict
 ** < del.c > */
 
 void		no_free(void *data);
-void		del_ditem(t_dict *dict, int id);
+t_res		del_ditem(t_dict *dict, int id);
 void		del_dict(t_dict *dict);
+/*
+** < drop.c > */
+
+t_res		dict_drop(t_dict *dict, char *key);
 /*
 ** < expand.c > */
 

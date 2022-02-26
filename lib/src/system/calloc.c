@@ -8,7 +8,10 @@ void	*ft_calloc(size_t size, size_t count)
 
 	ptr = malloc(allocated_space);
 	if (!ptr)
+	{
+		error_syscall("fd_calloc");
 		return (NULL);
+	}
 	i = 0;
 	while (i < allocated_space)
 		ptr[i++] = 0;

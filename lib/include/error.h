@@ -1,6 +1,9 @@
 #ifndef ERROR_H
 # define ERROR_H
 
+# include <errno.h>
+# include <string.h>
+
 # define MINISHELL			"minishell: "
 # define SYNTAX_ERROR		"syntax error near unexpected token"
 # define QUOTE_ERROR		"unclosed quote: "
@@ -13,7 +16,5 @@
 /*
 ** < error.c > */
 
-t_res	error_msg_return(char *message[]);
-t_res	error_malloc_msg(void);
-t_res	error_with_exitcode(char *message[], t_dict *env, int exitcode);
+t_res	error_syscall(char *category);
 #endif
