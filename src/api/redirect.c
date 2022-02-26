@@ -60,7 +60,6 @@ t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect, t_shell *shell)
 	return (OK);
 }
 
-//	TODO: refactor later, this is very dirty
 void	cmd_try_open_redirect(
 	t_AST_NODE *node, t_AST_COMMAND *cmd, t_shell *shell)
 {
@@ -77,7 +76,6 @@ void	cmd_try_open_redirect(
 	api_open(fd_p, node, shell);
 }
 
-//	TODO: move functions below to suitable place?
 /*	Opens fd, save to cmd and create file if needed
 	does NOT connect fd to STDIN/STDOUT,
 	that's done on command execution

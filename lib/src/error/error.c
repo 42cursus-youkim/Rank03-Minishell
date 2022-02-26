@@ -8,7 +8,7 @@ t_res	error_msg_return(char *message[])
 
 	i = -1;
 	while (++i < len)
-		printf("%s", message[i]);
+		ft_write(STDERR_FILENO, message[i]);
 	return (ERR);
 }
 
