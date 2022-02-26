@@ -1,5 +1,20 @@
 #include "minishell.h"
 
+static t_res	parameter_substitution(
+	char **parr[], t_AST_NODE *node, t_dict *env, int i)
+{
+	if (!is_substitution_valid((*parr)[i]))
+	{
+		error_msg_return((char *[]){
+			BRED, MINISHELL, (*parr)[i], SUBSTITUTION_ERROR, END, NULL});
+		return (ERR);
+	}
+	if (ft_str_replace(&(*parr)[i], new_str(
+			env_get(env, node->expansions[i >> 1]->parameter))) == ERR)
+		return (error_malloc_msg());
+	return (OK);
+}
+
 static t_res	word_expansion(char **parr[], t_AST_NODE *node, t_dict *env)
 {
 	int		i;
@@ -9,9 +24,8 @@ static t_res	word_expansion(char **parr[], t_AST_NODE *node, t_dict *env)
 	while ((*parr)[++i])
 	{
 		if (i % 2)
-			if (ft_str_replace(&(*parr)[i], new_str(
-					env_get(env, node->expansions[i >> 1]->parameter))) == ERR)
-				return (error_malloc_msg());
+			if (parameter_substitution(parr, node, env, i) == ERR)
+				return (ERR);
 	}
 	temp_str = new_str_join(*parr, '\0');
 	if (!temp_str)

@@ -10,12 +10,11 @@
 # define BRACE_ERROR		"unclosed brace: "
 # define MULTILINE_ERROR	"multiline is not supported :(\n"
 # define MALLOC_ERROR		"failed to allocate memory :(\n"
+# define SUBSTITUTION_ERROR	": bad substitution\n"
 
 //@func
 /*
 ** < error.c > */
 
-t_res	error_msg_return(char *message[]);
-t_res	error_malloc_msg(void);
 void	error_syscall(char *category);
 #endif

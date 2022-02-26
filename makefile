@@ -17,7 +17,7 @@ VFLAGS   := --leak-check=full --show-leak-kinds=all \
 HGEN     := hgen
 
 # ===== Packages =====
-PKGS     := prompt lexer parser exec api builtin tree
+PKGS     := prompt lexer parser exec api builtin tree errormsg
 
 lexerV   := lexer expansion util util2 \
 			scanner scanner_list scanner_util \
@@ -29,6 +29,7 @@ apiV     := shell redirect signal path file util
 execV    := context exec pipe argv util
 builtinV := builtin cd echo env1 env2 pwd util
 treeV    := repr1 repr2
+errormsgV:= error
 
 # ===== Macros =====
 define choose_modules

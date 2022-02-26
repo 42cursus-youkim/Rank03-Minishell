@@ -1,39 +1,41 @@
 #include "minishell.h"
 
-static bool	is_pipeline_token_valid(t_AST_type type[])
+static bool	is_pipeline_token_valid(t_AST_type type[], t_dict *env)
 {
 	if (type[1] == PIPELINE && (type[0] != WORD || type[2] == PIPELINE))
 	{
-		error_msg_return(
-			(char *[]){BRED, MINISHELL, SYNTAX_ERROR, " `|'\n", END, NULL});
+		error_with_exitcode(
+			(char *[]){BRED, MINISHELL, SYNTAX_ERROR, " `|'\n", END, NULL},
+			env, 2);
 		return (false);
 	}
 	if (type[1] == PIPELINE && type[2] == TYPE_END)
 	{
-		error_msg_return(
+		error_with_exitcode(
 			(char *[]){
 			BRED, MINISHELL, SYNTAX_ERROR, " `|'\n",
-			MULTILINE_ERROR, END, NULL});
+			MULTILINE_ERROR, END, NULL}, env, 2);
 		return (false);
 	}
 	return (true);
 }
 
-static bool	is_redirect_token_valid(t_AST_type type[], char *str)
+static bool	is_redirect_token_valid(t_AST_type type[], char *str, t_dict *env)
 {
 	if (type[1] == REDIRECT && type[0] == REDIRECT)
 	{
-		error_msg_return(
+		error_with_exitcode(
 			(char *[]){
-			BRED, MINISHELL, SYNTAX_ERROR, " `", str, "'\n", END, NULL});
+			BRED, MINISHELL, SYNTAX_ERROR, " `", str, "'\n", END, NULL},
+			env, 2);
 		return (false);
 	}
 	if ((type[0] == REDIRECT && type[1] == TYPE_END)
 		|| (type[1] == REDIRECT && type[2] == TYPE_END))
 	{
-		error_msg_return(
+		error_with_exitcode(
 			(char *[]){
-			BRED, MINISHELL, SYNTAX_ERROR, " `newline'\n", END, NULL});
+			BRED, MINISHELL, SYNTAX_ERROR, " `newline'\n", END, NULL}, env, 2);
 		return (false);
 	}
 	return (true);
@@ -52,7 +54,7 @@ static void	type_arr_init(t_AST_type type[3], t_token tokens[], int i)
 		type[2] = TYPE_END;
 }
 
-static bool	is_tokens_valid(t_token tokens[])
+static bool	is_tokens_valid(t_token tokens[], t_dict *env)
 {
 	int			i;
 	t_AST_type	type[3];
@@ -61,28 +63,31 @@ static bool	is_tokens_valid(t_token tokens[])
 	while (tokens[++i].text)
 	{
 		type_arr_init(type, tokens, i);
-		if (!is_pipeline_token_valid(type)
-			|| !is_redirect_token_valid(type, tokens[i].text))
+		if (!is_pipeline_token_valid(type, env)
+			|| !is_redirect_token_valid(type, tokens[i].text, env))
 			return (false);
 	}
 	return (true);
 }
 
-t_token	*lexer(char *line)
+t_token	*lexer(char *line, t_dict *env)
 {
 	t_list	*scan_list;
 	t_token	*tokens;
 
 	scan_list = NULL;
 	tokens = NULL;
-	if (scanner(&scan_list, line) == ERR)
+	if (scanner(&scan_list, line, env) == ERR)
 		del_list(&scan_list, del_scan_node);
 	else
 	{
 		tokens = tokenizer(scan_list);
 		if (!tokens)
+		{
+			env_set_exitcode(env, EXIT_FAILURE);
 			return (NULL);
-		if (!is_tokens_valid(tokens))
+		}
+		if (!is_tokens_valid(tokens, env))
 		{
 			del_tokens(tokens);
 			return (NULL);
