@@ -16,6 +16,6 @@
 /*
 ** < error.c > */
 
-void	error_msg_category(char *category, char *msg);
-void	error_syscall(char *category);
+t_res	error_msg_category(char *category, char *msg);
+t_res	error_syscall(char *category);
 #endif

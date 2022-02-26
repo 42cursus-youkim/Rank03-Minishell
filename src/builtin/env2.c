@@ -25,7 +25,6 @@ char	*env_get(t_dict *env, char *key)
 	return (dict_get_default(env, key, ""));
 }
 
-
 void	env_print(t_dict *env)
 {
 	int		id;
@@ -48,5 +47,7 @@ void	env_print(t_dict *env)
 void	builtin_env(t_context *context, t_shell *shell)
 {
 	(void)context;
+	if (check_no_opt_arg(context->argv, "env") != OK)
+		return ;
 	env_print(shell->env);
 }

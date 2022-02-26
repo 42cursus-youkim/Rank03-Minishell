@@ -2,11 +2,9 @@
 
 void	builtin_cd(t_context *context, t_shell *shell)
 {
-	if (ft_arr_len(context->argv) != 1 + 1)
-	{
-		error_msg_category("cd", "too many arguments");
+	if (check_no_opt(context->argv, "cd") != OK
+		|| check_arg_no_more_than(context->argv, "cd", 1) != OK)
 		return ;
-	}
 	if (chdir(context->argv[1]) == ERR)
 		error_syscall("cd");
 	dict_set(shell->env, "PWD", getcwd(NULL, 0));

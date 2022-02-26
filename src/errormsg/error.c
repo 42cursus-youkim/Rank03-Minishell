@@ -22,3 +22,14 @@ t_res	error_with_exitcode(char *message[], t_dict *env, int exitcode)
 	env_set_exitcode(env, exitcode);
 	return (error_msg_return(message));
 }
+
+t_res	error_msg_bad_opt(char *category, char *opt)
+{
+	if (!is_opt(opt))
+		return (ERR);
+	ft_writes(STDERR_FILENO, (char *[]){
+		BHRED, category, ": bad option: -", NULL});
+	write(STDERR_FILENO, &opt[1], 1);
+	ft_write(STDERR_FILENO, END "\n");
+	return (ERR);
+}
