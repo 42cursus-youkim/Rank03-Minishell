@@ -41,7 +41,7 @@ int	api_handle_exitcode(t_dict *env, int status)
 
 int	api_exec_cmd_at(t_shell *shell, int index)
 {
-	int	status;
+	int		status;
 	pid_t	pid;
 
 	pid = fork();

@@ -37,6 +37,10 @@ void		env_set(t_dict *env, char *str);
 char		*env_get(t_dict *env, char *key);
 void		env_print(t_dict *env);
 /*
+** < pwd.c > */
+
+void		builtin_pwd(t_dict *env);
+/*
 ** < util.c > */
 
 t_builtin	which_builtin(char *str);

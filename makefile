@@ -27,7 +27,7 @@ parserV  := parser new1 new2 del util1 util2 expander1 expander2
 promptV  := prompt interrupt util
 apiV     := shell redirect signal path file util
 execV    := context exec pipe argv util
-builtinV := builtin echo env1 env2 util
+builtinV := builtin echo env1 env2 pwd util
 treeV    := repr1 repr2
 errorV   := error
 
