@@ -41,6 +41,10 @@ void		no_free(void *data);
 void		del_ditem(t_dict *dict, int id);
 void		del_dict(t_dict *dict);
 /*
+** < drop.c > */
+
+void		dict_drop(t_dict *dict, char *key);
+/*
 ** < expand.c > */
 
 int			dict_expand(t_dict *dict);
