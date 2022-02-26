@@ -13,7 +13,8 @@ LIBFT    := lib/libft.a
 # ===== Test & Debugging =====
 DFLAGS	 :=  -g #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
 VFLAGS   := --leak-check=full --show-leak-kinds=all \
-			--track-origins=yes --suppressions=./supp.txt
+			--track-origins=yes --suppressions=./supp_mac.txt \
+			--suppressions=./supp.txt
 HGEN     := hgen
 
 # ===== Packages =====
