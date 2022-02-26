@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-bool	is_opt_nonewline_valid(char *str, bool *is_newline_p)
+static bool	is_opt_nonewline_valid(char *str, bool *is_newline_p)
 {
 	int	i;
 
@@ -14,7 +14,7 @@ bool	is_opt_nonewline_valid(char *str, bool *is_newline_p)
 	return (true);
 }
 
-void	echo_inner(int i, int len, char *str)
+static void	echo_inner(int i, int len, char *str)
 {
 	ft_write(STDOUT_FILENO, str);
 	if (i != len)

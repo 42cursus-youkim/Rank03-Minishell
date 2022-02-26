@@ -1,7 +1,12 @@
 #include "libft.h"
 
-void	error_syscall(char *category)
+void	error_msg_category(char *category, char *msg)
 {
 	ft_writes(STDERR_FILENO, (char *[]){
-		BHRED, category, ": ", strerror(errno), END "\n", NULL});
+		BHRED, category, ": ", msg, END "\n", NULL});
+}
+
+void	error_syscall(char *category)
+{
+	error_msg_category(category, strerror(errno));
 }

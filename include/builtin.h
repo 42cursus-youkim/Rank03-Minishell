@@ -26,8 +26,6 @@ void		builtin_cd(t_context *context, t_shell *shell);
 /*
 ** < echo.c > */
 
-bool		is_opt_nonewline_valid(char *str, bool *is_newline_p);
-void		echo_inner(int i, int len, char *str);
 void		builtin_echo(t_context *context, t_shell *shell);
 /*
 ** < env1.c > */
