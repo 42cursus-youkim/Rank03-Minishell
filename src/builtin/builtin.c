@@ -7,14 +7,15 @@ static void	TODO(t_context *context, t_shell *shell)
 	printf(BBLU "TODO\n" END);
 }
 
-//	Used by child_proc
-void	builtins_exec(t_AST_COMMAND *cmd, t_shell *shell)
+
+//	does not use fork
+int	builtin_run(t_AST_COMMAND *cmd, t_shell *shell)
 {
 	t_context				context;
 	const t_builtin			builtin = which_builtin(cmd->name->text);
 	const t_builtinfunc_f	funcs[] = {
 		builtin_echo,
-		TODO, // builtin_cd,
+		builtin_cd,
 		builtin_pwd,
 		TODO, // builtin_export,
 		TODO, // builtin_unset,
@@ -22,8 +23,11 @@ void	builtins_exec(t_AST_COMMAND *cmd, t_shell *shell)
 		TODO, // builtin_exit
 	};
 
+	if (builtin == BUILTIN_EXIT)
+		api_exit(shell, EXIT_SUCCESS);
 	context_init(&context, cmd, shell->env);
 	funcs[builtin](&context, shell);
 	del_context(&context);
-	api_exit(shell, EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
+	// api_exit(shell, EXIT_SUCCESS);
 }

@@ -19,8 +19,6 @@ void	child_proc(t_shell *shell, int index)
 
 	cmd = shell->script->commands[index];
 	text = cmd->name->text;
-	if (is_builtin(text))
-		return ((void)builtins_exec(cmd, shell));
 	if (is_executable_exists(text, shell->env))
 		return ((void)any_exec(cmd, shell));
 	else
@@ -39,7 +37,7 @@ int	api_handle_exitcode(t_dict *env, int status)
 	return (exitcode);
 }
 
-int	api_exec_cmd_at(t_shell *shell, int index)
+static int	api_fork_exec_cmd_at(t_shell *shell, int index)
 {
 	int		status;
 	pid_t	pid;
@@ -55,4 +53,17 @@ int	api_exec_cmd_at(t_shell *shell, int index)
 	else
 		printf(RED "fork error\n" END);
 	return (OK);
+}
+
+int	api_exec_cmd_at(t_shell *shell, int index)
+{
+	t_AST_COMMAND	*cmd;
+	char			*text;
+
+	cmd = shell->script->commands[index];
+	text = cmd->name->text;
+	if (is_builtin(text))
+		return (builtin_run(cmd, shell));
+	else
+		return (api_fork_exec_cmd_at(shell, index));
 }

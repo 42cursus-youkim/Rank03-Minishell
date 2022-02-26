@@ -18,7 +18,11 @@ typedef void(*t_builtinfunc_f)(t_context *context, t_shell *shell);
 /*
 ** < builtin.c > */
 
-void		builtins_exec(t_AST_COMMAND *cmd, t_shell *shell);
+int			builtin_run(t_AST_COMMAND *cmd, t_shell *shell);
+/*
+** < cd.c > */
+
+void		builtin_cd(t_context *context, t_shell *shell);
 /*
 ** < echo.c > */
 
@@ -54,7 +58,7 @@ void		builtin_unset();
 /*
 ** < util.c > */
 
-t_builtin	which_builtin(char *str);
-bool		is_builtin(char *str);
+t_builtin	which_builtin(const char *str);
+bool		is_builtin(const char *str);
 bool		is_opt(char *str);
 #endif
