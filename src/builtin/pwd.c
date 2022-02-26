@@ -1,7 +1,30 @@
 #include "minishell.h"
 
-void	builtin_pwd(t_dict *env)
+static bool	has_error(char *argv[])
 {
+	int	i;
+
+	i = 0;
+	while (argv[++i])
+	{
+		if (is_opt(argv[i]))
+		{
+			printf(RED "pwd: bad option: -%c\n" END, argv[i][1]);
+			return (true);
+		}
+		else
+		{
+			printf(RED "pwd: too many arguments\n" END);
+			return (true);
+		}
+	}
+	return (false);
+}
+
+void	builtin_pwd(t_context *context, t_shell *shell)
+{
+	if (has_error(context->argv))
+		return ;
 	ft_writes(STDOUT_FILENO, (char *[]){
-		env_get(env, "PWD"), "\n", NULL});
+		env_get(shell->env, "PWD"), "\n", NULL});
 }

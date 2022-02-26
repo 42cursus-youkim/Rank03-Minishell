@@ -22,7 +22,7 @@ void		builtins_exec(t_AST_COMMAND *cmd, t_shell *shell);
 
 bool		is_opt_nonewline_valid(char *str, bool *is_newline_p);
 void		echo_inner(int i, int len, char *str);
-void		builtin_echo(t_context *context);
+void		builtin_echo(t_context *context, t_shell *shell);
 /*
 ** < env1.c > */
 
@@ -37,12 +37,17 @@ void		env_set(t_dict *env, char *str);
 char		*env_get(t_dict *env, char *key);
 void		env_print(t_dict *env);
 /*
+** < export.c > */
+
+void		builtin_export(t_dict *env);
+/*
 ** < pwd.c > */
 
-void		builtin_pwd(t_dict *env);
+void		builtin_pwd(t_context *context, t_shell *shell);
 /*
 ** < util.c > */
 
 t_builtin	which_builtin(char *str);
 bool		is_builtin(char *str);
+bool		is_opt(char *str);
 #endif

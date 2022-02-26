@@ -24,3 +24,8 @@ bool	is_builtin(char *str)
 {
 	return ((int)which_builtin(str) != ERR);
 }
+
+bool	is_opt(char *str)
+{
+	return (ft_strlen(str) > 1 && str[0] == '-');
+}

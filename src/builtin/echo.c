@@ -4,7 +4,7 @@ bool	is_opt_nonewline_valid(char *str, bool *is_newline_p)
 {
 	int	i;
 
-	if (str[0] != '-')
+	if (!is_opt(str))
 		return (false);
 	i = 0;
 	while (str[++i])
@@ -21,13 +21,14 @@ void	echo_inner(int i, int len, char *str)
 		ft_write(STDOUT_FILENO, " ");
 }
 
-void	builtin_echo(t_context *context)
+void	builtin_echo(t_context *context, t_shell *shell)
 {
 	int			i;
 	const int	len = ft_arr_len(context->argv) - 1;
 	bool		is_newline;
 	bool		is_listen_opt;
 
+	(void)shell;
 	is_newline = true;
 	is_listen_opt = true;
 	if (len == ERR)
