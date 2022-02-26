@@ -1,11 +1,18 @@
 #ifndef LEXER_H
 # define LEXER_H
 
+typedef struct s_scan_data
+{
+	char	*buf;
+	char	*line;
+	int		idx;
+	t_dict	*env;
+	bool	env_flag;
+}	t_scan_data;
+
 typedef struct s_expansion_scan_info
 {
-	char			**buf;
-	char			*str;
-	int				*idx;
+	t_scan_data		*data;
 	int				start_i;
 	t_AST_expansion	**expansions;
 	int				begin;
@@ -37,7 +44,7 @@ typedef struct s_token
 /*
 ** < dollar_scan1.c > */
 
-t_res		dollar_scan(t_list **list, char **buf, char *str, int *idx);
+t_res		dollar_scan(t_list **list, t_scan_data *data);
 /*
 ** < dollar_scan2.c > */
 
@@ -57,11 +64,11 @@ void		expansions_print(t_AST_expansion *expansions[]);
 /*
 ** < lexer.c > */
 
-t_token		*lexer(char *line);
+t_token		*lexer(char *line, t_dict *env);
 /*
 ** < metachar_scan1.c > */
 
-t_res		metachar_scan(t_list **list, char **buf, char *str, int *idx);
+t_res		metachar_scan(t_list **list, t_scan_data *data);
 /*
 ** < metachar_scan2.c > */
 
@@ -71,7 +78,7 @@ bool		is_prev_metachar_attachable(char *str);
 /*
 ** < scanner.c > */
 
-t_res		scanner(t_list **scan_list, char *line);
+t_res		scanner(t_list **scan_list, char *line, t_dict *env);
 /*
 ** < scanner_list.c > */
 
@@ -86,7 +93,7 @@ bool		is_brace_open(char *str);
 t_res		list_element_create( t_list **element, char *buf,
 				t_AST_expansion **expansions);
 t_res		buf_to_list(t_list **list, char **buf);
-t_res		whitespace_scan(t_list **list, char **buf, char *str, int *idx);
+t_res		whitespace_scan(t_list **list, t_scan_data *data);
 /*
 ** < tokenizer.c > */
 

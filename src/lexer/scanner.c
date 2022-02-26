@@ -1,67 +1,74 @@
 #include "minishell.h"
 
-static t_res	error_unclosed(char c, char **buf)
+static t_res	error_unclosed(char c, t_scan_data *data)
 {
 	char	*quote_str;
 
 	quote_str = (char []){'(', c, ')', ':', ' ', '\0'};
-	return (free_n_return(buf, error_msg_return((char *[]){
-				BRED,
-				MINISHELL,
-				QUOTE_ERROR,
-				quote_str,
-				MULTILINE_ERROR,
-				END,
-				NULL})));
+	data->env_flag = true;
+	return (free_n_return(&data->buf, error_with_exitcode((char *[]){
+				BRED, MINISHELL, QUOTE_ERROR, quote_str,
+				MULTILINE_ERROR, END, NULL}, data->env, 2)));
 }
 
-static t_res	scan_last_check(t_list **scan_list, char **buf)
+static t_res	scan_last_check(t_list **scan_list, t_scan_data *data)
 {
 	char	last_quote;
 
-	if (is_quotes_open(&last_quote, *buf))
-		return (error_unclosed(last_quote, buf));
-	if (buf_to_list(scan_list, buf) == ERR)
+	if (is_quotes_open(&last_quote, data->buf))
+		return (error_unclosed(last_quote, data));
+	if (buf_to_list(scan_list, &data->buf) == ERR)
 		return (ERR);
-	free(*buf);
+	free(data->buf);
 	return (OK);
 }
 
-static t_res	scanner_loop(t_list **scan_list, char *line, char **buf, int *i)
+static t_res	scanner_loop(t_list **scan_list, t_scan_data *data)
 {
 	t_res	scan_res;
 
-	while (line[++*i])
+	while (data->line[++(data->idx)])
 	{
-		scan_res = whitespace_scan(scan_list, buf, line, i);
+		scan_res = whitespace_scan(scan_list, data);
 		if (scan_res == OK)
 			continue ;
 		if (scan_res == ERR)
 			return (ERR);
-		scan_res = dollar_scan(scan_list, buf, line, i);
+		scan_res = dollar_scan(scan_list, data);
 		if (scan_res == OK)
 			continue ;
 		if (scan_res == ERR)
 			return (ERR);
-		scan_res = metachar_scan(scan_list, buf, line, i);
+		scan_res = metachar_scan(scan_list, data);
 		if (scan_res == OK)
 			continue ;
 		if (scan_res == ERR)
 			return (ERR);
-		if (ft_str_append(buf, line[*i]) == ERR)
-			return (free_n_return(buf, error_malloc_msg()));
+		if (ft_str_append(&data->buf, data->line[data->idx]) == ERR)
+			return (free_n_return(&data->buf, error_malloc_msg()));
 	}
-	return (scan_last_check(scan_list, buf));
+	return (scan_last_check(scan_list, data));
 }
 
-t_res	scanner(t_list **scan_list, char *line)
+t_res	scanner(t_list **scan_list, char *line, t_dict *env)
 {
-	char	*buf;
-	int		i;
+	t_scan_data	data;
+	t_res		res;
 
-	buf = new_str("");
-	if (!buf)
+	data.line = line;
+	data.idx = -1;
+	data.env = env;
+	data.env_flag = false;
+	data.buf = new_str("");
+	if (!data.buf)
+	{
+		env_set_exitcode(env, EXIT_FAILURE);
 		return (error_malloc_msg());
-	i = -1;
-	return (scanner_loop(scan_list, line, &buf, &i));
+	}
+	res = scanner_loop(scan_list, &data);
+	if (res == OK)
+		return (OK);
+	if (!data.env_flag)
+		env_set_exitcode(env, EXIT_FAILURE);
+	return (ERR);
 }
