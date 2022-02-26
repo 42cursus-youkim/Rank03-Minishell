@@ -38,12 +38,12 @@ typedef struct s_dict
 ** < del.c > */
 
 void		no_free(void *data);
-void		del_ditem(t_dict *dict, int id);
+t_res		del_ditem(t_dict *dict, int id);
 void		del_dict(t_dict *dict);
 /*
 ** < drop.c > */
 
-void		dict_drop(t_dict *dict, char *key);
+t_res		dict_drop(t_dict *dict, char *key);
 /*
 ** < expand.c > */
 

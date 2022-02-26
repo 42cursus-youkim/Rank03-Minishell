@@ -6,15 +6,18 @@ void	no_free(void *data)
 	(void)data;
 }
 
-void	del_ditem(t_dict *dict, int id)
+t_res	del_ditem(t_dict *dict, int id)
 {
 	t_ditem	*item;
 
 	item = dict->items[id];
+	if (!item)
+		return (ERR);
 	free(item->key);
 	dict->del_value(item->value);
 	free(item);
 	dict->items[id] = NULL;
+	return (OK);
 }
 
 //	uses internal function pointer as destructor.
