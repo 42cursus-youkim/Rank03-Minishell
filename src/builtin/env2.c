@@ -2,6 +2,7 @@
 
 void	env_set_exitcode(t_dict *env, int exitcode)
 {
+	env->exitcode = exitcode;
 	ft_str_replace(&env->exitcode_str, new_itoa(exitcode));
 }
 
@@ -44,10 +45,11 @@ void	env_print(t_dict *env)
 	free(items);
 }
 
-void	builtin_env(t_context *context, t_shell *shell)
+int	builtin_env(t_context *context, t_shell *shell)
 {
 	(void)context;
 	if (check_no_opt_arg(context->argv, "env") != OK)
-		return ;
+		return (EXIT_FAILURE);
 	env_print(shell->env);
+	return (OK);
 }

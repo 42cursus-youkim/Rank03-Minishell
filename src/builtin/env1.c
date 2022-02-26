@@ -6,6 +6,7 @@ t_dict	*new_env(char *envp[])
 	t_dict	*env;
 
 	env = new_dict(free);
+	env->exitcode = EXIT_SUCCESS;
 	env->exitcode_str = new_itoa(EXIT_SUCCESS);
 	i = -1;
 	while (envp[++i])

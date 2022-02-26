@@ -1,16 +1,18 @@
 #include "minishell.h"
 
-static void	TODO(t_context *context, t_shell *shell)
+static int	TODO(t_context *context, t_shell *shell)
 {
 	(void)context;
 	(void)shell;
 	printf(BBLU "TODO\n" END);
+	return (EXIT_BUILTINS_ERR);
 }
 
 
 //	does not use fork
 int	builtin_run(t_AST_COMMAND *cmd, t_shell *shell)
 {
+	int						exitcode;
 	t_context				context;
 	const t_builtin			builtin = which_builtin(cmd->name->text);
 	const t_builtinfunc_f	funcs[] = {
@@ -26,8 +28,9 @@ int	builtin_run(t_AST_COMMAND *cmd, t_shell *shell)
 	if (builtin == BUILTIN_EXIT)
 		api_exit(shell, EXIT_SUCCESS);
 	context_init(&context, cmd, shell->env);
-	funcs[builtin](&context, shell);
+	exitcode = funcs[builtin](&context, shell);
+	env_set_exitcode(shell->env, exitcode);
 	del_context(&context);
-	return (EXIT_SUCCESS);
+	return (shell->env->exitcode);
 	// api_exit(shell, EXIT_SUCCESS);
 }

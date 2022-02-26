@@ -21,7 +21,7 @@ static void	echo_inner(int i, int len, char *str)
 		ft_write(STDOUT_FILENO, " ");
 }
 
-void	builtin_echo(t_context *context, t_shell *shell)
+int	builtin_echo(t_context *context, t_shell *shell)
 {
 	int			i;
 	const int	len = ft_arr_len(context->argv) - 1;
@@ -32,7 +32,7 @@ void	builtin_echo(t_context *context, t_shell *shell)
 	is_newline = true;
 	is_listen_opt = true;
 	if (len == ERR)
-		return ;
+		return (EXIT_FAILURE);
 	i = 0;
 	while (++i <= len && is_listen_opt)
 	{
@@ -45,4 +45,5 @@ void	builtin_echo(t_context *context, t_shell *shell)
 		echo_inner(i, len, context->argv[i]);
 	if (is_newline)
 		ft_write(STDOUT_FILENO, "\n");
+	return (OK);
 }
