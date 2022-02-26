@@ -44,3 +44,9 @@ void	env_print(t_dict *env)
 	}
 	free(items);
 }
+
+void	builtin_env(t_context *context, t_shell *shell)
+{
+	(void)context;
+	env_print(shell->env);
+}

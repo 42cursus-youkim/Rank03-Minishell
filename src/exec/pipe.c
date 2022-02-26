@@ -33,7 +33,7 @@ static void	api_exec_pipe_internal(t_shell *shell)
 {
 	int			i;
 	int			*pids;
-	int 		status;
+	int			status;
 	const int	len = shell->script->commands_len;
 
 	pids = ft_calloc(sizeof(pid_t), len);

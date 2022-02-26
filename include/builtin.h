@@ -12,6 +12,8 @@ typedef enum e_builtin
 	BUILTIN_EXIT
 }	t_builtin;
 
+typedef void(*t_builtinfunc_f)(t_context *context, t_shell *shell);
+
 //@func
 /*
 ** < builtin.c > */
@@ -36,6 +38,7 @@ void		env_set_exitcode(t_dict *env, int exitcode);
 void		env_set(t_dict *env, char *str);
 char		*env_get(t_dict *env, char *key);
 void		env_print(t_dict *env);
+void		builtin_env(t_context *context, t_shell *shell);
 /*
 ** < export.c > */
 
@@ -44,6 +47,10 @@ void		builtin_export(t_dict *env);
 ** < pwd.c > */
 
 void		builtin_pwd(t_context *context, t_shell *shell);
+/*
+** < unset.c > */
+
+void		builtin_unset();
 /*
 ** < util.c > */
 

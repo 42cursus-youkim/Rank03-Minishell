@@ -8,15 +8,10 @@ static bool	has_error(char *argv[])
 	while (argv[++i])
 	{
 		if (is_opt(argv[i]))
-		{
 			printf(RED "pwd: bad option: -%c\n" END, argv[i][1]);
-			return (true);
-		}
 		else
-		{
 			printf(RED "pwd: too many arguments\n" END);
-			return (true);
-		}
+		return (true);
 	}
 	return (false);
 }

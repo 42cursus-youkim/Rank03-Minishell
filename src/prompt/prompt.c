@@ -60,8 +60,8 @@ void	shell_prompt(t_shell *shell)
 		line = readline(prompt->ps1);
 		if (is_line_eof(line))
 			return (prompt_replace_line_with(line, prompt->ps1, "exit"));
-		else if (is_str_equal(line, "exit"))
-			return (prompt_exit(line));
+		// else if (is_str_equal(line, "exit"))
+		// 	return (prompt_exit(line));
 		else if (!is_line_empty(line))
 		{
 			add_history(line);
