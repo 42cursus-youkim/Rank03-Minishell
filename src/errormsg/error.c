@@ -23,6 +23,13 @@ t_res	error_with_exitcode(char *message[], t_dict *env, int exitcode)
 	return (error_msg_return(message));
 }
 
+t_res	error_msg_category(char *category, char *msg)
+{
+	ft_writes(STDERR_FILENO, (char *[]){
+		BHRED, "minishell: ", category, ": ", msg, END "\n", NULL});
+	return (ERR);
+}
+
 t_res	error_msg_bad_opt(char *category, char *opt)
 {
 	if (!is_opt(opt))
