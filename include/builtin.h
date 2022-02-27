@@ -55,4 +55,5 @@ int			builtin_unset(t_context *context, t_shell *shell);
 t_builtin	which_builtin(const char *str);
 bool		is_builtin(const char *str);
 bool		is_opt(char *str);
+bool		is_exit(t_shell *shell);
 #endif

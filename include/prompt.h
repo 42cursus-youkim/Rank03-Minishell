@@ -23,7 +23,7 @@ void	shell_prompt(t_shell *shell);
 
 bool	is_line_eof(char *line);
 bool	is_line_empty(char *line);
-void	prompt_exit(char *line);
+void	prompt_exit(t_shell *shell);
 void	cursor_up(void);
 void	prompt_replace_line_with(char *line, char *ps, char *new_line);
 #endif 

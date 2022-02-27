@@ -26,7 +26,7 @@ void	del_prompt(t_prompt *prompt)
 	free(prompt->ps2);
 }
 
-static void	prompt_run_line(char *line, t_shell *shell)
+static void	prompt_process_line(char *line, t_shell *shell)
 {
 	t_token			*tokens;
 	t_AST_SCRIPT	*script;
@@ -37,17 +37,21 @@ static void	prompt_run_line(char *line, t_shell *shell)
 		return ;
 	script = new_script_from_tokens(tokens);
 	if (!script)
-	{
-		env_set_exitcode(shell->env, EXIT_FAILURE);
-		return ;
-	}
+		return (env_set_exitcode(shell->env, EXIT_FAILURE));
 	if (expander(script, shell->env) == ERR)
-		return ((void)env_set_exitcode(shell->env, EXIT_FAILURE));
+		return (env_set_exitcode(shell->env, EXIT_FAILURE));
 	shell_replace_script(shell, script);
+}
+
+static void	shell_run_line(t_shell *shell)
+{
 	if (DEBUG)
 		ast_script_repr(shell->script);
 	prompt_ignore_signal();
-	shell_exec_script(shell);
+	if (is_exit(shell))
+		prompt_exit(shell);
+	else
+		shell_exec_script(shell);
 	prompt_handle_signal();
 	shell_clear_script(shell);
 }
@@ -64,12 +68,11 @@ void	shell_prompt(t_shell *shell)
 		line = readline(prompt->ps1);
 		if (is_line_eof(line))
 			return (prompt_replace_line_with(line, prompt->ps1, "exit"));
-		// else if (is_str_equal(line, "exit"))
-		// 	return (prompt_exit(line));
 		else if (!is_line_empty(line))
 		{
 			add_history(line);
-			prompt_run_line(line, shell);
+			prompt_process_line(line, shell);
+			shell_run_line(shell);
 		}
 	}
 }

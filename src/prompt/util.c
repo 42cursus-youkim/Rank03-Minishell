@@ -10,15 +10,15 @@ bool	is_line_empty(char *line)
 	return (ft_strlen(line) <= 0);
 }
 
-void	prompt_exit(char *line)
+void	prompt_exit(t_shell *shell)
 {
 	printf("exit\n");
-	free(line);
+	api_exit(shell, shell->env->exitcode);
 }
 
 void	cursor_up(void)
 {
-	printf("\033[1A");
+	ft_write(1, "\033[1A");
 }
 
 /*

@@ -29,3 +29,13 @@ bool	is_opt(char *str)
 {
 	return (ft_strlen(str) > 1 && str[0] == '-');
 }
+
+bool	is_exit(t_shell *shell)
+{
+	t_AST_SCRIPT	*script;
+
+	script = shell->script;
+	return (
+		is_ast_command(script)
+		&& which_builtin(script->commands[0]->name->text) == BUILTIN_EXIT);
+}
