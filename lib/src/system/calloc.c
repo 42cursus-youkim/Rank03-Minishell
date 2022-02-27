@@ -10,7 +10,7 @@ void	*ft_calloc(size_t size, size_t count)
 	if (!ptr)
 	{
 		error_syscall("ft_calloc");
-		return (NULL);
+		exit(EXIT_FAILURE);
 	}
 	i = 0;
 	while (i < allocated_space)
