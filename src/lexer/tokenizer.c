@@ -55,7 +55,7 @@ t_res	node_tokenize(t_token *tokens[], t_scan_node *node, int i)
 	return (OK);
 }
 
-t_token	*tokenizer(t_list *scan_list)
+t_token	*new_tokens_from_list(t_list *scan_list)
 {
 	t_token			*tokens;
 	const int		len = ft_list_size(scan_list);

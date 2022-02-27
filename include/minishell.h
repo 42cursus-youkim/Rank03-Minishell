@@ -22,6 +22,7 @@
 # include "ast_type.h"
 # include "minishell_type.h"
 
+# include "scanner.h"
 # include "lexer.h"
 # include "parser.h"
 # include "prompt.h"
