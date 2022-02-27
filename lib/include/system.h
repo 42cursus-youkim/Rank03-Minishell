@@ -8,8 +8,10 @@
 # endif
 //@func
 /*
-** < calloc.c > */
+** < alloc.c > */
 
+void	*ft_memset(void *b, char c, int space);
+void	*ft_bzero(void *ptr, int n);
 void	*ft_calloc(size_t size, size_t count);
 /*
 ** < gnl.c > */
