@@ -3,8 +3,7 @@
 void	prompt_init(t_prompt *prompt)
 {
 	rl_catch_signals = 0;
-	signal(SIGINT, prompt_new_line);
-	signal(SIGQUIT, prompt_ignore_signal);
+	prompt_handle_signal();
 	prompt->user = getenv("USER");
 	prompt->ps1 = new_str_join((char *[]){
 			SIGN BGRN EIGN,
@@ -47,7 +46,9 @@ static void	prompt_run_line(char *line, t_shell *shell)
 	shell_replace_script(shell, script);
 	if (DEBUG)
 		ast_script_repr(shell->script);
+	prompt_ignore_signal();
 	shell_exec_script(shell);
+	prompt_handle_signal();
 	shell_clear_script(shell);
 }
 

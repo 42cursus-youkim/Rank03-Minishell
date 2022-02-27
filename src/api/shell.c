@@ -42,4 +42,3 @@ void	del_shell(t_shell *shell)
 	del_prompt(&shell->prompt);
 	shell_clear_script(shell);
 }
-

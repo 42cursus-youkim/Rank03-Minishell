@@ -4,12 +4,14 @@
 # define SIGN "\001"
 # define EIGN "\002"
 
+typedef void(*t_sigfunc_f)(int);
+
 //@func
 /*
 ** < interrupt.c > */
 
-void	prompt_ignore_signal(int status);
-void	prompt_new_line(int status);
+void	prompt_handle_signal(void);
+void	prompt_ignore_signal(void);
 /*
 ** < prompt.c > */
 
