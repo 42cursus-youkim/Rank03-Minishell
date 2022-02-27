@@ -63,7 +63,7 @@ static t_res	command_parsing_with_pipe(
 	return (OK);
 }
 
-t_res	commands_for_parser(
+static t_res	commands_for_parser(
 	t_AST_COMMAND **commands[], t_token tokens[], int *commands_len)
 {
 	int				tokens_size;
@@ -88,7 +88,7 @@ t_res	commands_for_parser(
 	return (OK);
 }
 
-t_AST_SCRIPT	*parser(t_token tokens[])
+t_AST_SCRIPT	*new_script_from_tokens(t_token tokens[])
 {
 	t_AST_SCRIPT	*script;
 	t_AST_COMMAND	**commands;

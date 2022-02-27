@@ -31,11 +31,11 @@ static void	prompt_run_line(char *line, t_shell *shell)
 	t_token			*tokens;
 	t_AST_SCRIPT	*script;
 
-	tokens = lexer(line, shell->env);
+	tokens = new_tokens_from_line(line, shell->env);
 	free(line);
 	if (!tokens)
 		return ;
-	script = parser(tokens);
+	script = new_script_from_tokens(tokens);
 	if (!script)
 	{
 		env_set_exitcode(shell->env, EXIT_FAILURE);
