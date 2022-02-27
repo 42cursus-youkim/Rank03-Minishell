@@ -56,7 +56,7 @@ void	env_print(t_dict *env)
 	while (++id < env->size)
 	{
 		item = items[id];
-		if (!item || !item->key)
+		if (!item || !item->key || !item->value)
 			continue ;
 		printf(BHYEL "%-s" END "=" HGRN "%s\n" END,
 			item->key, (char *)item->value);
