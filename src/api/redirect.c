@@ -23,7 +23,8 @@ static t_fd	shell_heredoc(t_shell *shell, const char *eof)
 			break ;
 		else
 		{
-			// TODO: heredoc_parser_replace_line(&line, shell->env);
+			if (replace_line_heredoc(&line, shell->env) == ERR)
+				break ;
 			ft_writes(pipefd[PIPE_WRITE], (char *[]){line, "\n", NULL});
 			free(line);
 		}

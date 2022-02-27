@@ -59,6 +59,7 @@ t_res	scanner(t_list **scan_list, char *line, t_dict *env)
 	data.idx = -1;
 	data.env = env;
 	data.env_flag = false;
+	data.type = CMD;
 	data.buf = new_str("");
 	if (!data.buf)
 	{

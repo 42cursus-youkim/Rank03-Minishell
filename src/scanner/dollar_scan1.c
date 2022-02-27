@@ -31,7 +31,8 @@ static t_res	expansion_scan_loop(t_expansion_scan_info *info, int *i)
 {
 	t_res	res;
 
-	while (is_scan_continuos(info->data->buf, info->data->line[++*i]))
+	while (is_scan_continuos(
+			info->data->buf, info->data->line[++*i], info->data->type))
 	{
 		if (!is_brace_open(info->data->buf)
 			&& !is_variable_char_valid(info->data->line[*i]))
@@ -86,7 +87,8 @@ t_res	dollar_scan(t_list **list, t_scan_data *data)
 
 	if (data->line[data->idx] == '$')
 	{
-		if (is_quotes_open(&last_quote, data->buf) && last_quote == '\'')
+		if (data->type == CMD && is_quotes_open(&last_quote, data->buf)
+			&& last_quote == '\'')
 			return (UNSET);
 		res = expansion_scan(list, data);
 		if (res == UNSET)

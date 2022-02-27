@@ -15,7 +15,8 @@ static t_res	parameter_substitution(
 	return (OK);
 }
 
-static t_res	word_expansion(char **parr[], t_AST_NODE *node, t_dict *env)
+static t_res	word_expansion(
+	char **parr[], t_AST_NODE *node, t_dict *env, t_scanner_type type)
 {
 	int		i;
 	char	*temp_str;
@@ -30,8 +31,10 @@ static t_res	word_expansion(char **parr[], t_AST_NODE *node, t_dict *env)
 	temp_str = new_str_join(*parr, '\0');
 	if (!temp_str)
 		return (ERR);
-	if (ft_str_replace(&node->text, new_quotes_remove(temp_str)) == ERR)
-		return (ERR);
+	if (type == CMD)
+		ft_str_replace(&node->text, new_quotes_remove(temp_str));
+	if (type == HEREDOC)
+		ft_str_replace(&node->text, new_str(temp_str));
 	del_ast_expansions(node->expansions);
 	node->expansions = NULL;
 	del_arr(*parr);
@@ -39,7 +42,7 @@ static t_res	word_expansion(char **parr[], t_AST_NODE *node, t_dict *env)
 	return (OK);
 }
 
-static t_res	node_expansion(t_AST_NODE *node, t_dict *env)
+t_res	node_expansion(t_AST_NODE *node, t_dict *env, t_scanner_type type)
 {
 	char	**text_split;
 
@@ -58,7 +61,7 @@ static t_res	node_expansion(t_AST_NODE *node, t_dict *env)
 		del_arr(text_split);
 		return (ERR);
 	}
-	if (word_expansion(&text_split, node, env) == ERR)
+	if (word_expansion(&text_split, node, env, type) == ERR)
 	{
 		del_arr(text_split);
 		return (ERR);
@@ -70,20 +73,20 @@ t_res	commands_expansion(t_AST_COMMAND *command, t_dict *env)
 {
 	int	i;
 
-	if (node_expansion(command->name, env) == ERR)
+	if (node_expansion(command->name, env, CMD) == ERR)
 		return (ERR);
 	i = -1;
 	if (command->prefixes)
 	{
 		while (command->prefixes[++i])
-			if (node_expansion(command->prefixes[i], env) == ERR)
+			if (node_expansion(command->prefixes[i], env, CMD) == ERR)
 				return (ERR);
 	}
 	i = -1;
 	if (command->suffixes)
 	{
 		while (command->suffixes[++i])
-			if (node_expansion(command->suffixes[i], env) == ERR)
+			if (node_expansion(command->suffixes[i], env, CMD) == ERR)
 				return (ERR);
 	}
 	return (OK);
