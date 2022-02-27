@@ -5,7 +5,7 @@ t_ditem	*new_ditem(const char *key, void *value)
 {
 	t_ditem	*item;
 
-	item = malloc(sizeof(t_ditem));
+	item = ft_calloc(sizeof(t_ditem), 0);
 	if (!item)
 		return (NULL);
 	item->key = new_str(key);

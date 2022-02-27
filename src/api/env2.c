@@ -29,4 +29,3 @@ char	*env_get(t_dict *env, char *key)
 		return (env->exitcode_str);
 	return (dict_get_default(env, key, ""));
 }
-

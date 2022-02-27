@@ -24,7 +24,7 @@ t_dict	*new_dict(t_del_f del_value)
 {
 	t_dict	*dict;
 
-	dict = malloc(sizeof(t_dict));
+	dict = ft_calloc(sizeof(t_dict), 0);
 	if (!dict)
 		return (NULL);
 	if (dict_init(dict, del_value) == ERR)

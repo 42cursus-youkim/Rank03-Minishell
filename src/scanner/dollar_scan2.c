@@ -9,11 +9,11 @@ t_res	expansions_update_with_brace(
 	parameter = new_str_slice(info->data->buf,
 			info->begin + 1 + brace, info->end + 1 - brace);
 	if (!parameter)
-		return (free_n_return(&info->data->buf, error_malloc_msg()));
+		return (free_n_return(&info->data->buf, ERR));
 	if (expansions_append_free(&info->expansions,
 			new_ast_expansion(parameter, info->begin, info->end)) == ERR)
 		return (free_arr_n_return((char *[]){info->data->buf, parameter, NULL},
-			error_malloc_msg()));
+			ERR));
 	free(parameter);
 	return (OK);
 }
@@ -23,7 +23,7 @@ t_res	expansion_location_init(t_expansion_scan_info *info, int *i)
 	info->begin = *i - info->data->idx + info->start_i;
 	if (ft_str_extend(&info->data->buf,
 			(char []){'$', info->data->line[++*i], '\0'}) == ERR)
-		return (free_n_return(&info->data->buf, error_malloc_msg()));
+		return (free_n_return(&info->data->buf, ERR));
 	info->end = -1;
 	if (info->data->line[*i] == '?')
 		if (expansions_update_with_brace(info, *i, false) == ERR)

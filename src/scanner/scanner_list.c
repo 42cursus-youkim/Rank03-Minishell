@@ -4,7 +4,7 @@ t_scan_node	*new_scan_node(char *str, t_AST_expansion **arr)
 {
 	t_scan_node	*new;
 
-	new = (t_scan_node *)malloc(sizeof(t_scan_node));
+	new = ft_calloc(sizeof(t_scan_node), 0);
 	if (!new)
 		return (NULL);
 	new->text = str;

@@ -11,10 +11,9 @@ t_res	ft_arr_append(char **parr[], char *str)
 
 	if (arr_len == ERR)
 		return (ERR);
-	new = malloc((total_len + 1) * sizeof(char *));
+	new = ft_calloc(sizeof(char *), total_len);
 	if (!new)
 		return (ERR);
-	new[total_len] = NULL;
 	i = -1;
 	while (++i < arr_len)
 		new[i] = new_str((*parr)[i]);
@@ -46,10 +45,9 @@ t_res	ft_arr_extend(char **parr[], char *src[])
 
 	if (arr_len == ERR || src_len == ERR)
 		return (ERR);
-	new = malloc((total_len + 1) * sizeof(char *));
+	new = ft_calloc(sizeof(char *), total_len);
 	if (!new)
 		return (ERR);
-	new[total_len] = NULL;
 	i = -1;
 	while (++i < arr_len)
 		new[i] = new_str((*parr)[i]);

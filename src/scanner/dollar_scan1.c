@@ -8,7 +8,7 @@ static t_res	expansion_last_check(t_expansion_scan_info *info, int *i)
 		free(info->data->buf);
 		info->data->env_flag = true;
 		return (error_with_exitcode((char *[]){
-			BRED, MINISHELL, BRACE_ERROR, MULTILINE_ERROR, NULL},
+				BRED, MINISHELL, BRACE_ERROR, MULTILINE_ERROR, NULL},
 			info->data->env, 2));
 	}
 	if (info->end < info->begin)
@@ -23,7 +23,7 @@ static t_res	brace_closed_n_other_check(t_expansion_scan_info *info, int *i)
 		if (expansions_update_with_brace(info, *i, true) == ERR)
 			return (ERR);
 	if (ft_str_append(&info->data->buf, info->data->line[*i]) == ERR)
-		return (free_n_return(&info->data->buf, error_malloc_msg()));
+		return (free_n_return(&info->data->buf, ERR));
 	return (OK);
 }
 
@@ -67,7 +67,7 @@ static t_res	expansion_scan(t_list **list, t_scan_data *data)
 		return (UNSET);
 	info.expansions = new_ast_expansions((t_AST_expansion *[]){NULL});
 	if (!info.expansions)
-		return (free_n_return(&data->buf, error_malloc_msg()));
+		return (free_n_return(&data->buf, ERR));
 	if (expansion_location_init(&info, &i) == ERR)
 		return (ERR);
 	if (expansion_scan_loop(&info, &i) == ERR)
@@ -96,7 +96,7 @@ t_res	dollar_scan(t_list **list, t_scan_data *data)
 		free(data->buf);
 		data->buf = new_str("");
 		if (!data->buf)
-			return (error_malloc_msg());
+			return (ERR);
 		return (OK);
 	}
 	return (UNSET);

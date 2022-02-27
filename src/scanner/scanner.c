@@ -45,7 +45,7 @@ static t_res	scanner_loop(t_list **scan_list, t_scan_data *data)
 		if (scan_res == ERR)
 			return (ERR);
 		if (ft_str_append(&data->buf, data->line[data->idx]) == ERR)
-			return (free_n_return(&data->buf, error_malloc_msg()));
+			return (free_n_return(&data->buf, ERR));
 	}
 	return (scan_last_check(scan_list, data));
 }
@@ -63,7 +63,7 @@ t_res	scanner(t_list **scan_list, char *line, t_dict *env)
 	if (!data.buf)
 	{
 		env_set_exitcode(env, EXIT_FAILURE);
-		return (error_malloc_msg());
+		return (ERR);
 	}
 	res = scanner_loop(scan_list, &data);
 	if (res == OK)
