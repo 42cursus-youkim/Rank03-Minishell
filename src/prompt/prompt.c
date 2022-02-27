@@ -39,7 +39,7 @@ static void	prompt_run_line(char *line, t_shell *shell)
 	if (!script)
 	{
 		env_set_exitcode(shell->env, EXIT_FAILURE);
-		return ((void)error_malloc_msg());
+		return ;
 	}
 	if (expander(script, shell->env) == ERR)
 		return ((void)env_set_exitcode(shell->env, EXIT_FAILURE));

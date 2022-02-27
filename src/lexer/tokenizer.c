@@ -14,7 +14,7 @@ t_res	quotes_remove_loop(char **new, char *last_quote, bool *open, char c)
 		return (OK);
 	}
 	if (ft_str_append(new, c) == ERR)
-		return (free_n_return(new, error_malloc_msg()));
+		return (free_n_return(new, ERR));
 	return (OK);
 }
 
@@ -27,10 +27,7 @@ char	*new_quotes_remove(const char *str)
 
 	new = new_str("");
 	if (!new)
-	{
-		error_malloc_msg();
 		return (NULL);
-	}
 	open = false;
 	i = -1;
 	while (str[++i])
@@ -48,10 +45,10 @@ t_res	node_tokenize(t_token *tokens[], t_scan_node *node, int i)
 	else
 		(*tokens)[i].text = new_str(node->text);
 	if (!(*tokens)[i].text)
-		return (error_malloc_msg());
+		return (ERR);
 	(*tokens)[i].expansions = new_ast_expansions(node->expansions);
 	if (!(*tokens)[i].expansions)
-		return (error_malloc_msg());
+		return (ERR);
 	return (OK);
 }
 

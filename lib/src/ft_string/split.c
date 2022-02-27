@@ -48,13 +48,12 @@ static char	**write_words(
 	{
 		while (str[i] == delimitor)
 			i++;
-		arr[word_idx] = malloc((wordlen(i, str, delimitor) + 1) * sizeof(char));
+		arr[word_idx] = ft_calloc(sizeof(char), wordlen(i, str, delimitor));
 		if (!arr[word_idx])
 		{
 			del_arr(arr);
 			return (NULL);
 		}
-		arr[word_idx][wordlen(i, str, delimitor)] = '\0';
 		j = 0;
 		while (str[i] && str[i] != delimitor)
 			arr[word_idx][j++] = str[i++];
@@ -70,9 +69,8 @@ char	**new_str_split(char const *str, char delimitor)
 	if (!str)
 		return (NULL);
 	words = count_words(str, delimitor);
-	strarr = malloc((words + 1) * sizeof(char *));
+	strarr = ft_calloc(sizeof(char *), words);
 	if (!strarr)
 		return (NULL);
-	strarr[words] = NULL;
 	return (write_words(strarr, words, str, delimitor));
 }

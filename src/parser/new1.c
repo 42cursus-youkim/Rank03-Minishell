@@ -4,7 +4,7 @@ t_AST_expansion	*new_ast_expansion(char *parameter, int begin, int end)
 {
 	t_AST_expansion	*expansion;
 
-	expansion = malloc(sizeof(t_AST_expansion));
+	expansion = ft_calloc(sizeof(t_AST_expansion), 0);
 	if (!expansion)
 		return (NULL);
 	expansion->parameter = new_str(parameter);
@@ -46,7 +46,7 @@ t_AST_NODE	*new_ast_word(
 {
 	t_AST_NODE	*node;
 
-	node = malloc(sizeof(t_AST_NODE));
+	node = ft_calloc(sizeof(t_AST_NODE), 0);
 	if (!node)
 		return (NULL);
 	node->op = NOT_REDIR;

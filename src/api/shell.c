@@ -29,11 +29,14 @@ int	shell_exec_script(t_shell *shell)
 	return (exitcode);
 }
 
-void	shell_init(t_shell *shell, char *envp[])
+t_res	shell_init(t_shell *shell, char *envp[])
 {
 	shell->env = new_env(envp);
+	if (!shell->env)
+		return (ERR);
 	shell->script = NULL;
 	prompt_init(&shell->prompt);
+	return (OK);
 }
 
 void	del_shell(t_shell *shell)
