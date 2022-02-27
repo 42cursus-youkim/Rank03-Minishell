@@ -1,18 +1,13 @@
 #include "minishell.h"
 
-void	prompt_init(t_prompt *prompt)
+void	prompt_init(t_shell *shell)
 {
 	rl_catch_signals = 0;
 	prompt_handle_signal();
-	prompt->user = getenv("USER");
-	prompt->ps1 = new_str_join((char *[]){
-			SIGN BGRN EIGN,
-			prompt->user, "@minishell > "
-			SIGN END EIGN, NULL}, '\0');
-	prompt->ps2 = new_str_join((char *[]){
-			SIGN BGRN EIGN
-			"> "
-			SIGN END EIGN, NULL}, '\0');
+	shell->prompt.ps1 = new_str("");
+	shell->prompt.ps2 = new_str_join((char *[]){
+			BBLU "> " END, NULL}, '\0');
+	prompt_refresh_ps(shell);
 }
 
 /*
@@ -52,6 +47,7 @@ static void	shell_run_line(t_shell *shell)
 		prompt_exit(shell);
 	else
 		shell_exec_script(shell);
+	prompt_refresh_ps(shell);
 	prompt_handle_signal();
 	shell_clear_script(shell);
 }
