@@ -1,14 +1,35 @@
 {
-   <insert_a_suppression_name_here>
+   <it's readline's fault!>
    Memcheck:Leak
    match-leak-kinds: reachable
    ...
    fun:readline
 }
 {
-   <insert_a_suppression_name_here>
+   <it's add_history's fault!>
    Memcheck:Leak
    match-leak-kinds: reachable
    ...
    fun:add_history
+}
+{
+   <it's fork's fault!>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:libSystem_atfork_child
+}
+{
+   <it's fork's fault!>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:libSystem_atfork_child
+}
+{
+   <it's fork's fault! (2)>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:xpc_atfork_child
 }

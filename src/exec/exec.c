@@ -1,15 +1,15 @@
 #include "minishell.h"
 
 //	Used by child_proc
-void	any_exec(t_AST_COMMAND *cmd, t_shell *shell)
+int	any_exec(t_AST_COMMAND *cmd, t_shell *shell)
 {
 	t_context	context;
 
 	context_init(&context, cmd, shell->env);
 	if (execve(context.executable, context.argv, context.envp) == OK)
-		return ;
+		return (OK);
 	del_context(&context);
-	api_exit(shell, EXIT_FAILURE);
+	return (EXIT_FAILURE);
 }
 
 void	child_proc(t_shell *shell, int index)
@@ -19,11 +19,13 @@ void	child_proc(t_shell *shell, int index)
 
 	cmd = shell->script->commands[index];
 	text = cmd->name->text;
-	if (is_executable_exists(text, shell->env))
-		return ((void)any_exec(cmd, shell));
+	if (is_builtin(text))
+		api_exit(shell, builtin_run(cmd, shell));
+	else if (is_executable_exists(text, shell->env))
+		api_exit(shell, any_exec(cmd, shell));
 	else
 	{
-		printf(RED "cannot find executable %s\n" END, text);
+		error_msg_category("command not found", text);
 		api_exit(shell, EXIT_COMMAND_NOT_IN_PATH);
 	}
 }
@@ -37,7 +39,7 @@ int	api_handle_exitcode(t_dict *env, int status)
 	return (exitcode);
 }
 
-static int	api_fork_exec_cmd_at(t_shell *shell, int index)
+int	api_spawn_proc_with_cmd_at(t_shell *shell, int index)
 {
 	int		status;
 	pid_t	pid;
@@ -65,5 +67,5 @@ int	api_exec_cmd_at(t_shell *shell, int index)
 	if (is_builtin(text))
 		return (builtin_run(cmd, shell));
 	else
-		return (api_fork_exec_cmd_at(shell, index));
+		return (api_spawn_proc_with_cmd_at(shell, index));
 }

@@ -3,7 +3,7 @@
 /*	get input for heredoc
 	returns opened fd that points to it
 */
-static t_fd	shell_heredoc(char *ps, const char *eof)
+static t_fd	shell_heredoc(t_shell *shell, const char *eof)
 {
 	char	*line;
 	t_fd	pipefd[PIPE_SIZE];
@@ -12,18 +12,24 @@ static t_fd	shell_heredoc(char *ps, const char *eof)
 		return (ERR);
 	while (true)
 	{
-		line = readline(ps);
-		if (is_str_equal(line, eof))
+		line = readline(shell->prompt.ps2);
+		if (!line)
 		{
-			free(line);
+			cursor_up();
+			ft_write(1, shell->prompt.ps2);
 			break ;
 		}
+		else if (is_str_equal(line, eof))
+			break ;
 		else
 		{
+			// TODO: heredoc_parser_replace_line(&line, shell->env);
 			ft_writes(pipefd[PIPE_WRITE], (char *[]){line, "\n", NULL});
 			free(line);
 		}
 	}
+	if (line)
+		free(line);
 	close(pipefd[PIPE_WRITE]);
 	return (pipefd[PIPE_READ]);
 }
@@ -52,7 +58,7 @@ t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect, t_shell *shell)
 	if (*fd_p > STDERR_FILENO)
 		close(*fd_p);
 	if (redirect->op == REDIR_HEREDOC)
-		*fd_p = shell_heredoc(shell->prompt.ps2, file);
+		*fd_p = shell_heredoc(shell, file);
 	else
 		*fd_p = open(file, flag, 0644);
 	if (*fd_p == ERR)

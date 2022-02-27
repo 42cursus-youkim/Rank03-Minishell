@@ -10,20 +10,20 @@ bool	is_line_empty(char *line)
 	return (ft_strlen(line) <= 0);
 }
 
-void	prompt_exit(char *line)
+void	prompt_exit(t_shell *shell)
 {
 	printf("exit\n");
-	free(line);
+	api_exit(shell, shell->env->exitcode);
 }
 
 void	cursor_up(void)
 {
-	printf("\033[1A");
+	ft_write(1, "\033[1A");
 }
 
 /*
 	only works when replaced line is shorter than original prompt.
-	intended to be only used with EOF and "exit"
+	intended to be only used with EOF
 */
 void	prompt_replace_line_with(char *line, char *ps, char *new_line)
 {

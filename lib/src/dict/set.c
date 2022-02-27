@@ -23,14 +23,22 @@ static void	dict_probe(t_dict *dict, int id, char *key, void *value)
 {
 	int	i;
 
-	i = id;
+	i = id - 1;
 	while (++i < dict->capacity)
+	{
 		if (is_key_vacant(dict, i))
 			return (dict_insert(dict, i, key, value));
-	i = 0;
-	while (i < id)
-		if (is_key_vacant(dict, i++))
-			return (dict_insert(dict, --i, key, value));
+		else if (is_key_update(dict, i, key))
+			return (dict_update(dict, i, value));
+	}
+	i = -1;
+	while (++i < id)
+	{
+		if (is_key_vacant(dict, i))
+			return (dict_insert(dict, i, key, value));
+		else if (is_key_update(dict, i, key))
+			return (dict_update(dict, i, value));
+	}
 	printf(BRED "dict is full, probe failed" END);
 }
 
@@ -50,11 +58,6 @@ t_res	dict_set(t_dict *dict, char *key, void *value)
 		if (dict_expand(dict) == ERR)
 			return (ERR);
 	id = dict_getid(dict->capacity, key);
-	if (is_key_vacant(dict, id))
-		dict_insert(dict, id, key, value);
-	else if (is_key_update(dict, id, key))
-		dict_update(dict, id, value);
-	else
-		dict_probe(dict, id, key, value);
+	dict_probe(dict, id, key, value);
 	return (OK);
 }

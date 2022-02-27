@@ -1,6 +1,9 @@
 #include "minishell.h"
 
-//	does not use fork
+/*	does not use fork
+	builtin_exit works differently inside pipe;
+	since it won't close process
+*/
 int	builtin_run(t_AST_COMMAND *cmd, t_shell *shell)
 {
 	int						exitcode;
@@ -16,11 +19,10 @@ int	builtin_run(t_AST_COMMAND *cmd, t_shell *shell)
 	};
 
 	if (builtin == BUILTIN_EXIT)
-		api_exit(shell, EXIT_SUCCESS);
+		api_exit(shell, shell->env->exitcode);
 	context_init(&context, cmd, shell->env);
 	exitcode = funcs[builtin](&context, shell);
 	env_set_exitcode(shell->env, exitcode);
 	del_context(&context);
 	return (shell->env->exitcode);
-	// api_exit(shell, EXIT_SUCCESS);
 }
