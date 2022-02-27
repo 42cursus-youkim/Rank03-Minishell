@@ -44,9 +44,7 @@ t_AST_SCRIPT	*new_ast_script(t_AST_COMMAND *commands[], int commands_len);
 /*
 ** < parser.c > */
 
-t_res			commands_for_parser( t_AST_COMMAND **commands[],
-					t_token tokens[], int *commands_len);
-t_AST_SCRIPT	*parser(t_token tokens[]);
+t_AST_SCRIPT	*new_script_from_tokens(t_token tokens[]);
 /*
 ** < util1.c > */
 
