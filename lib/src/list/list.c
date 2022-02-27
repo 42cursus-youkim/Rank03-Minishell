@@ -4,7 +4,7 @@ t_list	*new_list(void *content)
 {
 	t_list	*new_list;
 
-	new_list = (t_list *)malloc(sizeof(t_list));
+	new_list = ft_calloc(sizeof(t_list), 0);
 	if (new_list == NULL)
 		return (NULL);
 	new_list->content = content;

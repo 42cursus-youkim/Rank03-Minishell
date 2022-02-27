@@ -5,10 +5,9 @@ char	**new_arr(char **arr)
 	int			i;
 	char		**new;
 
-	new = malloc(sizeof(char *) * 1);
+	new = ft_calloc(sizeof(char *), 0);
 	if (!new)
 		return (NULL);
-	new[0] = NULL;
 	if (arr)
 	{
 		i = -1;
