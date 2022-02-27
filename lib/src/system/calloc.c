@@ -9,7 +9,7 @@ void	*ft_calloc(size_t size, size_t count)
 	ptr = malloc(allocated_space);
 	if (!ptr)
 	{
-		error_syscall("fd_calloc");
+		error_syscall("ft_calloc");
 		return (NULL);
 	}
 	i = 0;

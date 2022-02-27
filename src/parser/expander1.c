@@ -11,7 +11,7 @@ static t_res	parameter_substitution(
 	}
 	if (ft_str_replace(&(*parr)[i], new_str(
 			env_get(env, node->expansions[i >> 1]->parameter))) == ERR)
-		return (error_malloc_msg());
+		return (ERR);
 	return (OK);
 }
 
@@ -29,7 +29,7 @@ static t_res	word_expansion(char **parr[], t_AST_NODE *node, t_dict *env)
 	}
 	temp_str = new_str_join(*parr, '\0');
 	if (!temp_str)
-		return (error_malloc_msg());
+		return (ERR);
 	if (ft_str_replace(&node->text, new_quotes_remove(temp_str)) == ERR)
 		return (ERR);
 	del_ast_expansions(node->expansions);
@@ -52,7 +52,7 @@ static t_res	node_expansion(t_AST_NODE *node, t_dict *env)
 		return (UNSET);
 	text_split = new_arr((char *[]){NULL});
 	if (!text_split)
-		return (error_malloc_msg());
+		return (ERR);
 	if (expansions_to_array(&text_split, node) == ERR)
 	{
 		del_arr(text_split);

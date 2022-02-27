@@ -3,9 +3,9 @@
 static t_res	buf_append_n_null_check(char **parr[], char **buf)
 {
 	if (!*buf)
-		return (error_malloc_msg());
+		return (ERR);
 	if (ft_arr_append_free(parr, *buf) == ERR)
-		return (free_n_return(buf, error_malloc_msg()));
+		return (free_n_return(buf, ERR));
 	return (OK);
 }
 

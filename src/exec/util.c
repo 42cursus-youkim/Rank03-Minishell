@@ -28,4 +28,3 @@ void	receive_input_from_pipe(t_fd pipefd[PIPE_SIZE])
 	dup2(pipefd[PIPE_READ], STDIN_FILENO);
 	close(pipefd[PIPE_READ]);
 }
-

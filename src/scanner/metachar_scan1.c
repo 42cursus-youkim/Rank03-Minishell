@@ -26,7 +26,7 @@ static t_res	metastr_append(
 		metastr->prev = metastr->str;
 		metastr->str = new_str((char []){c, '\0'});
 		if (!metastr->str)
-			return (free_n_return(&metastr->prev, error_malloc_msg()));
+			return (free_n_return(&metastr->prev, ERR));
 		return (OK);
 	}
 	else

@@ -54,15 +54,15 @@ t_res	list_element_create(
 	*element = NULL;
 	str = new_str(buf);
 	if (!str)
-		return (error_malloc_msg());
+		return (ERR);
 	content = new_scan_node(str, expansions);
 	if (!content)
-		return (free_n_return(&str, error_malloc_msg()));
+		return (free_n_return(&str, ERR));
 	*element = new_list(content);
 	if (!element)
 	{
 		del_scan_node(content);
-		return (error_malloc_msg());
+		return (ERR);
 	}
 	return (OK);
 }
@@ -80,7 +80,7 @@ t_res	buf_to_list(t_list **list, char **buf)
 	free(*buf);
 	*buf = new_str("");
 	if (!*buf)
-		return (error_malloc_msg());
+		return (ERR);
 	return (OK);
 }
 
