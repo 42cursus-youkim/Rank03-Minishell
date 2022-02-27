@@ -26,4 +26,4 @@ bool	is_line_empty(char *line);
 void	prompt_exit(char *line);
 void	cursor_up(void);
 void	prompt_replace_line_with(char *line, char *ps, char *new_line);
-#endif
+#endif 

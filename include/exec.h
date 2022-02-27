@@ -24,9 +24,10 @@ void	del_context(t_context *context);
 /*
 ** < exec.c > */
 
-void	any_exec(t_AST_COMMAND *cmd, t_shell *shell);
+int		any_exec(t_AST_COMMAND *cmd, t_shell *shell);
 void	child_proc(t_shell *shell, int index);
 int		api_handle_exitcode(t_dict *env, int status);
+int		api_spawn_proc_with_cmd_at(t_shell *shell, int index);
 int		api_exec_cmd_at(t_shell *shell, int index);
 /*
 ** < pipe.c > */

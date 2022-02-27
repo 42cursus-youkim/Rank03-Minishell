@@ -23,7 +23,7 @@ void	cursor_up(void)
 
 /*
 	only works when replaced line is shorter than original prompt.
-	intended to be only used with EOF and "exit"
+	intended to be only used with EOF
 */
 void	prompt_replace_line_with(char *line, char *ps, char *new_line)
 {
