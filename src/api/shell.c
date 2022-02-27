@@ -35,7 +35,7 @@ t_res	shell_init(t_shell *shell, char *envp[])
 	if (!shell->env)
 		return (ERR);
 	shell->script = NULL;
-	prompt_init(&shell->prompt);
+	prompt_init(shell);
 	return (OK);
 }
 

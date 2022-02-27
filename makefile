@@ -11,7 +11,7 @@ LIB		 := -L ~/.brew/opt/readline/lib -lreadline -L./lib -lft
 LIBFT    := lib/libft.a
 
 # ===== Test & Debugging =====
-DFLAGS	 :=  -g #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
+DFLAGS	 := -g3 #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
 VFLAGS   := --leak-check=full --show-leak-kinds=all \
 			--track-origins=yes --suppressions=./supp_mac.txt \
 			--suppressions=./supp.txt
@@ -24,7 +24,7 @@ scannerV := scanner scanner_list expansion util util2 util3 \
 			dollar_scan1 dollar_scan2 metachar_scan1 metachar_scan2
 lexerV   := lexer tokenizer util
 parserV  := parser new1 new2 del util1 util2 expander1 expander2 heredoc_parser
-promptV  := prompt interrupt util
+promptV  := prompt interrupt ps util
 apiV     := shell redirect signal path file util env1 env2
 execV    := context exec pipe argv util
 builtinV := builtin cd echo env export unset pwd util checks
@@ -90,7 +90,7 @@ run: docs all
 leak: docs all cls
 	@$(call log, Y, 🧪 Running Leak Test)
 	@valgrind $(VFLAGS) ./$(NAME)
-	
+
 supp: docs all cls
 	@$(call log, Y, Creating Leak Suppressions,...)
 	@valgrind $(VFLAGS) \

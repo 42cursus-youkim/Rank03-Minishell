@@ -1,9 +1,6 @@
 #ifndef PROMPT_H
 # define PROMPT_H
 
-# define SIGN "\001"
-# define EIGN "\002"
-
 typedef void(*t_sigfunc_f)(int);
 
 //@func
@@ -15,9 +12,13 @@ void	prompt_ignore_signal(void);
 /*
 ** < prompt.c > */
 
-void	prompt_init(t_prompt *prompt);
+void	prompt_init(t_shell *shell);
 void	del_prompt(t_prompt *prompt);
 void	shell_prompt(t_shell *shell);
+/*
+** < ps.c > */
+
+void	prompt_refresh_ps(t_shell *shell);
 /*
 ** < util.c > */
 
@@ -26,4 +27,4 @@ bool	is_line_empty(char *line);
 void	prompt_exit(t_shell *shell);
 void	cursor_up(void);
 void	prompt_replace_line_with(char *line, char *ps, char *new_line);
-#endif 
+#endif

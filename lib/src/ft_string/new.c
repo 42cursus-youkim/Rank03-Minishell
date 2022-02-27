@@ -15,6 +15,7 @@ char	*new_str(const char *src)
 }
 
 /*	slice new string from begin to end
+	ex) new_str_slice("abcdef", 0, 3) => "abc"
 	returns NULL if begin and end is out of range
 */
 char	*new_str_slice(char *str, int begin, int end)
