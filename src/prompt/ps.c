@@ -2,7 +2,7 @@
 
 static char	*prompt_color_result(t_shell *shell)
 {
-	static char	*colors[2] = {BRED, BGRN};
+	static char	*colors[2] = {BRED, BBLU};
 	char		*color;
 
 	color = colors[shell->env->exitcode == OK];
