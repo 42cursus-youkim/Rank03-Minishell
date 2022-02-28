@@ -37,6 +37,10 @@ int			builtin_echo(t_context *context, t_shell *shell);
 
 int			builtin_env(t_context *context, t_shell *shell);
 /*
+** < exit.c > */
+
+int			builtin_exit(t_context *context, t_shell *shell);
+/*
 ** < export.c > */
 
 int			builtin_export(t_context *context, t_shell *shell);

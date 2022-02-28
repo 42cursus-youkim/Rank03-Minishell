@@ -16,6 +16,7 @@ int	builtin_run(t_AST_COMMAND *cmd, t_shell *shell)
 		builtin_export,
 		builtin_unset,
 		builtin_env,
+		// TODO: builtin_exit here
 	};
 
 	if (builtin == BUILTIN_EXIT)

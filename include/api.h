@@ -1,13 +1,6 @@
 #ifndef API_H
 # define API_H
 
-typedef enum e_exitcode
-{
-	EXIT_BUILTINS_ERR = 2,
-	EXIT_COMMAND_NOT_IN_PATH = 127,
-	EXIT_FATAL_ERR_CAUSED_BY_SIGNAL = 128,
-}	t_exitcode;
-
 //@func
 /*
 ** < env1.c > */

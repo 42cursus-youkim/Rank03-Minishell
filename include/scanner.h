@@ -92,10 +92,7 @@ t_res		whitespace_scan(t_list **list, t_scan_data *data);
 ** < util2.c > */
 
 bool		is_metachar(char c);
-bool		is_whitespace(char c);
 bool		is_quotechar(char c);
-bool		is_alpha(char c);
-bool		is_digit(char c);
 /*
 ** < util3.c > */
 

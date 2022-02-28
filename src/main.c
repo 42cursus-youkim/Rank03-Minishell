@@ -6,7 +6,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	(void)argc;
 	(void)argv;
-	api_show_logo("logo.txt");
+	// api_show_logo("logo.txt");
 	if (shell_init(&shell, envp) == ERR)
 		return (EXIT_FAILURE);
 	shell_prompt(&shell);

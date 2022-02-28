@@ -32,7 +32,7 @@ promptV  := prompt interrupt ps util
 apiV     := redirect signal path file util env1 env2
 execV    := context exec argv util
 pipeV    := pipe send status util
-builtinV := builtin cd echo env export unset pwd util checks
+builtinV := builtin cd echo exit env export unset pwd util checks
 treeV    := repr1 repr2
 errormsgV:= error
 
