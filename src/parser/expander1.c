@@ -5,13 +5,13 @@ static t_res	parameter_substitution(
 {
 	if (!is_substitution_valid((*parr)[i]))
 	{
-		error_msg_return((char *[]){
-			BRED, MINISHELL, (*parr)[i], SUBSTITUTION_ERROR, END, NULL});
+		error_with_exitcode((char *[]){
+			BRED, MINISHELL, (*parr)[i], SUBSTITUTION_ERROR, END, NULL},
+			env, 1);
 		return (ERR);
 	}
-	if (ft_str_replace(&(*parr)[i], new_str(
-			env_get(env, node->expansions[i >> 1]->parameter))) == ERR)
-		return (ERR);
+	ft_str_replace(&(*parr)[i], new_str(
+			env_get(env, node->expansions[i >> 1]->parameter)));
 	return (OK);
 }
 
@@ -29,8 +29,6 @@ static t_res	word_expansion(
 				return (ERR);
 	}
 	temp_str = new_str_join(*parr, '\0');
-	if (!temp_str)
-		return (ERR);
 	if (type == CMD)
 		ft_str_replace(&node->text, new_quotes_remove(temp_str));
 	if (type == HEREDOC)
@@ -102,6 +100,7 @@ t_res	expander(t_AST_SCRIPT *script, t_dict *env)
 		if (commands_expansion(script->commands[i], env) == ERR)
 		{
 			del_ast_script(script);
+			script = NULL;
 			return (ERR);
 		}
 	}
