@@ -17,6 +17,7 @@ void	child_proc(t_shell *shell, int index)
 	t_AST_COMMAND	*cmd;
 	char			*text;
 
+	child_handle_signal();
 	cmd = shell->script->commands[index];
 	text = cmd->name->text;
 	if (is_builtin(text))
