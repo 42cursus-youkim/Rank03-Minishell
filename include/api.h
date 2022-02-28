@@ -49,6 +49,5 @@ int		api_handle_status(int status);
 ** < util.c > */
 
 void	api_exit(t_shell *shell, int exitcode);
-void	api_sleep(size_t tick);
 void	api_show_logo(char *file);
 #endif
