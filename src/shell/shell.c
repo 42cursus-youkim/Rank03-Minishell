@@ -17,6 +17,5 @@ void	del_shell(t_shell *shell)
 	del_env(shell->env);
 	del_prompt(&shell->prompt);
 	shell_clear_script(shell);
-	close(shell->io_backup[INPUT]);
-	close(shell->io_backup[OUTPUT]);
+	api_close_pipe(shell->io_backup);
 }
