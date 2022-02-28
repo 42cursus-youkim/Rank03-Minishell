@@ -26,7 +26,7 @@ lexerV   := lexer tokenizer util
 parserV  := parser new1 new2 del util1 util2 expander1 expander2 heredoc_parser
 shellV   := shell script
 promptV  := prompt interrupt ps util
-apiV     := redirect signal path file util env1 env2
+apiV     := redirect heredoc signal path file util env1 env2
 execV    := context exec pipe argv util
 builtinV := builtin cd echo env export unset pwd util checks
 treeV    := repr1 repr2
@@ -95,7 +95,7 @@ leak: docs all cls
 supp: docs all cls
 	@$(call log, Y, Creating Leak Suppressions,...)
 	@valgrind $(VFLAGS) \
-		--log-file=supp2.txt\
+		--log-file=supp3.txt\
 		--gen-suppressions=all ./$(NAME)
 
 .PHONY: $(NAME) all re clean fclean test red docs $(LIBFT)

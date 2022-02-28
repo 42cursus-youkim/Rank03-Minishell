@@ -22,15 +22,16 @@ static t_res	list_tokenize_n_expand(char **line, t_list *list, t_dict *env)
 {
 	t_scan_node	*node;
 	t_AST_NODE	*word;
+	t_res		res;
 
 	node = (t_scan_node *)list->content;
 	word = new_ast_word(node->text, node->expansions);
-	if (node_expansion(word, env, HEREDOC) == ERR)
-		return (ERR);
-	ft_str_replace(line, new_str(word->text));
+	res = node_expansion(word, env, HEREDOC);
+	if (res == OK)
+		ft_str_replace(line, new_str(word->text));
 	del_ast_node(word);
 	del_list(&list, del_scan_node);
-	return (OK);
+	return (res);
 }
 
 // mini parser for HEREDOC(`<<`)
