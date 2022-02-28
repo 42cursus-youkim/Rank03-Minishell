@@ -8,7 +8,7 @@ char	*new_cwd(void)
 	if (!cwd)
 	{
 		error_syscall("getcwd");
-		return (NULL);
+		exit(EXIT_FAILURE);
 	}
 	return (cwd);
 }
@@ -20,8 +20,6 @@ int	builtin_pwd(t_context *context, t_shell *shell)
 	(void)context;
 	(void)shell;
 	cwd = new_cwd();
-	if (!cwd)
-		return (EXIT_FAILURE);
 	printf("%s\n", cwd);
 	free(cwd);
 	return (EXIT_SUCCESS);
