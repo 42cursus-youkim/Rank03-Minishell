@@ -43,7 +43,6 @@ t_res	replace_line_heredoc(char **line, t_dict *env)
 	data.idx = -1;
 	data.type = HEREDOC;
 	data.env = env;
-	data.env_flag = false;
 	data.buf = new_str("");
 	if (heredoc_loop(&scan_list, &data) == ERR)
 	{	

@@ -13,7 +13,6 @@ typedef struct s_scan_data
 	char			*line;
 	int				idx;
 	t_dict			*env;
-	bool			env_flag;
 	t_scanner_type	type;
 }	t_scan_data;
 
@@ -68,8 +67,7 @@ t_res		metachar_scan(t_list **list, t_scan_data *data);
 /*
 ** < metachar_scan2.c > */
 
-t_res		metachar_attachable(char **pstr, char prev_c, char c);
-t_res		metastr_init(t_metastr *metastr, char c);
+bool		is_metachar_attachable(char **pstr, char prev_c, char c);
 bool		is_prev_metachar_attachable(char *str);
 /*
 ** < scanner.c > */
