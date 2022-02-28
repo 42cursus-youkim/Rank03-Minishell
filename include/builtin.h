@@ -27,7 +27,6 @@ int			builtin_cd(t_context *context, t_shell *shell);
 ** < checks.c > */
 
 t_res		check_no_opt(char *argv[], char *category);
-t_res		check_arg_no_more_than( char *argv[], char *category, int max);
 t_res		check_no_opt_arg(char *argv[], char *category);
 /*
 ** < echo.c > */
