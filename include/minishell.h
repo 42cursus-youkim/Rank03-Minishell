@@ -29,6 +29,7 @@
 # include "prompt.h"
 # include "api.h"
 # include "exec.h"
+# include "pipe.h"
 # include "builtin.h"
 # include "tree.h"
 # include "errormsg.h"

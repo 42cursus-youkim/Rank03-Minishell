@@ -3,6 +3,7 @@
 
 # include <errno.h>
 # include <string.h>
+# include "type.h"
 
 # define MINISHELL			"minishell: "
 # define SYNTAX_ERROR		"syntax error near unexpected token"

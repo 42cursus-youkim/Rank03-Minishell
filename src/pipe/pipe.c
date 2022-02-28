@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "pipe.h"
 
 /*	pids are malloced and then forked,
 	therefore must be freed INSIDE CHILD process  too
@@ -39,12 +40,7 @@
 // 		return (error_msg_category("fork", "failed to create fork"));
 // 	return (OK);
 // }
-/*
-prev[3, 4]
-next[5, 6]
 
-
-*/
 int	api_exec_pipe(t_shell *shell)
 {
 	int			i;
@@ -64,10 +60,11 @@ int	api_exec_pipe(t_shell *shell)
 		pids[i] = fork();
 		if (is_child(pids[i]))
 		{
+			free(pids);
 			if (has_pipe_prev(i))
-				receive_input_from_pipe(prev);
+				api_receive_input_from_pipe(prev);
 			if (has_pipe_next(i, len))
-				send_output_to_pipe(next);
+				api_send_output_to_pipe(next);
 			child_proc(shell, i);
 		}
 		else if (is_parent(pids[i]))
@@ -78,11 +75,9 @@ int	api_exec_pipe(t_shell *shell)
 				api_copy_pipe(next, prev);
 		}
 	}
-			// api_exec_pipe_at(shell, i, pids, &prev, &next);
 	i = -1;
 	while (++i < len)
 		waitpid(pids[i], &status, 0);
 	free(pids);
 	return (api_handle_exitcode(shell->env, status));
-	return (ERR);
 }
