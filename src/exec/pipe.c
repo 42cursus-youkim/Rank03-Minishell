@@ -9,7 +9,8 @@ t_res	api_exec_pipe_at(t_shell *shell, int index, int pids[])
 	t_fd		pipefd[PIPE_SIZE];
 	const int	len = shell->script->commands_len;
 
-	pipe(pipefd);
+	if (pipe(pipefd) == ERR)
+		return (error_msg_category("pipe", "failed to create pipe"));
 	pid = fork();
 	if (is_child(pid))
 	{
@@ -25,7 +26,7 @@ t_res	api_exec_pipe_at(t_shell *shell, int index, int pids[])
 			receive_input_from_pipe(pipefd);
 	}
 	else
-		printf(RED "fork error\n" END);
+		return (error_msg_category("fork", "failed to create fork"));
 	return (OK);
 }
 
