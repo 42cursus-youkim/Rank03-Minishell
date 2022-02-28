@@ -18,11 +18,7 @@ t_res	prefixes_parsing(
 	command->prefixes[*prefix_i] = new_ast_redirect(
 			tokens[*i + 1].text, tokens[*i + 1].expansions, op);
 	*i += 1;
-	if (!command->prefixes[(*prefix_i)++])
-	{
-		del_ast_command(command);
-		return (ERR);
-	}
+	*prefix_i += 1;
 	return (OK);
 }
 
@@ -38,10 +34,6 @@ t_res	suffixes_parsing(
 		command->suffixes[*suffix_i] = new_ast_redirect(
 				tokens[*i + 1].text, tokens[*i + 1].expansions, op);
 	*i += (op != NOT_REDIR);
-	if (!command->suffixes[(*suffix_i)++])
-	{
-		del_ast_command(command);
-		return (ERR);
-	}
+	*suffix_i += 1;
 	return (OK);
 }

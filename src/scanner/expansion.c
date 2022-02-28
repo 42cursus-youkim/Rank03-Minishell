@@ -21,19 +21,12 @@ t_res	expansions_append(t_AST_expansion **parr[], t_AST_expansion *element)
 	if (arr_len == ERR)
 		return (ERR);
 	new = ft_calloc(sizeof(t_AST_expansion), arr_len + 1);
-	if (!new)
-		return (ERR);
 	i = -1;
 	while (++i < arr_len)
 		new[i] = new_ast_expansion(
 				(*parr)[i]->parameter, (*parr)[i]->begin, (*parr)[i]->end);
 	new[i] = new_ast_expansion(
 			element->parameter, element->begin, element->end);
-	if (!new[i])
-	{
-		del_ast_expansions(new);
-		return (ERR);
-	}
 	del_ast_expansions(*parr);
 	*parr = new;
 	return (OK);
@@ -42,8 +35,7 @@ t_res	expansions_append(t_AST_expansion **parr[], t_AST_expansion *element)
 t_res	expansions_append_free(
 	t_AST_expansion **parr[], t_AST_expansion *element)
 {
-	if (expansions_append(parr, element) == ERR)
-		return (ERR);
+	expansions_append(parr, element);
 	free(element->parameter);
 	free(element);
 	return (OK);
