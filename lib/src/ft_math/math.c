@@ -1,25 +1,5 @@
 #include "libft.h"
 
-int	ft_digit_len(int n)
-{
-	int	len;
-
-	len = 0;
-	while (n)
-	{
-		n /= 10;
-		len++;
-	}
-	return (len);
-}
-
-int	ft_max(int a, int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
-}
-
 char	*new_itoa(int n)
 {
 	char	*str;
@@ -55,4 +35,29 @@ char	*ft_bool_to_str(bool b)
 		HGRN "true" END};
 
 	return (value[b]);
+}
+
+//	pass reference to n to convert str to int
+t_res	ft_atoi(const char *str, int *n)
+{
+	int	i;
+	int	num;
+	int	sign;
+
+	i = 0;
+	num = 0;
+	sign = 1;
+	if (!str)
+		return (ERR);
+	while (ft_strchr_i("\t\n\v\f\r ", str[i]) >= 0)
+		i++;
+	if (ft_strchr_i("-+", str[i]) >= 0)
+		if (str[i++] == '-')
+			sign = -1;
+	while (is_digit(str[i]))
+		num = num * 10 + (str[i++] - '0');
+	*n = sign * num;
+	if (is_overflow(*n, sign))
+		return (ERR);
+	return (OK);
 }
