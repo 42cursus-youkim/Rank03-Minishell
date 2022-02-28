@@ -44,6 +44,7 @@ int			builtin_export(t_context *context, t_shell *shell);
 /*
 ** < pwd.c > */
 
+char		*new_cwd(void);
 int			builtin_pwd(t_context *context, t_shell *shell);
 /*
 ** < unset.c > */

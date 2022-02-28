@@ -75,8 +75,7 @@ t_res		dict_set(t_dict *dict, char *key, void *value);
 /*
 ** < status.c > */
 
-bool		is_input_valid(const t_dict *dict, const char *key,
-				const void *value);
+bool		is_input_valid(const t_dict *dict, const char *key);
 bool		is_key_vacant(const t_dict *dict, int id);
 bool		is_key_update(const t_dict *dict, int id, const char *key);
 bool		is_dict_almostfull(const t_dict *dict);

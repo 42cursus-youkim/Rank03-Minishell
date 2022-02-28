@@ -6,6 +6,9 @@ void	env_set_exitcode(t_dict *env, int exitcode)
 	ft_str_replace(&env->exitcode_str, new_itoa(exitcode));
 }
 
+/*	if only key is passed: save NULL
+	if key and value are passed: save key=value
+*/
 t_res	env_set(t_dict *env, char *str)
 {
 	int		eq_idx;
@@ -14,8 +17,7 @@ t_res	env_set(t_dict *env, char *str)
 
 	eq_idx = ft_strchr_i(str, '=');
 	if (eq_idx == ERR)
-		return (error_msg_category("env",
-				"exporting variable without value not supported"));
+		return (dict_set(env, str, NULL));
 	key = new_str_slice(str, 0, eq_idx);
 	value = new_str_slice(str, eq_idx + 1, ft_strlen(str));
 	dict_set(env, key, value);

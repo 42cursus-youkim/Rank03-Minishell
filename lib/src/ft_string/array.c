@@ -6,8 +6,6 @@ char	**new_arr(char **arr)
 	char		**new;
 
 	new = ft_calloc(sizeof(char *), 0);
-	if (!new)
-		return (NULL);
 	if (arr)
 	{
 		i = -1;

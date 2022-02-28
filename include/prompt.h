@@ -9,6 +9,7 @@ typedef void(*t_sigfunc_f)(int);
 
 void	prompt_handle_signal(void);
 void	prompt_ignore_signal(void);
+void	child_handle_signal(void);
 /*
 ** < prompt.c > */
 

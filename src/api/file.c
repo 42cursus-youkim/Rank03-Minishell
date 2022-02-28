@@ -1,10 +1,17 @@
 #include "minishell.h"
 
-bool	is_file_exists(char *filename)
+bool	is_dir(char *path)
+{
+	struct stat	statbuf;
+
+	return (is_path(path) && S_ISDIR(statbuf.st_mode));
+}
+
+bool	is_path(char *path)
 {
 	struct stat	buffer;
 
-	return (stat(filename, &buffer) == OK);
+	return (stat(path, &buffer) == OK);
 }
 
 bool	is_executable_exists(char *file, t_dict *env)
@@ -13,32 +20,40 @@ bool	is_executable_exists(char *file, t_dict *env)
 	char	**names;
 	bool	result;
 
-	if (is_file_exists(file))
+	if (is_path(file))
 		return (true);
 	names = new_names_from_path(file, env);
 	i = -1;
 	result = false;
 	while (names[++i])
-		if (is_file_exists(names[i]))
+		if (is_path(names[i]))
 			result = true;
 	del_arr(names);
 	return (result);
 }
 
+/*	only time it would fail to get executable is when
+	the command is builtin, hence returns empty string
+*/
 char	*new_executable_from_env(char *file, t_dict *env)
 {
 	int		i;
 	char	**path;
 	char	*executable;
 
-	if (is_file_exists(file))
+	if (is_path(file) && is_dir(file))
+	{
+		error_msg_category(file, "is a directory");
+		return (new_str(""));
+	}
+	else if (is_path(file))
 		return (new_str(file));
 	else if (!is_executable_exists(file, env))
-		return (NULL);
+		return (new_str(""));
 	path = new_names_from_path(file, env);
 	i = -1;
 	while (path[++i])
-		if (is_file_exists(path[i]))
+		if (is_path(path[i]))
 			break ;
 	executable = new_str(path[i]);
 	del_arr(path);

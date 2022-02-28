@@ -19,7 +19,7 @@ static char	*sliced(char **backup_str_p, int nl_idx, bool *is_finish)
 	return (sliced_str);
 }
 
-static char	*result(char **backup_str_p, int read_length)
+static char	*result(char **backup_str_p, int read_length, bool *is_finish)
 {
 	char	*temp;
 
@@ -27,6 +27,7 @@ static char	*result(char **backup_str_p, int read_length)
 		return (NULL);
 	temp = new_str(*backup_str_p);
 	free(*backup_str_p);
+	*is_finish = true;
 	*backup_str_p = NULL;
 	return (temp);
 }
@@ -59,6 +60,5 @@ char	*ft_gnl(int fd)
 		if (nl_idx >= 0)
 			return (sliced(&backup[fd], nl_idx, &is_finished[fd]));
 	}
-	is_finished[fd] = true;
-	return (result(&backup[fd], read_length));
+	return (result(&backup[fd], read_length, &is_finished[fd]));
 }

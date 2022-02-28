@@ -1,8 +1,9 @@
 #include "libft.h"
 
-bool	is_input_valid(const t_dict *dict, const char *key, const void *value)
+//	sinc env allows 'NULL' as empty value, it won't check for value
+bool	is_input_valid(const t_dict *dict, const char *key)
 {
-	return (dict && key && value);
+	return (dict && key);
 }
 
 bool	is_key_vacant(const t_dict *dict, int id)

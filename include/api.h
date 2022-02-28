@@ -25,7 +25,8 @@ char	*env_get(t_dict *env, char *key);
 /*
 ** < file.c > */
 
-bool	is_file_exists(char *filename);
+bool	is_dir(char *path);
+bool	is_path(char *path);
 bool	is_executable_exists(char *file, t_dict *env);
 char	*new_executable_from_env(char *file, t_dict *env);
 /*
@@ -48,5 +49,6 @@ int		api_handle_status(int status);
 ** < util.c > */
 
 void	api_exit(t_shell *shell, int exitcode);
+void	api_sleep(size_t tick);
 void	api_show_logo(char *file);
 #endif

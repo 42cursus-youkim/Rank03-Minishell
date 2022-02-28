@@ -17,6 +17,7 @@ void	child_proc(t_shell *shell, int index)
 	t_AST_COMMAND	*cmd;
 	char			*text;
 
+	child_handle_signal();
 	cmd = shell->script->commands[index];
 	text = cmd->name->text;
 	if (is_builtin(text))
@@ -25,7 +26,7 @@ void	child_proc(t_shell *shell, int index)
 		api_exit(shell, any_exec(cmd, shell));
 	else
 	{
-		error_msg_category("command not found", text);
+		error_msg_category(text, "command not found");
 		api_exit(shell, EXIT_COMMAND_NOT_IN_PATH);
 	}
 }

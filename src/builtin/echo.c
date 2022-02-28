@@ -45,5 +45,5 @@ int	builtin_echo(t_context *context, t_shell *shell)
 		echo_inner(i, len, context->argv[i]);
 	if (is_newline)
 		ft_write(STDOUT_FILENO, "\n");
-	return (OK);
+	return (EXIT_SUCCESS);
 }
