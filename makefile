@@ -18,14 +18,15 @@ VFLAGS   := --leak-check=full --show-leak-kinds=all \
 HGEN     := hgen
 
 # ===== Packages =====
-PKGS     := prompt scanner lexer parser exec api builtin tree errormsg
+PKGS     := shell prompt scanner lexer parser exec api builtin tree errormsg
 
 scannerV := scanner scanner_list expansion util util2 util3 \
 			dollar_scan1 dollar_scan2 metachar_scan1 metachar_scan2
 lexerV   := lexer tokenizer util
 parserV  := parser new1 new2 del util1 util2 expander1 expander2 heredoc_parser
+shellV   := shell script
 promptV  := prompt interrupt ps util
-apiV     := shell redirect signal path file util env1 env2
+apiV     := redirect signal path file util env1 env2
 execV    := context exec pipe argv util
 builtinV := builtin cd echo env export unset pwd util checks
 treeV    := repr1 repr2

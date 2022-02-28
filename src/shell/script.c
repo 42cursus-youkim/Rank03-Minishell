@@ -14,6 +14,14 @@ void	shell_replace_script(t_shell *shell, t_AST_SCRIPT *script)
 	shell->script = script;
 }
 
+void	shell_reconnect_io(t_shell *shell)
+{
+	close(STDIN_FILENO);
+	dup2(shell->io_backup[STDIN_FILENO], STDIN_FILENO);
+	close(STDOUT_FILENO);
+	dup2(shell->io_backup[STDOUT_FILENO], STDOUT_FILENO);
+}
+
 int	shell_exec_script(t_shell *shell)
 {
 	int	exitcode;
@@ -24,24 +32,8 @@ int	shell_exec_script(t_shell *shell)
 		exitcode = api_exec_cmd_at(shell, 0);
 	else if (is_ast_pipeline(shell->script))
 		exitcode = api_exec_pipe(shell);
+	shell_reconnect_io(shell);
 	if (DEBUG && exitcode != OK)
 		printf(BRED "exitcode: %d\n" END, exitcode);
 	return (exitcode);
-}
-
-t_res	shell_init(t_shell *shell, char *envp[])
-{
-	shell->env = new_env(envp);
-	if (!shell->env)
-		return (ERR);
-	shell->script = NULL;
-	prompt_init(shell);
-	return (OK);
-}
-
-void	del_shell(t_shell *shell)
-{
-	del_env(shell->env);
-	del_prompt(&shell->prompt);
-	shell_clear_script(shell);
 }

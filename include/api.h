@@ -1,16 +1,6 @@
 #ifndef API_H
 # define API_H
 
-typedef enum e_procflag
-{
-	PIPE_READ = 0,
-	PIPE_WRITE = 1,
-	PIPE_SIZE = 2,
-	INPUT = 0,
-	OUTPUT = 1,
-	TEMP = 1,
-}	t_procflag;
-
 typedef enum e_exitcode
 {
 	EXIT_BUILTINS_ERR = 2,
@@ -50,14 +40,6 @@ void	cmd_try_open_redirect( t_AST_NODE *node, t_AST_COMMAND *cmd,
 			t_shell *shell);
 void	cmd_open_redirects(t_AST_COMMAND *cmd, t_shell *shell);
 void	shell_open_redirects(t_shell *shell);
-/*
-** < shell.c > */
-
-void	shell_clear_script(t_shell *shell);
-void	shell_replace_script(t_shell *shell, t_AST_SCRIPT *script);
-int		shell_exec_script(t_shell *shell);
-t_res	shell_init(t_shell *shell, char *envp[]);
-void	del_shell(t_shell *shell);
 /*
 ** < signal.c > */
 

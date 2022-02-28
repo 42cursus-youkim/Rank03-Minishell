@@ -25,8 +25,8 @@ t_AST_COMMAND	*new_ast_command(t_token tokens[], t_command_data data)
 				tokens[data.name_index].expansions);
 	new->prefixes = new_prefixes_n_suffixes(data.num_prefix);
 	new->suffixes = new_prefixes_n_suffixes(data.num_suffix);
-	new->io_input = UNSET;
-	new->io_output = UNSET;
+	new->io[INPUT] = UNSET;
+	new->io[OUTPUT] = UNSET;
 	return (new);
 }
 

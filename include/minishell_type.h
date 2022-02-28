@@ -1,19 +1,14 @@
 #ifndef MINISHELL_TYPE_H
 # define MINISHELL_TYPE_H
 
-typedef struct s_prompt
+typedef enum e_procflag
 {
-	char	*user;
-	char	*ps1;
-	char	*ps2;
-	char	*line;
-}	t_prompt;
-
-typedef struct s_shell
-{
-	t_dict			*env;
-	t_prompt		prompt;
-	t_AST_SCRIPT	*script;
-}	t_shell;
+	PIPE_READ = 0,
+	PIPE_WRITE = 1,
+	PIPE_SIZE = 2,
+	INPUT = 0,
+	OUTPUT = 1,
+	IO_SIZE = 2,
+}	t_procflag;
 
 #endif

@@ -10,10 +10,10 @@ void	context_init(t_context *context, t_AST_COMMAND *cmd, t_dict *env)
 
 void	cmd_connect_redirects(t_AST_COMMAND *cmd)
 {
-	if (cmd->io_input != UNSET)
-		dup2(cmd->io_input, STDIN_FILENO);
-	if (cmd->io_output != UNSET)
-		dup2(cmd->io_output, STDOUT_FILENO);
+	if (cmd->io[INPUT] >= 3)
+		dup2(cmd->io[INPUT], STDIN_FILENO);
+	if (cmd->io[OUTPUT] >= 3)
+		dup2(cmd->io[OUTPUT], STDOUT_FILENO);
 }
 
 void	del_context(t_context *context)

@@ -75,9 +75,9 @@ void	cmd_try_open_redirect(
 	if (node->type != REDIRECT)
 		return ;
 	if (node->op == REDIR_HEREDOC || node->op == REDIR_INPUT)
-		fd_p = &cmd->io_input;
+		fd_p = &cmd->io[INPUT];
 	else if (node->op == REDIR_OUTPUT || node->op == REDIR_OUTPUT_APPEND)
-		fd_p = &cmd->io_output;
+		fd_p = &cmd->io[OUTPUT];
 	else
 		return ;
 	api_open(fd_p, node, shell);
