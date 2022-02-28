@@ -51,5 +51,4 @@ int		api_handle_status(int status);
 void	api_exit(t_shell *shell, int exitcode);
 void	api_sleep(size_t tick);
 void	api_show_logo(char *file);
-void	api_close_pipe(t_fd pipefd[PIPE_SIZE]);
 #endif

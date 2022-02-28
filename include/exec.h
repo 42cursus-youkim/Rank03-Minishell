@@ -32,14 +32,17 @@ int		api_exec_cmd_at(t_shell *shell, int index);
 /*
 ** < pipe.c > */
 
-t_res	api_exec_pipe_at(t_shell *shell, int index, int pids[]);
 int		api_exec_pipe(t_shell *shell);
 /*
 ** < util.c > */
 
 bool	is_parent(pid_t pid);
 bool	is_child(pid_t pid);
-bool	is_pipe_last(int index, int length);
+bool	has_pipe_prev(int index);
+bool	has_pipe_next(int index, int length);
 void	send_output_to_pipe(t_fd pipefd[PIPE_SIZE]);
 void	receive_input_from_pipe(t_fd pipefd[PIPE_SIZE]);
+void	api_copy_pipe(t_fd from[PIPE_SIZE], t_fd to[PIPE_SIZE]);
+void	api_close_pipe(t_fd pipefd[PIPE_SIZE]);
+void	api_dup2(t_fd from, t_fd to);
 #endif

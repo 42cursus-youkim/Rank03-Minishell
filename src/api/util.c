@@ -35,9 +35,3 @@ void	api_show_logo(char *file)
 		free(line);
 	}
 }
-
-void	api_close_pipe(t_fd pipefd[PIPE_SIZE])
-{
-	close(pipefd[PIPE_READ]);
-	close(pipefd[PIPE_WRITE]);
-}
