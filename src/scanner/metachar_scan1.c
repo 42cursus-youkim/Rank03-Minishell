@@ -55,7 +55,7 @@ static t_res	metachar_valid_check(t_list **list, t_scan_data *data)
 	while (is_metachar(data->line[++metastr.i]) || !data->line[metastr.i])
 	{
 		if (is_metachar_attachable(&metastr.str,
-			data->line[metastr.i - 1], data->line[metastr.i]))
+				data->line[metastr.i - 1], data->line[metastr.i]))
 			continue ;
 		res = metastr_append(list, &metastr, data->line[metastr.i], data);
 		if (res == UNSET)
