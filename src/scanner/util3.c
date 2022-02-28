@@ -14,10 +14,11 @@ bool	is_variable_char_valid(char c)
 	return (false);
 }
 
-bool	is_scan_continuos(char *buf, char c)
+bool	is_scan_continuos(char *buf, char c, t_scanner_type type)
 {
-	if (!c || (!is_quotes_open(NULL, buf) && !is_brace_open(buf)
-			&& (is_whitespace(c) || is_metachar(c))))
+	if (!c || (type == CMD
+			&& (!is_quotes_open(NULL, buf) && !is_brace_open(buf)
+				&& (is_whitespace(c) || is_metachar(c)))))
 		return (false);
 	return (true);
 }

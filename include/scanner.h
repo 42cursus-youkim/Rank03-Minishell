@@ -1,13 +1,20 @@
 #ifndef SCANNER_H
 # define SCANNER_H
 
+typedef enum e_scanner_type
+{
+	CMD = 0,
+	HEREDOC,
+}	t_scanner_type;
+
 typedef struct s_scan_data
 {
-	char	*buf;
-	char	*line;
-	int		idx;
-	t_dict	*env;
-	bool	env_flag;
+	char			*buf;
+	char			*line;
+	int				idx;
+	t_dict			*env;
+	bool			env_flag;
+	t_scanner_type	type;
 }	t_scan_data;
 
 typedef struct s_expansion_scan_info
@@ -96,7 +103,7 @@ bool		is_digit(char c);
 
 bool		is_1stchar_valid(char c);
 bool		is_variable_char_valid(char c);
-bool		is_scan_continuos(char *buf, char c);
+bool		is_scan_continuos(char *buf, char c, t_scanner_type type);
 t_res		free_n_return(char **str, t_res result);
 t_res		free_arr_n_return(char *arr[], t_res result);
 #endif

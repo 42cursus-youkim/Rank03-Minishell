@@ -36,8 +36,12 @@ bool	is_multi_expansions(t_expansion_scan_info info, int i)
 	char	last_quote;
 
 	if (info.data->line[i] == '$' && is_1stchar_valid(info.data->line[i + 1])
-		&& (!is_quotes_open(&last_quote, info.data->buf) || last_quote != '\'')
 		&& !is_brace_open(info.data->buf))
-		return (true);
+	{
+		if (info.data->type == HEREDOC)
+			return (true);
+		if (!is_quotes_open(&last_quote, info.data->buf) || last_quote != '\'')
+			return (true);
+	}
 	return (false);
 }

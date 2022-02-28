@@ -20,6 +20,8 @@ void			del_ast_script(t_AST_SCRIPT *script);
 /*
 ** < expander1.c > */
 
+t_res			node_expansion(t_AST_NODE *node, t_dict *env,
+					t_scanner_type type);
 t_res			commands_expansion(t_AST_COMMAND *command, t_dict *env);
 t_res			expander(t_AST_SCRIPT *script, t_dict *env);
 /*
@@ -27,6 +29,10 @@ t_res			expander(t_AST_SCRIPT *script, t_dict *env);
 
 t_res			expansions_to_array(char **parr[], t_AST_NODE *node);
 bool			is_substitution_valid(char *str);
+/*
+** < heredoc_parser.c > */
+
+t_res			replace_line_heredoc(char **line, t_dict *env);
 /*
 ** < new1.c > */
 

@@ -42,6 +42,8 @@ static void	shell_run_line(t_shell *shell)
 {
 	if (DEBUG)
 		ast_script_repr(shell->script);
+	if (!shell->script)
+		return ;
 	prompt_ignore_signal();
 	if (is_exit(shell))
 		prompt_exit(shell);
