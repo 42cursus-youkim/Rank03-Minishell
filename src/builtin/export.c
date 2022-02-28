@@ -14,5 +14,5 @@ int	builtin_export(t_context *context, t_shell *shell)
 		res = env_set(shell->env, context->argv[i]);
 	if (res != OK)
 		return (EXIT_FAILURE);
-	return (OK);
+	return (EXIT_SUCCESS);
 }
