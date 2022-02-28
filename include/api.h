@@ -26,7 +26,7 @@ char	*env_get(t_dict *env, char *key);
 ** < file.c > */
 
 bool	is_dir(char *path);
-bool	is_file_exists(char *path);
+bool	is_path(char *path);
 bool	is_executable_exists(char *file, t_dict *env);
 char	*new_executable_from_env(char *file, t_dict *env);
 /*

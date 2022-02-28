@@ -49,7 +49,6 @@ static void	shell_run_line(t_shell *shell)
 		prompt_exit(shell);
 	else
 		shell_exec_script(shell);
-	prompt_refresh_ps(shell);
 	prompt_handle_signal();
 	shell_clear_script(shell);
 }
@@ -63,6 +62,7 @@ void	shell_prompt(t_shell *shell)
 	line = prompt->line;
 	while (true)
 	{
+		prompt_refresh_ps(shell);
 		line = readline(prompt->ps1);
 		if (is_line_eof(line))
 			return (prompt_replace_line_with(line, prompt->ps1, "exit"));
