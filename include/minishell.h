@@ -25,6 +25,7 @@
 # include "scanner.h"
 # include "lexer.h"
 # include "parser.h"
+# include "shell.h"
 # include "prompt.h"
 # include "api.h"
 # include "exec.h"

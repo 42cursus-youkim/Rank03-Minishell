@@ -51,14 +51,6 @@ void	cmd_try_open_redirect( t_AST_NODE *node, t_AST_COMMAND *cmd,
 void	cmd_open_redirects(t_AST_COMMAND *cmd, t_shell *shell);
 void	shell_open_redirects(t_shell *shell);
 /*
-** < shell.c > */
-
-void	shell_clear_script(t_shell *shell);
-void	shell_replace_script(t_shell *shell, t_AST_SCRIPT *script);
-int		shell_exec_script(t_shell *shell);
-t_res	shell_init(t_shell *shell, char *envp[]);
-void	del_shell(t_shell *shell);
-/*
 ** < signal.c > */
 
 int		api_handle_status(int status);
