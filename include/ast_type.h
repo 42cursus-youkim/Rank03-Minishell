@@ -43,8 +43,7 @@ typedef struct s_AST_COMMAND
 	t_AST_NODE	*name;
 	t_AST_NODE	**prefixes;
 	t_AST_NODE	**suffixes;
-	t_fd		io_input;
-	t_fd		io_output;
+	t_fd		io[IO_SIZE];
 }	t_AST_COMMAND;
 
 typedef struct s_AST_SCRIPTS

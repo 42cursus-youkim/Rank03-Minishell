@@ -14,7 +14,7 @@ typedef struct s_shell
 	t_dict			*env;
 	t_prompt		prompt;
 	t_AST_SCRIPT	*script;
-	t_fd			io_backup[2];
+	t_fd			io_backup[IO_SIZE];
 }	t_shell;
 
 //@func

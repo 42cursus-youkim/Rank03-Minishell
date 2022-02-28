@@ -19,8 +19,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# include "ast_type.h"
 # include "minishell_type.h"
+# include "ast_type.h"
 
 # include "scanner.h"
 # include "lexer.h"
