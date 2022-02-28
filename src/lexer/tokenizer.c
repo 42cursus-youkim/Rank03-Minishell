@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-t_res	quotes_remove_loop(char **new, char *last_quote, bool *open, char c)
+static t_res	quotes_remove_loop(
+	char **new, char *last_quote, bool *open, char c)
 {
 	if (!*open && is_quotechar(c))
 	{
@@ -13,8 +14,7 @@ t_res	quotes_remove_loop(char **new, char *last_quote, bool *open, char c)
 		*open = false;
 		return (OK);
 	}
-	if (ft_str_append(new, c) == ERR)
-		return (free_n_return(new, ERR));
+	ft_str_append(new, c);
 	return (OK);
 }
 
@@ -26,30 +26,11 @@ char	*new_quotes_remove(const char *str)
 	bool	open;
 
 	new = new_str("");
-	if (!new)
-		return (NULL);
 	open = false;
 	i = -1;
 	while (str[++i])
-	{
-		if (quotes_remove_loop(&new, &last_quote, &open, str[i]) == ERR)
-			return (NULL);
-	}
+		quotes_remove_loop(&new, &last_quote, &open, str[i]);
 	return (new);
-}
-
-t_res	node_tokenize(t_token *tokens[], t_scan_node *node, int i)
-{
-	if (!node->expansions)
-		(*tokens)[i].text = new_quotes_remove(node->text);
-	else
-		(*tokens)[i].text = new_str(node->text);
-	if (!(*tokens)[i].text)
-		return (ERR);
-	(*tokens)[i].expansions = new_ast_expansions(node->expansions);
-	if (!(*tokens)[i].expansions)
-		return (ERR);
-	return (OK);
 }
 
 t_token	*new_tokens_from_list(t_list *scan_list)
@@ -61,20 +42,17 @@ t_token	*new_tokens_from_list(t_list *scan_list)
 	t_scan_node		*node;
 
 	tokens = ft_calloc(sizeof(t_token), len);
-	if (!tokens)
-		return (NULL);
 	current = scan_list;
 	i = -1;
 	while (++i < len)
 	{
 		node = (t_scan_node *)current->content;
 		tokens[i].type = tokentype_check(node);
-		if (node_tokenize(&tokens, node, i) == ERR)
-		{
-			del_list(&scan_list, del_scan_node);
-			del_tokens(tokens);
-			return (NULL);
-		}
+		if (!node->expansions)
+			tokens[i].text = new_quotes_remove(node->text);
+		else
+			tokens[i].text = new_str(node->text);
+		tokens[i].expansions = new_ast_expansions(node->expansions);
 		current = current->next;
 	}
 	del_list(&scan_list, del_scan_node);

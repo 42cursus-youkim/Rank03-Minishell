@@ -1,25 +1,13 @@
 #include "minishell.h"
 
-t_res	metachar_attachable(char **pstr, char prev_c, char c)
+bool	is_metachar_attachable(char **pstr, char prev_c, char c)
 {
 	if (prev_c != '|' && ft_strlen(*pstr) == 1 && c == prev_c)
 	{
-		if (ft_str_append(pstr, c) == ERR)
-			return (free_n_return(pstr, ERR));
-		return (OK);
+		ft_str_append(pstr, c);
+		return (true);
 	}
-	return (UNSET);
-}
-
-t_res	metastr_init(t_metastr *metastr, char c)
-{
-	metastr->str = new_str((char []){c, '\0'});
-	if (!metastr->str)
-		return (ERR);
-	metastr->prev = new_str("");
-	if (!metastr->prev)
-		return (free_n_return(&metastr->str, ERR));
-	return (OK);
+	return (false);
 }
 
 bool	is_prev_metachar_attachable(char *str)

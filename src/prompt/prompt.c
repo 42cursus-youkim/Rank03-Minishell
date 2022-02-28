@@ -31,10 +31,8 @@ static void	prompt_process_line(char *line, t_shell *shell)
 	if (!tokens)
 		return ;
 	script = new_script_from_tokens(tokens);
-	if (!script)
-		return (env_set_exitcode(shell->env, EXIT_FAILURE));
 	if (expander(script, shell->env) == ERR)
-		return (env_set_exitcode(shell->env, EXIT_FAILURE));
+		return ;
 	shell_replace_script(shell, script);
 }
 
@@ -49,7 +47,6 @@ static void	shell_run_line(t_shell *shell)
 		prompt_exit(shell);
 	else
 		shell_exec_script(shell);
-	prompt_refresh_ps(shell);
 	prompt_handle_signal();
 	shell_clear_script(shell);
 }
@@ -63,6 +60,7 @@ void	shell_prompt(t_shell *shell)
 	line = prompt->line;
 	while (true)
 	{
+		prompt_refresh_ps(shell);
 		line = readline(prompt->ps1);
 		if (is_line_eof(line))
 			return (prompt_replace_line_with(line, prompt->ps1, "exit"));
@@ -72,5 +70,7 @@ void	shell_prompt(t_shell *shell)
 			prompt_process_line(line, shell);
 			shell_run_line(shell);
 		}
+		else
+			free(line);
 	}
 }

@@ -53,17 +53,8 @@ t_res	list_element_create(
 
 	*element = NULL;
 	str = new_str(buf);
-	if (!str)
-		return (ERR);
 	content = new_scan_node(str, expansions);
-	if (!content)
-		return (free_n_return(&str, ERR));
 	*element = new_list(content);
-	if (!element)
-	{
-		del_scan_node(content);
-		return (ERR);
-	}
 	return (OK);
 }
 
@@ -74,13 +65,10 @@ t_res	buf_to_list(t_list **list, char **buf)
 
 	if (buf_len == 0)
 		return (UNSET);
-	if (list_element_create(&list_element, *buf, NULL) == ERR)
-		return (free_n_return(buf, ERR));
+	list_element_create(&list_element, *buf, NULL);
 	ft_list_append(list, list_element);
 	free(*buf);
 	*buf = new_str("");
-	if (!*buf)
-		return (ERR);
 	return (OK);
 }
 
@@ -91,8 +79,7 @@ t_res	whitespace_scan(t_list **list, t_scan_data *data)
 	i = data->idx;
 	if (is_whitespace(data->line[i]) && !is_quotes_open(NULL, data->buf))
 	{
-		if (buf_to_list(list, &data->buf) == ERR)
-			return (ERR);
+		buf_to_list(list, &data->buf);
 		while (is_whitespace(data->line[++i]))
 			;
 		data->idx = --i;

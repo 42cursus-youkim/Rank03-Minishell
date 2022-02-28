@@ -16,10 +16,7 @@ t_token		*new_tokens_from_line(char *line, t_dict *env);
 /*
 ** < tokenizer.c > */
 
-t_res		quotes_remove_loop(char **new, char *last_quote, bool *open,
-				char c);
 char		*new_quotes_remove(const char *str);
-t_res		node_tokenize(t_token *tokens[], t_scan_node *node, int i);
 t_token		*new_tokens_from_list(t_list *scan_list);
 /*
 ** < util.c > */
@@ -27,6 +24,4 @@ t_token		*new_tokens_from_list(t_list *scan_list);
 t_AST_type	tokentype_check(t_scan_node *node);
 void		tokens_print(t_token tokens[]);
 void		del_tokens(t_token tokens[]);
-bool		is_pipeline_token_valid(t_AST_type type[], t_dict *env);
-bool		is_redirect_token_valid(t_AST_type type[], char *str, t_dict *env);
 #endif
