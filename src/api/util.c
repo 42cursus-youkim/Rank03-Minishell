@@ -31,7 +31,7 @@ void	api_show_logo(char *file)
 		if (!line)
 			break ;
 		printf(BBLU "%s" END, line);
-		api_sleep(12000);
+		api_sleep(40000);
 		free(line);
 	}
 }

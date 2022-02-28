@@ -1,7 +1,7 @@
 #ifndef SYSTEM_H
 # define SYSTEM_H
 
-# define BUFFER_SIZE 42
+# define BUFFER_SIZE 1024
 
 # ifndef OPEN_MAX
 #  define OPEN_MAX 256
