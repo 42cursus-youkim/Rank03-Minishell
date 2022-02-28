@@ -52,7 +52,7 @@ t_res	dict_set(t_dict *dict, char *key, void *value)
 {
 	int	id;
 
-	if (!is_input_valid(dict, key, value))
+	if (!is_input_valid(dict, key))
 		return (ERR);
 	if (is_dict_almostfull(dict))
 		if (dict_expand(dict) == ERR)
