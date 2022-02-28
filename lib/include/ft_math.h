@@ -3,12 +3,17 @@
 
 //@func
 /*
+** < check.c > */
+
+bool	is_alpha(char c);
+bool	is_digit(char c);
+bool	is_overflow(int n, int sign);
+bool	is_whitespace(char c);
+/*
 ** < compare.c > */
 
 int		ft_digit_len(int n);
 int		ft_max(int a, int b);
-bool	is_digit(char c);
-bool	is_overflow(int n, int sign);
 /*
 ** < math.c > */
 
