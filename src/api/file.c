@@ -32,6 +32,9 @@ bool	is_executable_exists(char *file, t_dict *env)
 	return (result);
 }
 
+/*	only time it would fail to get executable is when
+	the command is builtin, hence returns empty string
+*/
 char	*new_executable_from_env(char *file, t_dict *env)
 {
 	int		i;
@@ -41,12 +44,12 @@ char	*new_executable_from_env(char *file, t_dict *env)
 	if (is_path(file) && is_dir(file))
 	{
 		error_msg_category(file, "is a directory");
-		return (NULL);
+		return (new_str(""));
 	}
 	else if (is_path(file))
 		return (new_str(file));
 	else if (!is_executable_exists(file, env))
-		return (NULL);
+		return (new_str(""));
 	path = new_names_from_path(file, env);
 	i = -1;
 	while (path[++i])
