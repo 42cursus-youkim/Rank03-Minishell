@@ -36,9 +36,8 @@ t_res	env_set(t_dict *env, char *str)
 	key = new_str_slice(str, 0, eq_idx);
 	if (!is_key_valid(key))
 	{
-		ft_str_replace(&key, new_str_join((char *[]){
-				"`", str, "': not a valid identifier", NULL}, '\0'));
-		error_msg_category("export", key);
+		error_msg_return((char *[]){"export: ",
+				"`", str, "': not a valid identifier", NULL});
 		return (free_n_return(&key, ERR));
 	}
 	value = new_str_slice(str, eq_idx + 1, ft_strlen(str));
