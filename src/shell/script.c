@@ -17,9 +17,9 @@ void	shell_replace_script(t_shell *shell, t_AST_SCRIPT *script)
 void	shell_reconnect_io(t_shell *shell)
 {
 	close(STDIN_FILENO);
-	dup2(shell->io_backup[STDIN_FILENO], STDIN_FILENO);
 	close(STDOUT_FILENO);
-	dup2(shell->io_backup[STDOUT_FILENO], STDOUT_FILENO);
+	api_dup2(shell->io_backup[STDIN_FILENO], STDIN_FILENO);
+	api_dup2(shell->io_backup[STDOUT_FILENO], STDOUT_FILENO);
 }
 
 int	shell_exec_script(t_shell *shell)
