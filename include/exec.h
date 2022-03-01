@@ -27,19 +27,10 @@ void	del_context(t_context *context);
 int		any_exec(t_AST_COMMAND *cmd, t_shell *shell);
 void	child_proc(t_shell *shell, int index);
 int		api_handle_exitcode(t_dict *env, int status);
-int		api_spawn_proc_with_cmd_at(t_shell *shell, int index);
 int		api_exec_cmd_at(t_shell *shell, int index);
-/*
-** < pipe.c > */
-
-t_res	api_exec_pipe_at(t_shell *shell, int index, int pids[]);
-int		api_exec_pipe(t_shell *shell);
 /*
 ** < util.c > */
 
 bool	is_parent(pid_t pid);
 bool	is_child(pid_t pid);
-bool	is_pipe_last(int index, int length);
-void	send_output_to_pipe(t_fd pipefd[PIPE_SIZE]);
-void	receive_input_from_pipe(t_fd pipefd[PIPE_SIZE]);
 #endif

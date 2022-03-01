@@ -1,7 +1,6 @@
 #ifndef AST_TYPE_H
 # define AST_TYPE_H
 
-typedef int	t_fd;
 
 typedef enum e_AST_type
 {

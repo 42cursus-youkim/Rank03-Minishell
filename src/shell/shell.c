@@ -6,8 +6,8 @@ t_res	shell_init(t_shell *shell, char *envp[])
 	if (!shell->env)
 		return (ERR);
 	shell->script = NULL;
-	shell->io_backup[STDIN_FILENO] = dup(STDIN_FILENO);
-	shell->io_backup[STDOUT_FILENO] = dup(STDOUT_FILENO);
+	shell->io_backup[INPUT] = dup(STDIN_FILENO);
+	shell->io_backup[OUTPUT] = dup(STDOUT_FILENO);
 	prompt_init(shell);
 	return (OK);
 }
@@ -17,4 +17,5 @@ void	del_shell(t_shell *shell)
 	del_env(shell->env);
 	del_prompt(&shell->prompt);
 	shell_clear_script(shell);
+	api_close_pipe(shell->io_backup);
 }

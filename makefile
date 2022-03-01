@@ -13,12 +13,15 @@ LIBFT    := lib/libft.a
 # ===== Test & Debugging =====
 DFLAGS	 := -g3 #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
 VFLAGS   := --leak-check=full --show-leak-kinds=all \
+			--track-fds=yes \
 			--track-origins=yes --suppressions=./supp_mac.txt \
 			--suppressions=./supp.txt
 HGEN     := hgen
 
 # ===== Packages =====
-PKGS     := shell prompt scanner lexer parser exec api builtin tree errormsg
+PKGS     := scanner lexer parser \
+			api shell prompt tree errormsg \
+			exec pipe builtin
 
 scannerV := scanner scanner_list expansion util util2 util3 \
 			dollar_scan1 dollar_scan2 metachar_scan1 metachar_scan2
@@ -27,7 +30,8 @@ parserV  := parser new1 new2 del util1 util2 expander1 expander2 heredoc_parser
 shellV   := shell script
 promptV  := prompt interrupt ps util
 apiV     := redirect heredoc signal path file util env1 env2
-execV    := context exec pipe argv util
+pipeV    := pipe send status util
+execV    := context exec argv util
 builtinV := builtin cd echo env export unset pwd util checks
 treeV    := repr1 repr2
 errormsgV:= error

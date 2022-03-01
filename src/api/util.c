@@ -7,15 +7,6 @@ void	api_exit(t_shell *shell, int exitcode)
 	exit(exitcode);
 }
 
-void	api_sleep(size_t tick)
-{
-	size_t	i;
-
-	i = -1;
-	while (++i < tick * 1000)
-		;
-}
-
 void	api_show_logo(char *file)
 {
 	t_fd	fd;
@@ -30,7 +21,6 @@ void	api_show_logo(char *file)
 		if (!line)
 			break ;
 		printf(BBLU "%s" END, line);
-		api_sleep(40000);
 		free(line);
 	}
 }

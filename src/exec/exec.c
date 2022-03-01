@@ -40,7 +40,7 @@ int	api_handle_exitcode(t_dict *env, int status)
 	return (exitcode);
 }
 
-int	api_spawn_proc_with_cmd_at(t_shell *shell, int index)
+static int	api_spawn_proc_with_cmd_at(t_shell *shell, int index)
 {
 	int		status;
 	pid_t	pid;
@@ -54,7 +54,7 @@ int	api_spawn_proc_with_cmd_at(t_shell *shell, int index)
 		return (api_handle_exitcode(shell->env, status));
 	}
 	else
-		printf(RED "fork error\n" END);
+		return (error_syscall("fork"));
 	return (OK);
 }
 
