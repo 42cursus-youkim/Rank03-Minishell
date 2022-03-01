@@ -5,7 +5,7 @@ static t_res	error_unclosed(char c, t_scan_data *data)
 	char	*quote_str;
 
 	quote_str = (char []){'(', c, ')', ':', ' ', '\0'};
-	return (free_n_return(&data->buf, error_with_exitcode((char *[]){
+	return (free_n_return(data->buf, error_with_exitcode((char *[]){
 				BRED, MINISHELL, QUOTE_ERROR, quote_str,
 				MULTILINE_ERROR, END, NULL}, data->env, 2)));
 }
@@ -19,16 +19,6 @@ static t_res	scan_last_check(t_list **scan_list, t_scan_data *data)
 	buf_to_list(scan_list, &data->buf);
 	free(data->buf);
 	return (OK);
-}
-
-static bool	is_tilde_expansion(t_scan_data *data, int i)
-{
-	if (data->line[i] == '~'
-		&& is_str_equal(data->buf, "") && !is_quotes_open(NULL, data->buf)
-		&& (!data->line[i + 1] || data->line[i + 1] == ' '
-			|| data->line[i + 1] == '/'))
-		return (true);
-	return (false);
 }
 
 static t_res	tilde_scan(t_scan_data *data)
@@ -89,6 +79,6 @@ t_res	scanner(t_list **scan_list, char *line, t_dict *env)
 	data.type = CMD;
 	data.buf = new_str("");
 	if (scanner_loop(scan_list, &data) == OK)
-		return (free_n_return(&data.line, OK));
-	return (free_n_return(&data.line, ERR));
+		return (free_n_return(data.line, OK));
+	return (free_n_return(data.line, ERR));
 }

@@ -33,4 +33,6 @@ int		api_exec_cmd_at(t_shell *shell, int index);
 
 bool	is_parent(pid_t pid);
 bool	is_child(pid_t pid);
+t_fd	api_dup2(t_fd from, t_fd to);
+t_fd	api_dup(t_fd from);
 #endif

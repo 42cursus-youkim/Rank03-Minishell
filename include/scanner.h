@@ -93,12 +93,13 @@ t_res		whitespace_scan(t_list **list, t_scan_data *data);
 
 bool		is_metachar(char c);
 bool		is_quotechar(char c);
+bool		is_tilde_expansion(t_scan_data *data, int i);
 /*
 ** < util3.c > */
 
 bool		is_1stchar_valid(char c);
 bool		is_variable_char_valid(char c);
 bool		is_scan_continuos(char *buf, char c, t_scanner_type type);
-t_res		free_n_return(char **str, t_res result);
+t_res		free_n_return(void *data, t_res result);
 t_res		free_arr_n_return(char *arr[], t_res result);
 #endif

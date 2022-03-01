@@ -1,8 +1,12 @@
 #ifndef PIPE_H
 # define PIPE_H
 
-# include "error.h"
-# include "shell.h"
+typedef struct s_pipe_context
+{
+	int			*pids;
+	t_fd		prev[PIPE_SIZE];
+	t_fd		next[PIPE_SIZE];
+}	t_pipe_context;
 
 //@func
 /*
@@ -22,8 +26,8 @@ bool	has_pipe_next(int index, int length);
 /*
 ** < util.c > */
 
+t_res	api_create_pipe(t_fd pipefd[PIPE_SIZE]);
 void	api_copy_pipe(t_fd from[PIPE_SIZE], t_fd to[PIPE_SIZE]);
 void	api_close_pipe(t_fd pipefd[PIPE_SIZE]);
-t_fd	api_dup2(t_fd from, t_fd to);
-t_fd	api_dup(t_fd from);
+int		wait_pipe_processes(int pids[], const int len);
 #endif

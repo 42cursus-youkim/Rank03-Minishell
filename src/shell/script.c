@@ -26,8 +26,8 @@ int	shell_exec_script(t_shell *shell)
 {
 	int	exitcode;
 
-	exitcode = EXIT_FAILURE;
 	shell_open_redirects(shell);
+	exitcode = shell->env->exitcode;
 	if (is_ast_command(shell->script))
 		exitcode = api_exec_cmd_at(shell, 0);
 	else if (is_ast_pipeline(shell->script))

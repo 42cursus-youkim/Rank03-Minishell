@@ -78,7 +78,7 @@ t_res	metachar_scan(t_list **list, t_scan_data *data)
 	{
 		buf_to_list(list, &data->buf);
 		if (metachar_valid_check(list, data) == ERR)
-			return (free_n_return(&data->buf, ERR));
+			return (free_n_return(data->buf, ERR));
 		return (OK);
 	}
 	return (UNSET);

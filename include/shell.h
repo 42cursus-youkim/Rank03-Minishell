@@ -1,9 +1,6 @@
 #ifndef SHELL_H
 # define SHELL_H
 
-# include "dict.h"
-# include "ast_type.h"
-
 typedef struct s_prompt
 {
 	char	*user;

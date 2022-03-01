@@ -11,7 +11,6 @@ t_res	check_no_opt(char *argv[], char *category)
 	return (OK);
 }
 
-
 t_res	check_no_opt_arg(char *argv[], char *category)
 {
 	int	i;

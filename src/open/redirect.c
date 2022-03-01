@@ -11,7 +11,10 @@ void	cmd_try_open_redirect(
 		cmd->io[OUTPUT] = api_open_redirect_output(redirect);
 	else
 		return ;
-	if (cmd->io[INPUT] == ERR || cmd->io[OUTPUT] == ERR)
+	if (shell->env->exitcode
+		|| cmd->io[INPUT] == ERR
+		|| cmd->io[OUTPUT] == ERR
+	)
 	{
 		cmd->is_fail = true;
 		env_set_exitcode(shell->env, EXIT_FAILURE);
