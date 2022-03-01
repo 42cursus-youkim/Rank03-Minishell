@@ -21,16 +21,6 @@ static t_res	scan_last_check(t_list **scan_list, t_scan_data *data)
 	return (OK);
 }
 
-static bool	is_tilde_expansion(t_scan_data *data, int i)
-{
-	if (data->line[i] == '~'
-		&& is_str_equal(data->buf, "") && !is_quotes_open(NULL, data->buf)
-		&& (!data->line[i + 1] || data->line[i + 1] == ' '
-			|| data->line[i + 1] == '/'))
-		return (true);
-	return (false);
-}
-
 static t_res	tilde_scan(t_scan_data *data)
 {
 	int			i;

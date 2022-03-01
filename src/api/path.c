@@ -8,7 +8,6 @@ char	*new_path_resolved(char *path, t_dict *env)
 	char	*new;
 
 	new = new_str(path);
-
 	path_replace_tilde(&new, env);
 	if (!is_str_last(new, '/'))
 		ft_str_replace(&new, new_str_join((char *[]){

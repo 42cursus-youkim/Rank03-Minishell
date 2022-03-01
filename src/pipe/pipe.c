@@ -1,6 +1,4 @@
 #include "minishell.h"
-#include "pipe.h"
-
 
 static void	pipe_child_at(
 	t_pipe_context *context, int i, const int len, t_shell *shell)

@@ -93,6 +93,7 @@ t_res		whitespace_scan(t_list **list, t_scan_data *data);
 
 bool		is_metachar(char c);
 bool		is_quotechar(char c);
+bool		is_tilde_expansion(t_scan_data *data, int i);
 /*
 ** < util3.c > */
 
