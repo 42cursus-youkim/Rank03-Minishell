@@ -23,10 +23,12 @@ int	builtin_cd(t_context *context, t_shell *shell)
 {
 	char	*cwd;
 	char	*oldpwd;
+	char	*target;
 
 	oldpwd = new_cwd();
-	if (chdir(get_target(context, shell)) == ERR)
-		error_syscall("chdir");
+	target = get_target(context, shell);
+	if (chdir(target) == ERR)
+		error_syscall_with_arg("cd", target);
 	cwd = new_cwd();
 	dict_set(shell->env, "PWD", cwd);
 	dict_set(shell->env, "OLDPWD", oldpwd);
