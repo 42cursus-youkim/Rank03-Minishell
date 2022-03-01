@@ -28,6 +28,7 @@
 # include "shell.h"
 # include "prompt.h"
 # include "api.h"
+# include "open.h"
 # include "exec.h"
 # include "pipe.h"
 # include "builtin.h"

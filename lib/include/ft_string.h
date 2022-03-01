@@ -21,6 +21,12 @@ t_res	ft_arr_append(char **parr[], char *str);
 t_res	ft_arr_append_free(char **parr[], char *str);
 t_res	ft_arr_extend(char **parr[], char *src[]);
 /*
+** < check.c > */
+
+bool	is_str_first(char *str, char c);
+bool	is_str_last(char *str, char c);
+bool	is_str_digit(char *str);
+/*
 ** < join.c > */
 
 char	*new_str_join(char **arr, char delimiter);

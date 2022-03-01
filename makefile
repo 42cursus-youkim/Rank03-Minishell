@@ -21,20 +21,26 @@ HGEN     := hgen
 # ===== Packages =====
 PKGS     := scanner lexer parser \
 			api shell prompt tree errormsg \
-			exec pipe builtin
+			open exec pipe builtin
 
+# AST
 scannerV := scanner scanner_list expansion util util2 util3 \
 			dollar_scan1 dollar_scan2 metachar_scan1 metachar_scan2
 lexerV   := lexer tokenizer util
 parserV  := parser new1 new2 del util1 util2 expander1 expander2 heredoc_parser
+
+# Shell API
+apiV     := signal path tilde util env1 env2
 shellV   := shell script
 promptV  := prompt interrupt ps util
-apiV     := redirect heredoc signal path file util env1 env2
-pipeV    := pipe send status util
-execV    := context exec argv util
-builtinV := builtin cd echo env export unset pwd util checks
 treeV    := repr1 repr2
 errormsgV:= error
+
+# Script
+openV    := open redirect heredoc file util
+execV    := context exec argv util
+pipeV    := pipe send status util
+builtinV := builtin cd echo exit env export unset pwd util checks
 
 # ===== Macros =====
 define choose_modules

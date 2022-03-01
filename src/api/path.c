@@ -1,14 +1,16 @@
 #include "minishell.h"
 
-static char	*new_path_resolved(char *path, t_dict *env)
+/*	appends / to path if it's not already there
+	~ is expanded to $HOME
+*/
+char	*new_path_resolved(char *path, t_dict *env)
 {
 	char	*new;
 
 	new = new_str(path);
-	if (path[0] == '~')
-		ft_str_replace(&new, new_str_join((char *[]){
-				env_get(env, "HOME"), path + 1, NULL}, '\0'));
-	if (path[ft_strlen(path) - 1] != '/')
+
+	path_replace_tilde(&new, env);
+	if (!is_str_last(new, '/'))
 		ft_str_replace(&new, new_str_join((char *[]){
 				new, "/", NULL}, '\0'));
 	return (new);
@@ -23,6 +25,7 @@ static char	**new_raw_path(t_dict *env)
 	return (new_str_split(pathstr, ':'));
 }
 
+//	returns resolved array of paths
 static char	**new_path(t_dict *env)
 {
 	int		i;

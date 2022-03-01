@@ -12,8 +12,11 @@ bool	is_line_empty(char *line)
 
 void	prompt_exit(t_shell *shell)
 {
+	t_context	context;
+
+	context_init(&context, shell->script->commands[0], shell->env);
 	printf("exit\n");
-	api_exit(shell, shell->env->exitcode);
+	builtin_exit(&context, shell);
 }
 
 void	cursor_up(void)

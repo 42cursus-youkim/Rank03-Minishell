@@ -12,12 +12,12 @@ void	cmd_connect_redirects(t_AST_COMMAND *cmd)
 {
 	if (cmd->io[INPUT] >= 3)
 	{
-		dup2(cmd->io[INPUT], STDIN_FILENO);
+		api_dup2(cmd->io[INPUT], STDIN_FILENO);
 		close(cmd->io[INPUT]);
 	}
 	if (cmd->io[OUTPUT] >= 3)
 	{
-		dup2(cmd->io[OUTPUT], STDOUT_FILENO);
+		api_dup2(cmd->io[OUTPUT], STDOUT_FILENO);
 		close(cmd->io[OUTPUT]);
 	}
 }
