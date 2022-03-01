@@ -18,7 +18,7 @@ TEST     := test
 # ===== Packages =====
 PKGS     := ft_string dict system ft_math list error
 
-ft_stringV  := new util util2 array array2 split join
+ft_stringV  := new check util util2 array array2 split join
 dictV    := new del util hash set get drop expand print status
 systemV  := alloc read write gnl
 ft_mathV := math compare check

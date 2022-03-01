@@ -2,9 +2,7 @@
 
 bool	is_alpha(char c)
 {
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-		return (true);
-	return (false);
+	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
 }
 
 bool	is_digit(char c)
@@ -21,7 +19,5 @@ bool	is_overflow(int n, int sign)
 
 bool	is_whitespace(char c)
 {
-	if (c == ' ' || c == '\t')
-		return (true);
-	return (false);
+	return (c == ' ' || c == '\t');
 }
