@@ -1,9 +1,6 @@
 #ifndef PIPE_H
 # define PIPE_H
 
-# include "error.h"
-# include "shell.h"
-
 typedef struct s_pipe_context
 {
 	int			*pids;
