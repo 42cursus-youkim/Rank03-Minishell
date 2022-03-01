@@ -9,7 +9,7 @@
 */
 t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect, t_shell *shell)
 {
-	const char	*file = redirect->text;
+	char		*file;
 	int			flag;
 	const int	flags[5] = {
 		O_RDONLY,
@@ -18,6 +18,7 @@ t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect, t_shell *shell)
 		O_CREAT | O_WRONLY | O_APPEND,
 		ERR};
 
+	file = redirect->text;
 	flag = flags[redirect->op];
 	if (flag == ERR)
 		return (ERR);
@@ -27,6 +28,8 @@ t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect, t_shell *shell)
 		*fd_p = shell_heredoc(shell, file);
 	else
 		*fd_p = open(file, flag, 0644);
+	if (*fd_p == ERR && redirect->op != REDIR_HEREDOC)
+		return (error_syscall(file));
 	if (*fd_p == ERR)
 		return (ERR);
 	return (OK);
