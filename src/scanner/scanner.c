@@ -5,7 +5,7 @@ static t_res	error_unclosed(char c, t_scan_data *data)
 	char	*quote_str;
 
 	quote_str = (char []){'(', c, ')', ':', ' ', '\0'};
-	return (free_n_return(&data->buf, error_with_exitcode((char *[]){
+	return (free_n_return(data->buf, error_with_exitcode((char *[]){
 				BRED, MINISHELL, QUOTE_ERROR, quote_str,
 				MULTILINE_ERROR, END, NULL}, data->env, 2)));
 }
@@ -89,6 +89,6 @@ t_res	scanner(t_list **scan_list, char *line, t_dict *env)
 	data.type = CMD;
 	data.buf = new_str("");
 	if (scanner_loop(scan_list, &data) == OK)
-		return (free_n_return(&data.line, OK));
-	return (free_n_return(&data.line, ERR));
+		return (free_n_return(data.line, OK));
+	return (free_n_return(data.line, ERR));
 }

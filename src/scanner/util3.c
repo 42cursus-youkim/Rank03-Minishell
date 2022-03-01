@@ -23,13 +23,7 @@ bool	is_scan_continuos(char *buf, char c, t_scanner_type type)
 	return (true);
 }
 
-t_res	free_n_return(char **str, t_res result)
-{
-	free(*str);
-	return (result);
-}
-
-t_res	free_n_return_void(void *data, t_res result)
+t_res	free_n_return(void *data, t_res result)
 {
 	free(data);
 	return (result);

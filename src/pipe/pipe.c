@@ -34,7 +34,7 @@ int	api_exec_pipe(t_shell *shell, const int len)
 	{
 		if (has_pipe_next(i, len))
 			if (api_create_pipe(context.next) == ERR)
-				free_n_return_void(&context.pids, EXIT_FAILURE);
+				free_n_return(context.pids, EXIT_FAILURE);
 		context.pids[i] = fork();
 		if (is_child(context.pids[i]))
 			pipe_child_at(&context, i, len, shell);
