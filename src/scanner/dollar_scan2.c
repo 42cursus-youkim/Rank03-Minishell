@@ -9,7 +9,7 @@ t_res	expansions_update_with_brace(
 	parameter = new_str_slice(info->data->buf,
 			info->begin + 1 + brace, info->end + 1 - brace);
 	expansions_append_free(&info->expansions,
-			new_ast_expansion(parameter, info->begin, info->end));
+		new_ast_expansion(parameter, info->begin, info->end));
 	free(parameter);
 	return (OK);
 }
@@ -18,7 +18,7 @@ t_res	expansion_location_init(t_expansion_scan_info *info, int *i)
 {
 	info->begin = *i - info->data->idx + info->start_i;
 	ft_str_extend(&info->data->buf,
-			(char []){'$', info->data->line[++*i], '\0'});
+		(char []){'$', info->data->line[++*i], '\0'});
 	info->end = -1;
 	if (info->data->line[*i] == '?')
 		expansions_update_with_brace(info, *i, false);

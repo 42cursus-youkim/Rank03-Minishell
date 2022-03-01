@@ -1,40 +1,5 @@
 #include "minishell.h"
 
-/*	get input for heredoc
-	returns opened fd that points to it
-*/
-static t_fd	shell_heredoc(t_shell *shell, const char *eof)
-{
-	char	*line;
-	t_fd	pipefd[PIPE_SIZE];
-
-	if (pipe(pipefd) == ERR)
-		return (ERR);
-	while (true)
-	{
-		line = readline(shell->prompt.ps2);
-		if (!line)
-		{
-			cursor_up();
-			ft_write(1, shell->prompt.ps2);
-			break ;
-		}
-		else if (is_str_equal(line, eof))
-			break ;
-		else
-		{
-			if (replace_line_heredoc(&line, shell->env) == ERR)
-				break ;
-			ft_writes(pipefd[PIPE_WRITE], (char *[]){line, "\n", NULL});
-			free(line);
-		}
-	}
-	if (line)
-		free(line);
-	close(pipefd[PIPE_WRITE]);
-	return (pipefd[PIPE_READ]);
-}
-
 /*	currently:
 	REDIR_INPUT = 0,
 	REDIR_HEREDOC = 1,

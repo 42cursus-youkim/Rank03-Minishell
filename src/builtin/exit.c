@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-//	only works
+//	FIXME: needs to work in pipe too
 int	builtin_exit(t_context *context, t_shell *shell)
 {
 	int			exitcode_input;

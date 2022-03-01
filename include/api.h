@@ -23,6 +23,10 @@ bool	is_path(char *path);
 bool	is_executable_exists(char *file, t_dict *env);
 char	*new_executable_from_env(char *file, t_dict *env);
 /*
+** < heredoc.c > */
+
+t_fd	shell_heredoc(t_shell *shell, const char *eof);
+/*
 ** < path.c > */
 
 char	**new_names_from_path(char *name, t_dict *env);
