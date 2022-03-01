@@ -25,6 +25,7 @@ t_res	ft_arr_extend(char **parr[], char *src[]);
 
 bool	is_str_first(char *str, char c);
 bool	is_str_last(char *str, char c);
+bool	is_str_digit(char *str);
 /*
 ** < join.c > */
 
