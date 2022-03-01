@@ -100,5 +100,6 @@ bool		is_1stchar_valid(char c);
 bool		is_variable_char_valid(char c);
 bool		is_scan_continuos(char *buf, char c, t_scanner_type type);
 t_res		free_n_return(char **str, t_res result);
+t_res		free_n_return_void(void *data, t_res result);
 t_res		free_arr_n_return(char *arr[], t_res result);
 #endif

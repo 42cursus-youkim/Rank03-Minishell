@@ -29,6 +29,12 @@ t_res	free_n_return(char **str, t_res result)
 	return (result);
 }
 
+t_res	free_n_return_void(void *data, t_res result)
+{
+	free(data);
+	return (result);
+}
+
 t_res	free_arr_n_return(char *arr[], t_res result)
 {
 	int	i;

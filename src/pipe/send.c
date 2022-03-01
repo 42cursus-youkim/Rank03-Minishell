@@ -1,6 +1,4 @@
-#include <unistd.h>
-#include "minishell_type.h"
-#include "pipe.h"
+#include "minishell.h"
 
 void	api_send_output_to_pipe(t_fd pipefd[PIPE_SIZE])
 {
