@@ -25,7 +25,6 @@ int	builtin_cd(t_context *context, t_shell *shell)
 	target = get_target(context, shell);
 	if (chdir(target) == ERR)
 		error_syscall_with_arg("cd", target);
-	free(target);
 	cwd = new_cwd();
 	dict_set(shell->env, "PWD", cwd);
 	dict_set(shell->env, "OLDPWD", oldpwd);
