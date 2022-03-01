@@ -29,6 +29,7 @@ t_fd	shell_heredoc(t_shell *shell, const char *eof);
 /*
 ** < path.c > */
 
+char	*new_path_resolved(char *path, t_dict *env);
 char	**new_names_from_path(char *name, t_dict *env);
 /*
 ** < redirect.c > */
