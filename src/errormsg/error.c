@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+//	raw error message
 t_res	error_msg_return(char *message[])
 {
 	ft_writes(STDERR_FILENO, (char *[]){
