@@ -20,7 +20,7 @@ void	child_proc(t_shell *shell, int index)
 	child_handle_signal();
 	cmd = shell->script->commands[index];
 	text = cmd->name->text;
-	if (cmd->is_faulty)
+	if (cmd->is_fail)
 		api_exit(shell, shell->env->exitcode);
 	if (is_builtin(text))
 		api_exit(shell, builtin_run(cmd, shell));

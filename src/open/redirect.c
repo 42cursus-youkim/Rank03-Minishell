@@ -1,19 +1,21 @@
 #include "minishell.h"
 
 void	cmd_try_open_redirect(
-	t_AST_NODE *node, t_AST_COMMAND *cmd, t_shell *shell)
+	t_AST_NODE *redirect, t_AST_COMMAND *cmd, t_shell *shell)
 {
-	t_fd	*fd_p;
-
-	if (node->type != REDIRECT)
+	if (redirect->type != REDIRECT)
 		return ;
-	if (node->op == REDIR_HEREDOC || node->op == REDIR_INPUT)
-		fd_p = &cmd->io[INPUT];
-	else if (node->op == REDIR_OUTPUT || node->op == REDIR_OUTPUT_APPEND)
-		fd_p = &cmd->io[OUTPUT];
+	if (is_redirect_input(redirect->op))
+		cmd->io[INPUT] = api_open_redirect_input(redirect, shell);
+	else if (is_redirect_output(redirect->op))
+		cmd->io[OUTPUT] = api_open_redirect_output(redirect);
 	else
 		return ;
-	api_open(fd_p, node, shell);
+	if (cmd->io[INPUT] == ERR || cmd->io[OUTPUT] == ERR)
+	{
+		cmd->is_fail = true;
+		env_set_exitcode(shell->env, EXIT_FAILURE);
+	}
 }
 
 /*	Opens fd, save to cmd and create file if needed

@@ -30,7 +30,6 @@ t_res	error_msg_bad_opt(char *category, char *opt)
 	ft_writes(STDERR_FILENO, (char *[]){
 		BHRED "minishell: ", category, ": bad option: -", NULL});
 	write(STDERR_FILENO, &opt[1], 1);
-
 	return (ERR);
 }
 
