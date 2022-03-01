@@ -12,7 +12,7 @@ typedef struct s_pipe_context
 /*
 ** < pipe.c > */
 
-int		api_exec_pipe(t_shell *shell, const int len);
+int		api_exec_pipe(t_shell *shell);
 /*
 ** < send.c > */
 

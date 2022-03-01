@@ -20,11 +20,12 @@ static void	pipe_parent_at(
 		api_copy_pipe(context->next, context->prev);
 }
 
-int	api_exec_pipe(t_shell *shell, const int len)
+int	api_exec_pipe(t_shell *shell)
 {
 	int				i;
 	int				status;
 	t_pipe_context	context;
+	const int		len = shell->script->commands_len;
 
 	context.pids = ft_calloc(sizeof(pid_t), len);
 	i = -1;

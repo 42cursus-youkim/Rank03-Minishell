@@ -28,10 +28,11 @@ int	shell_exec_script(t_shell *shell)
 
 	exitcode = EXIT_FAILURE;
 	shell_open_redirects(shell);
+	exitcode = shell->env->exitcode;
 	if (is_ast_command(shell->script))
 		exitcode = api_exec_cmd_at(shell, 0);
 	else if (is_ast_pipeline(shell->script))
-		exitcode = api_exec_pipe(shell, shell->script->commands_len);
+		exitcode = api_exec_pipe(shell);
 	shell_reconnect_io(shell);
 	if (DEBUG && exitcode != OK)
 		printf(BRED "exitcode: %d\n" END, exitcode);
