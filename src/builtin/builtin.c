@@ -16,11 +16,9 @@ int	builtin_run(t_AST_COMMAND *cmd, t_shell *shell)
 		builtin_export,
 		builtin_unset,
 		builtin_env,
-		// TODO: builtin_exit here
+		builtin_exit,
 	};
 
-	if (builtin == BUILTIN_EXIT)
-		api_exit(shell, shell->env->exitcode);
 	context_init(&context, cmd, shell->env);
 	exitcode = funcs[builtin](&context, shell);
 	env_set_exitcode(shell->env, exitcode);
