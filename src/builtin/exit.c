@@ -6,6 +6,7 @@ int	builtin_exit(t_context *context, t_shell *shell)
 	int			exitcode_input;
 	const int	argv_len = ft_arr_len(context->argv);
 
+	del_context(context);
 	if (argv_len > 2)
 	{
 		error_msg_category("exit", "too many arguments");

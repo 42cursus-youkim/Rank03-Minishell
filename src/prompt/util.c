@@ -17,7 +17,6 @@ void	prompt_exit(t_shell *shell)
 	context_init(&context, shell->script->commands[0], shell->env);
 	printf("exit\n");
 	builtin_exit(&context, shell);
-	del_context(&context);
 }
 
 void	cursor_up(void)
