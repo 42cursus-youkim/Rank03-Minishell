@@ -34,3 +34,12 @@ t_res	error_msg_bad_opt(char *category, char *opt)
 	ft_write(STDERR_FILENO, END "\n");
 	return (ERR);
 }
+
+//	ex) bash: cd: dfsa: No such file or directory
+t_res	error_syscall_with_arg(char *category, char *arg)
+{
+	ft_writes(STDERR_FILENO, (char *[]){BHRED,
+		"minishell: ", category, ": ", arg, ": ", strerror(errno),
+		END "\n", NULL});
+	return (ERR);
+}
