@@ -24,6 +24,7 @@ t_res	ft_arr_extend(char **parr[], char *src[]);
 ** < check.c > */
 
 bool	is_str_first(char *str, char c);
+bool	is_str_last(char *str, char c);
 /*
 ** < join.c > */
 

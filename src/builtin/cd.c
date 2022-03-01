@@ -1,21 +1,17 @@
 #include "minishell.h"
 
-static char	*new_target(
+static char	*get_target(
 	t_context *context, t_shell *shell)
 {
-	char		*arg;
 	char		*target;
 	const int	argv_len = ft_arr_len(context->argv);
 
 	if (argv_len == 1)
-		return (new_str(env_get(shell->env, "HOME")));
-	arg = context->argv[1];
-	if (arg[0] == '~')
-		return (new_path_resolved(arg, shell->env));
-	else if (is_str_equal(arg, "-"))
-		target = new_str(dict_get(shell->env, "OLDPWD"));
+		target = env_get(shell->env, "HOME");
+	else if (is_str_equal(context->argv[1], "-"))
+		target = dict_get(shell->env, "OLDPWD");
 	else
-		target = arg;
+		target = context->argv[1];
 	return (target);
 }
 
@@ -26,7 +22,7 @@ int	builtin_cd(t_context *context, t_shell *shell)
 	char	*target;
 
 	oldpwd = new_cwd();
-	target = new_target(context, shell);
+	target = get_target(context, shell);
 	if (chdir(target) == ERR)
 		error_syscall_with_arg("cd", target);
 	free(target);

@@ -44,6 +44,11 @@ void	shell_open_redirects(t_shell *shell);
 
 int		api_handle_status(int status);
 /*
+** < tilde.c > */
+
+bool	is_path_tilde_expansion(char *path);
+t_res	path_replace_tilde(char **path_p, t_dict *env);
+/*
 ** < util.c > */
 
 void	api_exit(t_shell *shell, int exitcode);
