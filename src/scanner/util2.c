@@ -17,7 +17,8 @@ bool	is_quotechar(char c)
 bool	is_tilde_expansion(t_scan_data *data, int i)
 {
 	if (data->line[i] == '~'
-		&& is_str_equal(data->buf, "") && !is_quotes_open(NULL, data->buf)
+		&& is_str_equal(data->buf, "")
+		&& !is_quotes_open(NULL, data->buf, QUOTE_CLOSE, '\0')
 		&& (!data->line[i + 1] || data->line[i + 1] == ' '
 			|| data->line[i + 1] == '/'))
 		return (true);

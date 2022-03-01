@@ -5,13 +5,16 @@ static t_res	parameter_substitution(
 {
 	if (!is_substitution_valid((*parr)[i]))
 	{
-		error_with_exitcode((char *[]){
-			BRED, MINISHELL, (*parr)[i], SUBSTITUTION_ERROR, END, NULL},
-			env, 1);
+		error_with_exitcode(
+			(char *[]){(*parr)[i], SUBSTITUTION_ERROR, NULL}, env, 1);
 		return (ERR);
 	}
-	ft_str_replace(&(*parr)[i], new_str(
-			env_get(env, node->expansions[i >> 1]->parameter)));
+	if (quote_status_recur(*parr, i) == QUOTE_OPEN)
+		ft_str_replace(&(*parr)[i], new_str(
+				env_get(env, node->expansions[i >> 1]->parameter)));
+	else
+		ft_str_replace(&(*parr)[i], new_whitespaces_remove(
+				env_get(env, node->expansions[i >> 1]->parameter)));
 	return (OK);
 }
 

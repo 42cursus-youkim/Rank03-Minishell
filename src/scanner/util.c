@@ -1,14 +1,15 @@
 #include "minishell.h"
 
-bool	is_quotes_open(char *last_quote, char *str)
+bool	is_quotes_open(
+	char *last_quote, char *str, t_quote_status status, char init_quote)
 {
 	char	quote;
 	bool	open;
 	int		i;
 
 	i = -1;
-	quote = '\0';
-	open = false;
+	quote = init_quote;
+	open = status;
 	while (str[++i])
 	{
 		if (is_quotechar(str[i]) && !open)
@@ -77,7 +78,8 @@ t_res	whitespace_scan(t_list **list, t_scan_data *data)
 	int	i;
 
 	i = data->idx;
-	if (is_whitespace(data->line[i]) && !is_quotes_open(NULL, data->buf))
+	if (is_whitespace(data->line[i])
+		&& !is_quotes_open(NULL, data->buf, QUOTE_CLOSE, '\0'))
 	{
 		buf_to_list(list, &data->buf);
 		while (is_whitespace(data->line[++i]))

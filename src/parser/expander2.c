@@ -42,3 +42,45 @@ bool	is_substitution_valid(char *str)
 	}
 	return (true);
 }
+
+t_quote_status	quote_status_recur(char **arr, int i)
+{
+	bool			open;
+	t_quote_status	status;
+	char			init_quote;
+
+	init_quote = '\0';
+	if (i == 1)
+		open = is_quotes_open(NULL, arr[i - 1], QUOTE_CLOSE, init_quote);
+	else
+	{
+		status = quote_status_recur(arr, i - 2);
+		if (status == QUOTE_OPEN)
+			init_quote = '\"';
+		open = is_quotes_open(NULL, arr[i - 1], status, init_quote);
+	}
+	if (open)
+		return (QUOTE_OPEN);
+	return (QUOTE_CLOSE);
+}
+
+char	*new_whitespaces_remove(char *str)
+{
+	int		i;
+	char	*new;
+
+	new = new_str("");
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == ' ')
+		{
+			ft_str_append(&new, ' ');
+			while (str[++i] == ' ')
+				;
+		}
+		if (str[i])
+			ft_str_append(&new, str[i]);
+	}
+	return (new);
+}

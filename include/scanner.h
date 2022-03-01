@@ -7,6 +7,12 @@ typedef enum e_scanner_type
 	HEREDOC,
 }	t_scanner_type;
 
+typedef enum e_quote_status
+{
+	QUOTE_CLOSE = 0,
+	QUOTE_OPEN = 1,
+}	t_quote_status;
+
 typedef struct s_scan_data
 {
 	char			*buf;
@@ -82,7 +88,8 @@ void		scan_node_print(void *param);
 /*
 ** < util.c > */
 
-bool		is_quotes_open(char *last_quote, char *str);
+bool		is_quotes_open( char *last_quote, char *str, t_quote_status status,
+				char init_quote);
 bool		is_brace_open(char *str);
 t_res		list_element_create( t_list **element, char *buf,
 				t_AST_expansion **expansions);

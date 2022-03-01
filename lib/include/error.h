@@ -9,8 +9,8 @@
 # define SYNTAX_ERROR		"syntax error near unexpected token"
 # define QUOTE_ERROR		"unclosed quote: "
 # define BRACE_ERROR		"unclosed brace: "
-# define MULTILINE_ERROR	"multiline is not supported :(\n"
-# define MALLOC_ERROR		"failed to allocate memory :(\n"
+# define MULTILINE_ERROR	"multiline is not supported :("
+# define MALLOC_ERROR		"failed to allocate memory :("
 # define SUBSTITUTION_ERROR	": bad substitution\n"
 
 //@func

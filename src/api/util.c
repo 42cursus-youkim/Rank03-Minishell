@@ -4,6 +4,9 @@
 void	api_exit(t_shell *shell, int exitcode)
 {
 	del_shell(shell);
+	// char leaks[128];
+	// sprintf(leaks, "leaks %d > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result", getpid());
+	// system(leaks);
 	exit(exitcode);
 }
 

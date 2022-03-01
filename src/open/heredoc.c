@@ -7,11 +7,15 @@ static void	eof_heredoc(t_shell *shell)
 	ft_write(1, shell->prompt.ps2);
 }
 
-static t_res	process_heredoc(t_shell *shell, t_fd fd, char **pstr)
+static t_res	process_heredoc(
+	t_shell *shell, t_fd pipefd[PIPE_SIZE], char **pstr)
 {
 	if (replace_line_heredoc(pstr, shell->env) == ERR)
+	{
+		close(pipefd[PIPE_READ]);
 		return (ERR);
-	ft_writes(fd, (char *[]){*pstr, "\n", NULL});
+	}
+	ft_writes(pipefd[PIPE_WRITE], (char *[]){*pstr, "\n", NULL});
 	free(*pstr);
 	return (OK);
 }
@@ -37,7 +41,7 @@ t_fd	shell_heredoc(t_shell *shell, const char *eof)
 		else if (is_str_equal(line, eof))
 			break ;
 		else
-			if (process_heredoc(shell, pipefd[PIPE_WRITE], &line) == ERR)
+			if (process_heredoc(shell, pipefd, &line) == ERR)
 				break ;
 	}
 	if (line)
