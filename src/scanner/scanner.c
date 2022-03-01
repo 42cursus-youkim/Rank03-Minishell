@@ -21,6 +21,35 @@ static t_res	scan_last_check(t_list **scan_list, t_scan_data *data)
 	return (OK);
 }
 
+static bool	is_tilde_expansion(t_scan_data *data, int i)
+{
+	if (data->line[i] == '~'
+		&& is_str_equal(data->buf, "") && !is_quotes_open(NULL, data->buf)
+		&& (!data->line[i + 1] || data->line[i + 1] == ' '
+			|| data->line[i + 1] == '/'))
+		return (true);
+	return (false);
+}
+
+static t_res	tilde_scan(t_scan_data *data)
+{
+	int			i;
+	const int	len = ft_strlen(data->line);
+	char		**split_arr;
+
+	i = data->idx;
+	if (!is_tilde_expansion(data, i))
+		return (UNSET);
+	split_arr = new_arr((char *[]){NULL});
+	ft_arr_append_free(&split_arr, new_str_slice(data->line, 0, i));
+	ft_arr_append(&split_arr, "$HOME");
+	ft_arr_append_free(&split_arr, new_str_slice(data->line, i + 1, len));
+	ft_str_replace(&data->line, new_str_join(split_arr, '\0'));
+	del_arr(split_arr);
+	data->idx = --i;
+	return (OK);
+}
+
 static t_res	scanner_loop(t_list **scan_list, t_scan_data *data)
 {
 	t_res	scan_res;
@@ -39,6 +68,8 @@ static t_res	scanner_loop(t_list **scan_list, t_scan_data *data)
 			continue ;
 		if (scan_res == ERR)
 			return (ERR);
+		if (tilde_scan(data) == OK)
+			continue ;
 		ft_str_append(&data->buf, data->line[data->idx]);
 	}
 	return (scan_last_check(scan_list, data));
@@ -52,12 +83,12 @@ t_res	scanner(t_list **scan_list, char *line, t_dict *env)
 {
 	t_scan_data	data;
 
-	data.line = line;
+	data.line = new_str(line);
 	data.idx = -1;
 	data.env = env;
 	data.type = CMD;
 	data.buf = new_str("");
 	if (scanner_loop(scan_list, &data) == OK)
-		return (OK);
-	return (ERR);
+		return (free_n_return(&data.line, OK));
+	return (free_n_return(&data.line, ERR));
 }
