@@ -2,8 +2,8 @@
 
 static t_res	metastr_append_error(t_metastr *metastr, t_scan_data *data)
 {
-	error_with_exitcode((char *[]){BRED, MINISHELL, SYNTAX_ERROR,
-		" `", metastr->str, "'\n", END, NULL}, data->env, 2);
+	error_with_exitcode((char *[]){SYNTAX_ERROR,
+		" `", metastr->str, "'", NULL}, data->env, 2);
 	return (free_arr_n_return((char *[]){
 			metastr->prev, metastr->str, NULL}, ERR));
 }
@@ -74,7 +74,7 @@ static t_res	metachar_valid_check(t_list **list, t_scan_data *data)
 t_res	metachar_scan(t_list **list, t_scan_data *data)
 {
 	if (is_metachar(data->line[data->idx])
-		&& !is_quotes_open(NULL, data->buf))
+		&& !is_quotes_open(NULL, data->buf, QUOTE_CLOSE, '\0'))
 	{
 		buf_to_list(list, &data->buf);
 		if (metachar_valid_check(list, data) == ERR)

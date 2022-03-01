@@ -17,7 +17,8 @@ bool	is_variable_char_valid(char c)
 bool	is_scan_continuos(char *buf, char c, t_scanner_type type)
 {
 	if (!c || (type == CMD
-			&& (!is_quotes_open(NULL, buf) && !is_brace_open(buf)
+			&& (!is_quotes_open(NULL, buf, QUOTE_CLOSE, '\0')
+				&& !is_brace_open(buf)
 				&& (is_whitespace(c) || is_metachar(c)))))
 		return (false);
 	return (true);

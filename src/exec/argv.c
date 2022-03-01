@@ -10,8 +10,6 @@ char	**new_argv_from_cmd(char *executable, t_AST_COMMAND *cmd)
 	if (len == ERR)
 		return (new_arr((char *[]){executable, NULL}));
 	argv = ft_calloc(sizeof(char *), len + 1);
-	if (!argv)
-		return (NULL);
 	argv_idx = 0;
 	argv[argv_idx] = new_str(executable);
 	i = -1;

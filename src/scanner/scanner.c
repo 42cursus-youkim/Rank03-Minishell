@@ -6,15 +6,14 @@ static t_res	error_unclosed(char c, t_scan_data *data)
 
 	quote_str = (char []){'(', c, ')', ':', ' ', '\0'};
 	return (free_n_return(data->buf, error_with_exitcode((char *[]){
-				BRED, MINISHELL, QUOTE_ERROR, quote_str,
-				MULTILINE_ERROR, END, NULL}, data->env, 2)));
+				QUOTE_ERROR, quote_str, MULTILINE_ERROR, NULL}, data->env, 2)));
 }
 
 static t_res	scan_last_check(t_list **scan_list, t_scan_data *data)
 {
 	char	last_quote;
 
-	if (is_quotes_open(&last_quote, data->buf))
+	if (is_quotes_open(&last_quote, data->buf, QUOTE_CLOSE, '\0'))
 		return (error_unclosed(last_quote, data));
 	buf_to_list(scan_list, &data->buf);
 	free(data->buf);

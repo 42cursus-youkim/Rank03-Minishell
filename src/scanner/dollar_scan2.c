@@ -34,7 +34,8 @@ bool	is_multi_expansions(t_expansion_scan_info info, int i)
 	{
 		if (info.data->type == HEREDOC)
 			return (true);
-		if (!is_quotes_open(&last_quote, info.data->buf) || last_quote != '\'')
+		if (!is_quotes_open(&last_quote, info.data->buf, QUOTE_CLOSE, '\0')
+			|| last_quote != '\'')
 			return (true);
 	}
 	return (false);
