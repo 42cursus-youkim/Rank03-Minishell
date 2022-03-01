@@ -1,5 +1,16 @@
 #include "minishell.h"
 
+static t_res	api_open_inner(char *file, int flag)
+{
+	t_fd	fd;
+
+	fd = open(file, flag, 0644);
+	if (fd == ERR)
+		return (error_syscall(file));
+	else
+		return (fd);
+}
+
 /*	currently:
 	REDIR_INPUT = 0,
 	REDIR_HEREDOC = 1,
@@ -27,9 +38,7 @@ t_res	api_open(t_fd *fd_p, t_AST_NODE *redirect, t_shell *shell)
 	if (redirect->op == REDIR_HEREDOC)
 		*fd_p = shell_heredoc(shell, file);
 	else
-		*fd_p = open(file, flag, 0644);
-	if (*fd_p == ERR && redirect->op != REDIR_HEREDOC)
-		return (error_syscall(file));
+		*fd_p = api_open_inner(file, flag);
 	if (*fd_p == ERR)
 		return (ERR);
 	return (OK);
