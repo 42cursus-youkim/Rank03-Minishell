@@ -21,9 +21,7 @@ int	builtin_cd(t_context *context, t_shell *shell)
 	char	*oldpwd;
 	char	*target;
 
-	oldpwd = new_cwd();
-	if (!oldpwd)
-		return (EXIT_FAILURE);
+	oldpwd = getcwd(NULL, 0);
 	target = get_target(context, shell);
 	if (chdir(target) == ERR)
 	{
@@ -34,6 +32,7 @@ int	builtin_cd(t_context *context, t_shell *shell)
 	if (!cwd)
 		return (EXIT_FAILURE);
 	dict_set(shell->env, "PWD", cwd);
-	dict_set(shell->env, "OLDPWD", oldpwd);
+	if (oldpwd)
+		dict_set(shell->env, "OLDPWD", oldpwd);
 	return (EXIT_SUCCESS);
 }
