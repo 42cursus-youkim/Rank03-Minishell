@@ -5,8 +5,10 @@ static int	check_args(t_context *context)
 	int			arg_idx;
 	const int	argv_len = ft_arr_len(context->argv);
 
+	if (argv_len == 1)
+		return (EXIT_SUCCESS);
 	arg_idx = 0;
-	while (++arg_idx <= argv_len)
+	while (++arg_idx < argv_len)
 	{
 		if (!is_str_digit(context->argv[arg_idx]))
 		{
@@ -20,7 +22,7 @@ static int	check_args(t_context *context)
 			return (EXIT_FAILURE);
 		}
 	}
-	return (OK);
+	return (EXIT_SUCCESS);
 }
 
 //	FIXME: needs to work in pipe too
