@@ -27,14 +27,14 @@ scannerV := scanner scanner_list expansion util util2 util3 \
 			dollar_scan1 dollar_scan2 metachar_scan1 metachar_scan2
 lexerV   := lexer tokenizer util
 parserV  := parser new1 new2 del util1 util2 expander1 expander2 heredoc_parser
+apiV     := redirect heredoc signal path tilde file util env1 env2
 shellV   := shell script
 promptV  := prompt interrupt ps util
-apiV     := redirect heredoc signal path tilde file util env1 env2
+treeV    := repr1 repr2
+errormsgV:= error
 execV    := context exec argv util
 pipeV    := pipe send status util
 builtinV := builtin cd echo exit env export unset pwd util checks
-treeV    := repr1 repr2
-errormsgV:= error
 
 # ===== Macros =====
 define choose_modules
