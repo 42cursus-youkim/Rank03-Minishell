@@ -6,7 +6,7 @@ bool	is_path_tilde_expansion(char *path)
 
 	if (!is_str_first(path, '~'))
 		return (false);
-	return (len == 1 ||( len >= 2 && path[1] == '/'));
+	return ((len == 1) || (len >= 2 && path[1] == '/'));
 }
 
 t_res	path_replace_tilde(char **path_p, t_dict *env)
