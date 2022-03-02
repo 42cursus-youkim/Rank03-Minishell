@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojekim  <hyojekim@student.42seoul.k      +#+  +:+       +#+        */
+/*   By: youkim <youkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:16:52 by hyojekim          #+#    #+#             */
-/*   Updated: 2022/03/02 16:16:52 by hyojekim         ###   ########.fr       */
+/*   Updated: 2022/03/02 17:41:57 by youkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@
 /*
 ** < check.c > */
 
-bool	is_redirect_input(t_redirect_op op);
-bool	is_redirect_output(t_redirect_op op);
 bool	is_dir(char *path);
 bool	is_path(char *path);
 bool	is_absolute_path(char *path);
+bool	is_relative_path(char *path);
 /*
 ** < file.c > */
 
@@ -41,6 +40,8 @@ void	api_open_redirect_output( t_fd *fd_p, t_AST_NODE *redirect);
 /*
 ** < redirect.c > */
 
+bool	is_redirect_input(t_redirect_op op);
+bool	is_redirect_output(t_redirect_op op);
 void	cmd_try_open_redirect( t_AST_NODE *redirect, t_AST_COMMAND *cmd,
 			t_shell *shell);
 void	cmd_open_redirects(t_AST_COMMAND *cmd, t_shell *shell);

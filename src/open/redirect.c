@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojekim  <hyojekim@student.42seoul.k      +#+  +:+       +#+        */
+/*   By: youkim <youkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:16:52 by hyojekim          #+#    #+#             */
-/*   Updated: 2022/03/02 16:16:52 by hyojekim         ###   ########.fr       */
+/*   Updated: 2022/03/02 17:41:25 by youkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool	is_redirect_input(t_redirect_op op)
+{
+	return (op == REDIR_INPUT || op == REDIR_HEREDOC);
+}
+
+bool	is_redirect_output(t_redirect_op op)
+{
+	return (op == REDIR_OUTPUT || op == REDIR_OUTPUT_APPEND);
+}
 
 void	cmd_try_open_redirect(
 	t_AST_NODE *redirect, t_AST_COMMAND *cmd, t_shell *shell)

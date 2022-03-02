@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojekim  <hyojekim@student.42seoul.k      +#+  +:+       +#+        */
+/*   By: youkim <youkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:16:52 by hyojekim          #+#    #+#             */
-/*   Updated: 2022/03/02 16:16:52 by hyojekim         ###   ########.fr       */
+/*   Updated: 2022/03/02 17:41:18 by youkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	is_redirect_input(t_redirect_op op)
-{
-	return (op == REDIR_INPUT || op == REDIR_HEREDOC);
-}
-
-bool	is_redirect_output(t_redirect_op op)
-{
-	return (op == REDIR_OUTPUT || op == REDIR_OUTPUT_APPEND);
-}
 
 bool	is_dir(char *path)
 {
@@ -40,4 +30,12 @@ bool	is_path(char *path)
 bool	is_absolute_path(char *path)
 {
 	return (is_path(path) && is_str_first(path, '/'));
+}
+
+bool	is_relative_path(char *path)
+{
+	return (is_path(path)
+		&& ft_strlen(path) >= 2
+		&& path[0] == '.'
+		&& path[1] == '/');
 }
