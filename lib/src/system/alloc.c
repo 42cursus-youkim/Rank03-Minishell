@@ -32,3 +32,9 @@ void	*ft_calloc(size_t size, size_t count)
 	}
 	return (ft_bzero(ptr, allocated_space));
 }
+
+void	ft_free(void *ptr)
+{
+	free(ptr);
+	ptr = NULL;
+}
