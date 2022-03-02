@@ -1,15 +1,5 @@
 #include "minishell.h"
 
-bool	is_line_eof(char *line)
-{
-	return (line == NULL);
-}
-
-bool	is_line_empty(char *line)
-{
-	return (ft_strlen(line) <= 0);
-}
-
 void	prompt_exit(t_shell *shell)
 {
 	t_context	context;
@@ -22,6 +12,13 @@ void	prompt_exit(t_shell *shell)
 void	cursor_up(void)
 {
 	ft_write(1, "\033[1A");
+}
+
+// ctrl + d in heredoc readline
+void	prompt_eof_heredoc(t_shell *shell)
+{
+	cursor_up();
+	ft_write(STDOUT_FILENO, shell->prompt.ps2);
 }
 
 /*

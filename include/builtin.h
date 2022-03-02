@@ -24,7 +24,7 @@ int			builtin_run(t_AST_COMMAND *cmd, t_shell *shell);
 
 int			builtin_cd(t_context *context, t_shell *shell);
 /*
-** < checks.c > */
+** < check.c > */
 
 t_res		check_no_opt(char *argv[], char *category);
 t_res		check_no_opt_arg(char *argv[], char *category);
