@@ -6,8 +6,8 @@ static t_res	expansion_last_check(t_expansion_scan_info *info, int *i)
 	{
 		del_ast_expansions(info->expansions);
 		free(info->data->buf);
-		return (error_with_exitcode((char *[]){
-				BRED, MINISHELL, BRACE_ERROR, MULTILINE_ERROR, NULL},
+		return (error_with_exitcode(
+				(char *[]){BRACE_ERROR, MULTILINE_ERROR, NULL},
 			info->data->env, 2));
 	}
 	if (info->end < info->begin)
@@ -77,7 +77,8 @@ t_res	dollar_scan(t_list **list, t_scan_data *data)
 
 	if (data->line[data->idx] == '$')
 	{
-		if (data->type == CMD && is_quotes_open(&last_quote, data->buf)
+		if (data->type == CMD
+			&& is_quotes_open(&last_quote, data->buf, QUOTE_CLOSE, '\0')
 			&& last_quote == '\'')
 			return (UNSET);
 		res = expansion_scan(list, data);

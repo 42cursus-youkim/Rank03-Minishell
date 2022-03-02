@@ -17,17 +17,13 @@ static bool	is_pipeline_token_valid(t_AST_type type[], t_dict *env)
 {
 	if (type[1] == PIPELINE && (type[0] != WORD || type[2] == PIPELINE))
 	{
-		error_with_exitcode(
-			(char *[]){BRED, MINISHELL, SYNTAX_ERROR, " `|'\n", END, NULL},
-			env, 2);
+		error_with_exitcode((char *[]){SYNTAX_ERROR, " `|'", NULL}, env, 2);
 		return (false);
 	}
 	if (type[1] == PIPELINE && type[2] == TYPE_END)
 	{
-		error_with_exitcode(
-			(char *[]){
-			BRED, MINISHELL, SYNTAX_ERROR, " `|'\n",
-			MULTILINE_ERROR, END, NULL}, env, 2);
+		error_with_exitcode((char *[]){SYNTAX_ERROR, " `|'\n",
+			MULTILINE_ERROR, NULL}, env, 2);
 		return (false);
 	}
 	return (true);
@@ -38,17 +34,14 @@ static bool	is_redirect_token_valid(t_AST_type type[], char *str, t_dict *env)
 	if (type[1] == REDIRECT && type[0] == REDIRECT)
 	{
 		error_with_exitcode(
-			(char *[]){
-			BRED, MINISHELL, SYNTAX_ERROR, " `", str, "'\n", END, NULL},
-			env, 2);
+			(char *[]){SYNTAX_ERROR, " `", str, "'", NULL}, env, 2);
 		return (false);
 	}
 	if ((type[0] == REDIRECT && type[1] == TYPE_END)
 		|| (type[1] == REDIRECT && type[2] == TYPE_END))
 	{
 		error_with_exitcode(
-			(char *[]){
-			BRED, MINISHELL, SYNTAX_ERROR, " `newline'\n", END, NULL}, env, 2);
+			(char *[]){SYNTAX_ERROR, " `newline'", NULL}, env, 2);
 		return (false);
 	}
 	return (true);

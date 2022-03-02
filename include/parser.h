@@ -29,6 +29,8 @@ t_res			expander(t_AST_SCRIPT *script, t_dict *env);
 
 t_res			expansions_to_array(char **parr[], t_AST_NODE *node);
 bool			is_substitution_valid(char *str);
+t_quote_status	quote_status_recur(char **arr, int i);
+char			*new_whitespaces_remove(char *str);
 /*
 ** < heredoc_parser.c > */
 

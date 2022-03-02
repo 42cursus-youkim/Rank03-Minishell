@@ -11,11 +11,15 @@ static	t_res	write_to_heredoc_and_free(t_fd fd, char *str)
 	return (OK);
 }
 
-static t_res	process_heredoc(t_shell *shell, t_fd fd, char **pstr)
+static t_res	process_heredoc(
+	t_shell *shell, t_fd pipefd[PIPE_SIZE], char **pstr)
 {
 	if (replace_line_heredoc(pstr, shell->env) == ERR)
+	{
+		close(pipefd[PIPE_READ]);
 		return (ERR);
-	return (write_to_heredoc_and_free(fd, *pstr));
+	}
+	return (write_to_heredoc_and_free(pipefd[PIPE_WRITE], *pstr));
 }
 
 static void	shell_heredoc_loop(
@@ -32,7 +36,7 @@ static void	shell_heredoc_loop(
 			return (ft_free(line));
 		else if (is_str_equal(line, ""))
 			write_to_heredoc_and_free(pipefd[PIPE_WRITE], line);
-		else if (process_heredoc(shell, pipefd[PIPE_WRITE], &line) == ERR)
+		else if (process_heredoc(shell, pipefd, &line) == ERR)
 			return ;
 	}
 }
