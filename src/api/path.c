@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojekim  <hyojekim@student.42seoul.k      +#+  +:+       +#+        */
+/*   By: youkim <youkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:16:52 by hyojekim          #+#    #+#             */
-/*   Updated: 2022/03/02 16:16:52 by hyojekim         ###   ########.fr       */
+/*   Updated: 2022/03/02 20:30:05 by youkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static char	**new_path(t_dict *env)
 	char	**path;
 
 	raw = new_raw_path(env);
+	if (!raw)
+		return (NULL);
 	path = new_arr(NULL);
 	i = -1;
 	while (raw[++i])
@@ -66,6 +68,8 @@ char	**new_names_from_path(char *name, t_dict *env)
 	char	**path;
 
 	path = new_path(env);
+	if (!path)
+		return (NULL);
 	new = new_arr(NULL);
 	i = -1;
 	while (path[++i])

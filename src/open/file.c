@@ -6,7 +6,7 @@
 /*   By: youkim <youkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:16:52 by hyojekim          #+#    #+#             */
-/*   Updated: 2022/03/02 17:40:39 by youkim           ###   ########.fr       */
+/*   Updated: 2022/03/02 20:30:43 by youkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ bool	is_executable_exists(char *file, t_dict *env)
 	if (is_path(file))
 		return (true);
 	names = new_names_from_path(file, env);
+	if (!names)
+		return (false);
 	i = -1;
 	result = false;
 	while (names[++i])
