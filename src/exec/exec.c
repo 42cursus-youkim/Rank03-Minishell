@@ -67,6 +67,8 @@ int	api_exec_cmd_at(t_shell *shell, int index)
 
 	cmd = shell->script->commands[index];
 	text = cmd->name->text;
+	if (is_line_empty(text))
+		return (EXIT_SUCCESS);
 	if (is_builtin(text))
 		return (builtin_run(cmd, shell));
 	else
