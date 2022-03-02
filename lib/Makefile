@@ -6,7 +6,7 @@
 #    By: youkim <youkim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/02 16:30:58 by youkim            #+#    #+#              #
-#    Updated: 2022/03/02 16:30:59 by youkim           ###   ########.fr        #
+#    Updated: 2022/03/02 16:51:27 by youkim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,16 +15,12 @@ NAME     := libft.a
 
 CC       := clang
 CFLAGS   := -Wall -Wextra -Werror
-DFLAGS	 := #-g3 #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
-VFLAGS   := --leak-check=full --show-leak-kinds=all \
-			--track-origins=yes
 AR       := ar -rcs
 RM       := rm -f
 
 PRE      := src
 INC      := -I include
 
-HGEN     := hgen
 TEST     := test
 
 # ===== Packages =====
@@ -51,13 +47,15 @@ SRC      := $(call choose_modules, $(PKGS))
 OBJ      := $(SRC:%.c=%.o)
 
 # ===== Rules =====
+.PHONY: all re clean fclean
+
 %.o: %.c
 	@echo "  $(WU)$(<F)$(R) -> $(E)$(@F)"
-	@$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
+	@$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 $(NAME): $(OBJ)
 	@$(AR) $@ $^
-	@$(call log, V, 🗃️ archived with flag $(R)$(DFLAGS)$(E)$(CFLAGS))
+	@$(call log, V, 🗃️ archived with flag $(E)$(CFLAGS))
 
 all: $(NAME)
 
@@ -71,43 +69,7 @@ fclean: clean
 
 re: fclean all
 
-# ===== Custom Rules =====
-red: fclean docs all
-ald: docs all
-
-docs:
-	@set -e;\
-		for p in $(PKGS); do\
-			$(HGEN) -I include/$$p.h src/$$p 1> /dev/null;\
-		done
-	@$(call log, V, 📝 Generating Docs)
-
-testdry: docs all
-	@$(call log, Y, Preparing Test,...)
-	@$(CC) $(DFLAGS) $(INC) $(NAME) $(TEST).c -o test
-	@$(call log, G, Compiled Test)
-
-test: testdry cls
-	@$(call log, G, 🧪 Running Test)
-	@./$(TEST)
-
-leak: docs all cls
-	@$(call log, Y, 🧪 Running Leak Test)
-	@$(CC) $(DFLAGS) $(INC) $(NAME) test.c -o test
-	@colour-valgrind $(VFLAGS) ./test
-	@rm test
-#$(shell ruby -e "puts (1..11).to_a.shuffle.join  (' ')")
-leaksup: docs all cls
-	@echo "$(Y)<Creating Leak Suppressions>$(E)"
-	@$(CC) $(DFLAGS) $(INC) $(NAME) tests/test.c -o test
-	@valgrind $(VFLAGS) --gen-suppressions=yes ./test
-	@rm test
-
-.PHONY: all re clean fclean test red docs
-
 # ===== Miscs =====
-cls:
-	@set -e; clear
 
 R  ?= \033[0;91m
 WU ?= \033[4;37m

@@ -6,7 +6,7 @@
 #    By: youkim <youkim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/02 16:30:44 by youkim            #+#    #+#              #
-#    Updated: 2022/03/02 16:48:23 by youkim           ###   ########.fr        #
+#    Updated: 2022/03/02 16:52:30 by youkim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,6 @@ PRE      := src
 INC      := -I ~/.brew/opt/readline/include -I./include/ -I./lib/include
 LIB		 := -L ~/.brew/opt/readline/lib -lreadline -L./lib -lft
 LIBFT    := lib/libft.a
-
-# ===== Test & Debugging =====
-DFLAGS	 := #-g3 #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
-VFLAGS   := --leak-check=full --show-leak-kinds=all \
-			--track-fds=yes \
-			--track-origins=yes
-HGEN     := hgen
 
 # ===== Packages =====
 PKGS     := scanner lexer parser \
@@ -67,18 +60,18 @@ SRC      := $(call choose_modules, $(PKGS))
 OBJ      := $(SRC:%.c=%.o)
 
 # ===== Rules =====
-.PHONY: all re clean fclean test red docs
+.PHONY: all re clean fclean tclean
 
 %.o: %.c
 	@printf "$(Y)%-10s$(WU)$(<F)$(R) -> $(E)$(@F)\n" [$(subst src/,,$(*D))]
-	@$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
+	@$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(INC) $(LIB) $^ -o $@
-	@$(call log, V, 🚀 linked with flag $(R)$(DFLAGS)$(E)$(CFLAGS))
+	@$(call log, V, 🚀 linked with flag $(E)$(CFLAGS))
 
 $(LIBFT):
-	@make --no-print-directory all -C lib/ DFLAGS="$(DFLAGS)"
+	@make --no-print-directory all -C lib/
 
 all: $(NAME)
 
@@ -92,34 +85,9 @@ fclean: clean
 
 tclean: fclean
 	@make fclean -C lib
-
-# @$(call log, G, 🗑 Remove $(LIBFT))
+	@$(call log, G, 🗑 Remove $(LIBFT))
 
 re: fclean all
-
-# ===== Custom Rules =====
-red: tclean docs all cls
-ald: docs all cls
-
-docs:
-	@make --no-print-directory docs -C lib/
-	@set -e;\
-		for p in $(PKGS); do\
-			$(HGEN) -I include/$$p.h src/$$p 1> /dev/null;\
-		done
-
-run: docs all
-	@./$(NAME)
-
-leak: docs all cls
-	@$(call log, Y, 🧪 Running Leak Test)
-	@valgrind $(VFLAGS) ./$(NAME)
-
-supp: docs all cls
-	@$(call log, Y, Creating Leak Suppressions,...)
-	@valgrind $(VFLAGS) \
-		--log-file=supp3.txt\
-		--gen-suppressions=all ./$(NAME)
 
 # ===== Colors =====
 cls:
