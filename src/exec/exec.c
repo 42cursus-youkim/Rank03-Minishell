@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojekim  <hyojekim@student.42seoul.k      +#+  +:+       +#+        */
+/*   By: youkim <youkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:16:52 by hyojekim          #+#    #+#             */
-/*   Updated: 2022/03/02 16:16:52 by hyojekim         ###   ########.fr       */
+/*   Updated: 2022/03/02 17:15:31 by youkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void	child_proc(t_shell *shell, int index)
 	text = cmd->name->text;
 	if (cmd->is_fail)
 		api_exit(shell, shell->env->exitcode);
-	if (is_builtin(text))
+	else if (is_line_empty(text))
+		api_exit(shell, EXIT_SUCCESS);
+	else if (is_builtin(text))
 		api_exit(shell, builtin_run(cmd, shell));
 	else if (is_executable_exists(text, shell->env))
 		api_exit(shell, any_exec(cmd, shell));
@@ -79,8 +81,6 @@ int	api_exec_cmd_at(t_shell *shell, int index)
 
 	cmd = shell->script->commands[index];
 	text = cmd->name->text;
-	if (is_line_empty(text))
-		return (EXIT_SUCCESS);
 	if (is_builtin(text))
 		return (builtin_run(cmd, shell));
 	else
