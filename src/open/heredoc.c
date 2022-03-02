@@ -38,7 +38,7 @@ static t_res	shell_heredoc_inner(
 		ft_free(line);
 		return (UNSET);
 	}
-	else if (is_str_equal(line, ""))
+	else if (is_line_empty(line))
 	{
 		write_to_heredoc_and_free(pipefd[PIPE_WRITE], line);
 		return (OK);
