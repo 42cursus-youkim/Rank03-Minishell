@@ -33,6 +33,15 @@ void	*ft_calloc(size_t size, size_t count)
 	return (ft_bzero(ptr, allocated_space));
 }
 
+//	perfectly okay to pass NULL, also sets freed ptr to NULL
+void	ft_try_free(void *ptr)
+{
+	if (!ptr)
+		return ;
+	ft_free(ptr);
+}
+
+//	don't pass NULL ptr
 void	ft_free(void *ptr)
 {
 	free(ptr);

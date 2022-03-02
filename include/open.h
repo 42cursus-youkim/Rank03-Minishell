@@ -17,8 +17,9 @@ t_fd	shell_heredoc(t_shell *shell, const char *eof);
 ** < open.c > */
 
 t_fd	api_open(char *file, int flag);
-t_fd	api_open_redirect_input(t_AST_NODE *redirect, t_shell *shell);
-t_res	api_open_redirect_output(t_AST_NODE *redirect);
+void	api_open_redirect_input( t_fd *fd_p, t_AST_NODE *redirect,
+			t_shell *shell);
+void	api_open_redirect_output( t_fd *fd_p, t_AST_NODE *redirect);
 /*
 ** < redirect.c > */
 
