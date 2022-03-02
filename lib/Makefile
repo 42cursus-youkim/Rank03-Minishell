@@ -2,8 +2,8 @@
 NAME     := libft.a
 
 CC       := clang
-CFLAGS   := -Wall -Wextra -Werror -std=c99
-DFLAGS	 := -g3 #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
+CFLAGS   := -Wall -Wextra -Werror
+DFLAGS	 := #-g3 #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
 VFLAGS   := --leak-check=full --show-leak-kinds=all \
 			--track-origins=yes
 AR       := ar -rcs

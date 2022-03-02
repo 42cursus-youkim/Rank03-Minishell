@@ -11,11 +11,10 @@ LIB		 := -L ~/.brew/opt/readline/lib -lreadline -L./lib -lft
 LIBFT    := lib/libft.a
 
 # ===== Test & Debugging =====
-DFLAGS	 := -g3 #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
+DFLAGS	 := #-g3 #-DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"
 VFLAGS   := --leak-check=full --show-leak-kinds=all \
 			--track-fds=yes \
-			--track-origins=yes --suppressions=./supp_mac.txt \
-			--suppressions=./supp.txt
+			--track-origins=yes
 HGEN     := hgen
 
 # ===== Packages =====
