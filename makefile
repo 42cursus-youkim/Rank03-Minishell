@@ -6,7 +6,7 @@
 #    By: youkim <youkim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/02 16:30:44 by youkim            #+#    #+#              #
-#    Updated: 2022/03/02 16:30:46 by youkim           ###   ########.fr        #
+#    Updated: 2022/03/02 16:48:23 by youkim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,8 @@ SRC      := $(call choose_modules, $(PKGS))
 OBJ      := $(SRC:%.c=%.o)
 
 # ===== Rules =====
+.PHONY: all re clean fclean test red docs
+
 %.o: %.c
 	@printf "$(Y)%-10s$(WU)$(<F)$(R) -> $(E)$(@F)\n" [$(subst src/,,$(*D))]
 	@$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
@@ -118,8 +120,6 @@ supp: docs all cls
 	@valgrind $(VFLAGS) \
 		--log-file=supp3.txt\
 		--gen-suppressions=all ./$(NAME)
-
-.PHONY: $(NAME) all re clean fclean test red docs $(LIBFT)
 
 # ===== Colors =====
 cls:
