@@ -1,19 +1,5 @@
 #include "minishell.h"
 
-bool	is_dir(char *path)
-{
-	struct stat	statbuf;
-
-	return (is_path(path) && S_ISDIR(statbuf.st_mode));
-}
-
-bool	is_path(char *path)
-{
-	struct stat	buffer;
-
-	return (stat(path, &buffer) == OK);
-}
-
 bool	is_executable_exists(char *file, t_dict *env)
 {
 	int		i;
@@ -41,12 +27,7 @@ char	*new_executable_from_env(char *file, t_dict *env)
 	char	**path;
 	char	*executable;
 
-	if (is_path(file) && is_dir(file))
-	{
-		error_msg_category(file, "is a directory");
-		return (new_str(""));
-	}
-	else if (is_path(file))
+	if (is_absolute_path(file) && !is_dir(file))
 		return (new_str(file));
 	else if (!is_executable_exists(file, env))
 		return (new_str(""));

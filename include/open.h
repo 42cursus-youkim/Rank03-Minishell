@@ -3,10 +3,16 @@
 
 //@func
 /*
-** < file.c > */
+** < check.c > */
 
+bool	is_redirect_input(t_redirect_op op);
+bool	is_redirect_output(t_redirect_op op);
 bool	is_dir(char *path);
 bool	is_path(char *path);
+bool	is_absolute_path(char *path);
+/*
+** < file.c > */
+
 bool	is_executable_exists(char *file, t_dict *env);
 char	*new_executable_from_env(char *file, t_dict *env);
 /*
@@ -27,9 +33,4 @@ void	cmd_try_open_redirect( t_AST_NODE *redirect, t_AST_COMMAND *cmd,
 			t_shell *shell);
 void	cmd_open_redirects(t_AST_COMMAND *cmd, t_shell *shell);
 void	shell_open_redirects(t_shell *shell);
-/*
-** < util.c > */
-
-bool	is_redirect_input(t_redirect_op op);
-bool	is_redirect_output(t_redirect_op op);
 #endif

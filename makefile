@@ -37,7 +37,7 @@ treeV    := repr1 repr2
 errormsgV:= error
 
 # Script
-openV    := open redirect heredoc file util
+openV    := open redirect heredoc file check
 execV    := context exec argv util
 pipeV    := pipe send status util
 builtinV := builtin cd echo exit env export unset pwd util check
