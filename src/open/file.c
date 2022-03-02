@@ -2,9 +2,10 @@
 
 bool	is_dir(char *path)
 {
-	struct stat	statbuf;
+	struct stat	buffer;
 
-	return (is_path(path) && S_ISDIR(statbuf.st_mode));
+	stat(path, &buffer);
+	return (is_path(path) && S_ISDIR(buffer.st_mode));
 }
 
 bool	is_path(char *path)
@@ -41,12 +42,7 @@ char	*new_executable_from_env(char *file, t_dict *env)
 	char	**path;
 	char	*executable;
 
-	if (is_path(file) && is_dir(file))
-	{
-		error_msg_category(file, "is a directory");
-		return (new_str(""));
-	}
-	else if (is_path(file))
+	if (is_path(file) && !is_dir(file))
 		return (new_str(file));
 	else if (!is_executable_exists(file, env))
 		return (new_str(""));
