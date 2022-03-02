@@ -37,12 +37,32 @@ char	*ft_bool_to_str(bool b)
 	return (value[b]);
 }
 
-//	pass reference to n to convert str to int
+/*	long long overflow saturation
+	-overflow: 0
+	+overflow: -1
+*/
+static t_res	overflow_saturation(int temp, int num, int sign, int *n)
+{
+	if (temp < num)
+	{
+		if (sign == -1)
+			*n = 0;
+		else
+			*n = -1;
+		return (OK);
+	}
+	return (UNSET);
+}
+
+/*	pass reference to n to convert str to int
+	ERR: str has non-digit char
+*/
 t_res	ft_atoi(const char *str, int *n)
 {
-	int	i;
-	int	num;
-	int	sign;
+	int			i;
+	int			sign;
+	long long	num;
+	long long	temp;
 
 	i = 0;
 	num = 0;
@@ -51,13 +71,17 @@ t_res	ft_atoi(const char *str, int *n)
 		return (ERR);
 	while (ft_strchr_i("\t\n\v\f\r ", str[i]) >= 0)
 		i++;
-	if (ft_strchr_i("-+", str[i]) >= 0)
-		if (str[i++] == '-')
-			sign = -1;
+	if (ft_strchr_i("-+", str[i]) >= 0 && str[i++] == '-')
+		sign = -1;
 	while (is_digit(str[i]))
-		num = num * 10 + (str[i++] - '0');
-	*n = sign * num;
-	if (is_overflow(*n, sign))
+	{
+		temp = num * 10 + (str[i++] - '0');
+		if (overflow_saturation(temp, num, sign, n) == OK)
+			return (OK);
+		num = temp;
+	}
+	*n = sign * (int)num;
+	if (str[i])
 		return (ERR);
 	return (OK);
 }
