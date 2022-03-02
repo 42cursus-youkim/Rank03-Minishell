@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojekim  <hyojekim@student.42seoul.k      +#+  +:+       +#+        */
+/*   By: youkim <youkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:16:52 by hyojekim          #+#    #+#             */
-/*   Updated: 2022/03/02 16:16:52 by hyojekim         ###   ########.fr       */
+/*   Updated: 2022/03/02 16:19:39 by youkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 void	api_exit(t_shell *shell, int exitcode)
 {
 	del_shell(shell);
-	// char leaks[128];
-	// sprintf(leaks, "leaks %d > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result", getpid());
-	// system(leaks);
 	exit(exitcode);
 }
 
