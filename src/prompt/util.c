@@ -14,7 +14,7 @@ void	cursor_up(void)
 	ft_write(1, "\033[1A");
 }
 
-// ctrl + d in heredoc readline
+//	ctrl + d in heredoc readline
 void	prompt_eof_heredoc(t_shell *shell)
 {
 	cursor_up();

@@ -63,7 +63,7 @@ static bool	is_tokens_valid(t_token tokens[], t_dict *env)
 	return (true);
 }
 
-// lexer
+//	lexer
 t_token	*new_tokens_from_line(char *line, t_dict *env)
 {
 	t_list	*scan_list;

@@ -34,7 +34,7 @@ static t_res	list_tokenize_n_expand(char **line, t_list *list, t_dict *env)
 	return (res);
 }
 
-// mini parser for HEREDOC(`<<`)
+//	mini parser for HEREDOC(`<<`)
 t_res	replace_line_heredoc(char **line, t_dict *env)
 {
 	t_scan_data	data;
