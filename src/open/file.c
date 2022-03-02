@@ -15,6 +15,11 @@ bool	is_path(char *path)
 	return (stat(path, &buffer) == OK);
 }
 
+bool	is_absolute_path(char *path)
+{
+	return (is_path(path) && is_str_first(path, '/'));
+}
+
 bool	is_executable_exists(char *file, t_dict *env)
 {
 	int		i;
@@ -42,7 +47,7 @@ char	*new_executable_from_env(char *file, t_dict *env)
 	char	**path;
 	char	*executable;
 
-	if (is_path(file) && !is_dir(file))
+	if (is_absolute_path(file) && !is_dir(file))
 		return (new_str(file));
 	else if (!is_executable_exists(file, env))
 		return (new_str(""));
