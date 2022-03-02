@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojekim  <hyojekim@student.42seoul.k      +#+  +:+       +#+        */
+/*   By: youkim <youkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:16:52 by hyojekim          #+#    #+#             */
-/*   Updated: 2022/03/02 16:16:52 by hyojekim         ###   ########.fr       */
+/*   Updated: 2022/03/02 18:22:45 by youkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,77 +14,77 @@
 # define COLOR_H
 
 //	===== Regular text =====
-# define BLK "\001\e[0;30\002m"
-# define RED "\001\e[0;31\002m"
-# define GRN "\001\e[0;32\002m"
-# define YEL "\001\e[0;33\002m"
-# define BLU "\001\e[0;34\002m"
-# define MAG "\001\e[0;35\002m"
-# define CYN "\001\e[0;36\002m"
-# define WHT "\001\e[0;37\002m"
+# define BLK "\001\e[0;30m\002"
+# define RED "\001\e[0;31m\002"
+# define GRN "\001\e[0;32m\002"
+# define YEL "\001\e[0;33m\002"
+# define BLU "\001\e[0;34m\002"
+# define MAG "\001\e[0;35m\002"
+# define CYN "\001\e[0;36m\002"
+# define WHT "\001\e[0;37m\002"
 
 //	===== Regular bold text =====
-# define BBLK "\001\e[1;30\002m"
-# define BRED "\001\e[1;31\002m"
-# define BGRN "\001\e[1;32\002m"
-# define BYEL "\001\e[1;33\002m"
-# define BBLU "\001\e[1;34\002m"
-# define BMAG "\001\e[1;35\002m"
-# define BCYN "\001\e[1;36\002m"
-# define BWHT "\001\e[1;37\002m"
+# define BBLK "\001\e[1;30m\002"
+# define BRED "\001\e[1;31m\002"
+# define BGRN "\001\e[1;32m\002"
+# define BYEL "\001\e[1;33m\002"
+# define BBLU "\001\e[1;34m\002"
+# define BMAG "\001\e[1;35m\002"
+# define BCYN "\001\e[1;36m\002"
+# define BWHT "\001\e[1;37m\002"
 
 //	===== Regular underline text =====
-# define UBLK "\001\e[4;30\002m"
-# define URED "\001\e[4;31\002m"
-# define UGRN "\001\e[4;32\002m"
-# define UYEL "\001\e[4;33\002m"
-# define UBLU "\001\e[4;34\002m"
-# define UMAG "\001\e[4;35\002m"
-# define UCYN "\001\e[4;36\002m"
-# define UWHT "\001\e[4;37\002m"
+# define UBLK "\001\e[4;30m\002"
+# define URED "\001\e[4;31m\002"
+# define UGRN "\001\e[4;32m\002"
+# define UYEL "\001\e[4;33m\002"
+# define UBLU "\001\e[4;34m\002"
+# define UMAG "\001\e[4;35m\002"
+# define UCYN "\001\e[4;36m\002"
+# define UWHT "\001\e[4;37m\002"
 
 //	===== Regular background =====
-# define BLKB "\001\e[40\002m"
-# define REDB "\001\e[41\002m"
-# define GRNB "\001\e[42\002m"
-# define YELB "\001\e[43\002m"
-# define BLUB "\001\e[44\002m"
-# define MAGB "\001\e[45\002m"
-# define CYNB "\001\e[46\002m"
-# define WHTB "\001\e[47\002m"
+# define BLKB "\001\e[40m\002"
+# define REDB "\001\e[41m\002"
+# define GRNB "\001\e[42m\002"
+# define YELB "\001\e[43m\002"
+# define BLUB "\001\e[44m\002"
+# define MAGB "\001\e[45m\002"
+# define CYNB "\001\e[46m\002"
+# define WHTB "\001\e[47m\002"
 
 //	===== High intensty background =====
-# define BLKHB "\001\e[0;100\002m"
-# define REDHB "\001\e[0;101\002m"
-# define GRNHB "\001\e[0;102\002m"
-# define YELHB "\001\e[0;103\002m"
-# define BLUHB "\001\e[0;104\002m"
-# define MAGHB "\001\e[0;105\002m"
-# define CYNHB "\001\e[0;106\002m"
-# define WHTHB "\001\e[0;107\002m"
+# define BLKHB "\001\e[0;100m\002"
+# define REDHB "\001\e[0;101m\002"
+# define GRNHB "\001\e[0;102m\002"
+# define YELHB "\001\e[0;103m\002"
+# define BLUHB "\001\e[0;104m\002"
+# define MAGHB "\001\e[0;105m\002"
+# define CYNHB "\001\e[0;106m\002"
+# define WHTHB "\001\e[0;107m\002"
 
 //	===== High intensty text =====
-# define HBLK "\001\e[0;90\002m"
-# define HRED "\001\e[0;91\002m"
-# define HGRN "\001\e[0;92\002m"
-# define HYEL "\001\e[0;93\002m"
-# define HBLU "\001\e[0;94\002m"
-# define HMAG "\001\e[0;95\002m"
-# define HCYN "\001\e[0;96\002m"
-# define HWHT "\001\e[0;97\002m"
+# define HBLK "\001\e[0;90m\002"
+# define HRED "\001\e[0;91m\002"
+# define HGRN "\001\e[0;92m\002"
+# define HYEL "\001\e[0;93m\002"
+# define HBLU "\001\e[0;94m\002"
+# define HMAG "\001\e[0;95m\002"
+# define HCYN "\001\e[0;96m\002"
+# define HWHT "\001\e[0;97m\002"
 
 //	===== Bold high intensity text =====
-# define BHBLK "\001\e[1;90\002m"
-# define BHRED "\001\e[1;91\002m"
-# define BHGRN "\001\e[1;92\002m"
-# define BHYEL "\001\e[1;93\002m"
-# define BHBLU "\001\e[1;94\002m"
-# define BHMAG "\001\e[1;95\002m"
-# define BHCYN "\001\e[1;96\002m"
-# define BHWHT "\001\e[1;97\002m"
+# define BHBLK "\001\e[1;90m\002"
+# define BHRED "\001\e[1;91m\002"
+# define BHGRN "\001\e[1;92m\002"
+# define BHYEL "\001\e[1;93m\002"
+# define BHBLU "\001\e[1;94m\002"
+# define BHMAG "\001\e[1;95m\002"
+# define BHCYN "\001\e[1;96m\002"
+# define BHWHT "\001\e[1;97m\002"
 
 //	===== Reset =====
-# define END "\001\e[0\002m"
+# define END "\001\e[0m\002"
 
 /*	===== Reference =====
 	https://gist.github.com/RabaDabaDoba/145049536f815903c79944599c6f952a
