@@ -6,7 +6,7 @@
 /*   By: youkim <youkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:16:52 by hyojekim          #+#    #+#             */
-/*   Updated: 2022/03/02 17:41:25 by youkim           ###   ########.fr       */
+/*   Updated: 2022/03/02 17:50:28 by youkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ void	cmd_try_open_redirect(
 		api_open_redirect_output(&cmd->io[OUTPUT], redirect);
 	else
 		return ;
-	if (shell->env->exitcode
-		|| cmd->io[INPUT] == ERR
-		|| cmd->io[OUTPUT] == ERR
-	)
+	if (cmd->io[INPUT] == ERR || cmd->io[OUTPUT] == ERR)
 	{
 		cmd->is_fail = true;
 		env_set_exitcode(shell->env, EXIT_FAILURE);
