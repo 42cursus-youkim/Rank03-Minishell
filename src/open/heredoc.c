@@ -22,23 +22,29 @@ static t_res	process_heredoc(
 	return (write_to_heredoc_and_free(pipefd[PIPE_WRITE], *pstr));
 }
 
-static void	shell_heredoc_loop(
+static t_res	shell_heredoc_inner(
 	t_shell *shell, t_fd pipefd[PIPE_SIZE], const char *eof)
 {
 	char	*line;
 
-	while (true)
+	line = readline(shell->prompt.ps2);
+	if (!line)
 	{
-		line = readline(shell->prompt.ps2);
-		if (!line)
-			return (prompt_eof_heredoc(shell));
-		else if (is_str_equal(line, eof))
-			return (ft_free(line));
-		else if (is_str_equal(line, ""))
-			write_to_heredoc_and_free(pipefd[PIPE_WRITE], line);
-		else if (process_heredoc(shell, pipefd, &line) == ERR)
-			return ;
+		prompt_eof_heredoc(shell);
+		return (UNSET);
 	}
+	else if (is_str_equal(line, eof))
+	{
+		ft_free(line);
+		return (UNSET);
+	}
+	else if (is_str_equal(line, ""))
+	{
+		write_to_heredoc_and_free(pipefd[PIPE_WRITE], line);
+		return (OK);
+	}
+	else
+		return (process_heredoc(shell, pipefd, &line));
 }
 
 /*	get input for heredoc
@@ -46,11 +52,22 @@ static void	shell_heredoc_loop(
 */
 t_fd	shell_heredoc(t_shell *shell, const char *eof)
 {
+	t_res	res;
 	t_fd	pipefd[PIPE_SIZE];
 
 	if (pipe(pipefd) == ERR)
 		return (ERR);
-	shell_heredoc_loop(shell, pipefd, eof);
-	close(pipefd[PIPE_WRITE]);
-	return (pipefd[PIPE_READ]);
+	res = OK;
+	while (res == OK)
+		res = shell_heredoc_inner(shell, pipefd, eof);
+	if (res == ERR)
+	{
+		api_close_pipe(pipefd);
+		return (ERR);
+	}
+	else
+	{
+		close(pipefd[PIPE_WRITE]);
+		return (pipefd[PIPE_READ]);
+	}
 }
