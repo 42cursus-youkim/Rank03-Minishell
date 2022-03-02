@@ -21,7 +21,7 @@ void	del_prompt(t_prompt *prompt)
 	free(prompt->ps2);
 }
 
-static void	prompt_process_line(char *line, t_shell *shell)
+void	shell_process_line(char *line, t_shell *shell)
 {
 	t_token			*tokens;
 	t_AST_SCRIPT	*script;
@@ -36,7 +36,7 @@ static void	prompt_process_line(char *line, t_shell *shell)
 	shell_replace_script(shell, script);
 }
 
-static void	shell_run_line(t_shell *shell)
+void	shell_run_line(t_shell *shell)
 {
 	if (DEBUG)
 		ast_script_repr(shell->script);
@@ -67,7 +67,7 @@ void	shell_prompt(t_shell *shell)
 		else if (!is_line_empty(line))
 		{
 			add_history(line);
-			prompt_process_line(line, shell);
+			shell_process_line(line, shell);
 			shell_run_line(shell);
 		}
 		else

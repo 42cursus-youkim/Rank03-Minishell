@@ -20,6 +20,8 @@ void	child_handle_signal(void);
 
 void	prompt_init(t_shell *shell);
 void	del_prompt(t_prompt *prompt);
+void	shell_process_line(char *line, t_shell *shell);
+void	shell_run_line(t_shell *shell);
 void	shell_prompt(t_shell *shell);
 /*
 ** < ps.c > */

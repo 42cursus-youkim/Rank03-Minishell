@@ -100,7 +100,7 @@ run: docs all
 
 leak: docs all cls
 	@$(call log, Y, 🧪 Running Leak Test)
-	@valgrind $(VFLAGS) ./$(NAME)
+	@valgrind $(VFLAGS) ./$(NAME) ls ls "ls -al"
 
 supp: docs all cls
 	@$(call log, Y, Creating Leak Suppressions,...)
