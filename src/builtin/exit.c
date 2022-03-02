@@ -28,12 +28,12 @@ static int	check_args(t_context *context, int *n, t_shell *shell)
 	return (EXIT_SUCCESS);
 }
 
-//	FIXME: needs to work in pipe too
 int	builtin_exit(t_context *context, t_shell *shell)
 {
 	int			exitcode;
 	int			exitcode_input;
 
+	exitcode_input = EXIT_CODE_RANGE;
 	exitcode = check_args(context, &exitcode_input, shell);
 	if (exitcode == EXIT_EXIT_STATUS_OUT_OF_RANGE)
 		;

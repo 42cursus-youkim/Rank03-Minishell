@@ -47,7 +47,7 @@ static t_res	command_parsing_with_pipe(
 	return (OK);
 }
 
-// parser
+//	parser
 t_AST_SCRIPT	*new_script_from_tokens(t_token tokens[])
 {
 	t_AST_SCRIPT	*script;
