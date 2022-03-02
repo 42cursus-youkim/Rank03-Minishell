@@ -32,7 +32,7 @@ parserV  := parser new1 new2 del util1 util2 expander1 expander2 heredoc_parser
 # Shell API
 apiV     := signal path tilde util env1 env2
 shellV   := shell script
-promptV  := prompt interrupt ps util
+promptV  := prompt interrupt ps check util
 treeV    := repr1 repr2
 errormsgV:= error
 
@@ -40,7 +40,7 @@ errormsgV:= error
 openV    := open redirect heredoc file util
 execV    := context exec argv util
 pipeV    := pipe send status util
-builtinV := builtin cd echo exit env export unset pwd util checks
+builtinV := builtin cd echo exit env export unset pwd util check
 
 # ===== Macros =====
 define choose_modules

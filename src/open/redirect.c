@@ -6,9 +6,9 @@ void	cmd_try_open_redirect(
 	if (redirect->type != REDIRECT)
 		return ;
 	if (is_redirect_input(redirect->op))
-		cmd->io[INPUT] = api_open_redirect_input(redirect, shell);
+		api_open_redirect_input(&cmd->io[INPUT], redirect, shell);
 	else if (is_redirect_output(redirect->op))
-		cmd->io[OUTPUT] = api_open_redirect_output(redirect);
+		api_open_redirect_output(&cmd->io[OUTPUT], redirect);
 	else
 		return ;
 	if (shell->env->exitcode

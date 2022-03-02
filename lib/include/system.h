@@ -13,6 +13,8 @@
 void	*ft_memset(void *b, char c, int space);
 void	*ft_bzero(void *ptr, int n);
 void	*ft_calloc(size_t size, size_t count);
+void	ft_try_free(void *ptr);
+void	ft_free(void *ptr);
 /*
 ** < gnl.c > */
 

@@ -1,10 +1,14 @@
 #include "minishell.h"
 
-// ctrl + d in heredoc readline
-static void	eof_heredoc(t_shell *shell)
+static	t_res	write_to_heredoc_and_free(t_fd fd, char *str)
 {
-	cursor_up();
-	ft_write(1, shell->prompt.ps2);
+	int	res;
+
+	res = ft_writes(fd, (char *[]){str, "\n", NULL});
+	ft_free(str);
+	if (res == ERR)
+		return (ERR);
+	return (OK);
 }
 
 static t_res	process_heredoc(
@@ -15,9 +19,32 @@ static t_res	process_heredoc(
 		close(pipefd[PIPE_READ]);
 		return (ERR);
 	}
-	ft_writes(pipefd[PIPE_WRITE], (char *[]){*pstr, "\n", NULL});
-	free(*pstr);
-	return (OK);
+	return (write_to_heredoc_and_free(pipefd[PIPE_WRITE], *pstr));
+}
+
+static t_res	shell_heredoc_inner(
+	t_shell *shell, t_fd pipefd[PIPE_SIZE], const char *eof)
+{
+	char	*line;
+
+	line = readline(shell->prompt.ps2);
+	if (!line)
+	{
+		prompt_eof_heredoc(shell);
+		return (UNSET);
+	}
+	else if (is_str_equal(line, eof))
+	{
+		ft_free(line);
+		return (UNSET);
+	}
+	else if (is_line_empty(line))
+	{
+		write_to_heredoc_and_free(pipefd[PIPE_WRITE], line);
+		return (OK);
+	}
+	else
+		return (process_heredoc(shell, pipefd, &line));
 }
 
 /*	get input for heredoc
@@ -25,27 +52,22 @@ static t_res	process_heredoc(
 */
 t_fd	shell_heredoc(t_shell *shell, const char *eof)
 {
-	char	*line;
+	t_res	res;
 	t_fd	pipefd[PIPE_SIZE];
 
 	if (pipe(pipefd) == ERR)
 		return (ERR);
-	while (true)
+	res = OK;
+	while (res == OK)
+		res = shell_heredoc_inner(shell, pipefd, eof);
+	if (res == ERR)
 	{
-		line = readline(shell->prompt.ps2);
-		if (!line)
-		{
-			eof_heredoc(shell);
-			break ;
-		}
-		else if (is_str_equal(line, eof))
-			break ;
-		else
-			if (process_heredoc(shell, pipefd, &line) == ERR)
-				break ;
+		api_close_pipe(pipefd);
+		return (ERR);
 	}
-	if (line)
-		free(line);
-	close(pipefd[PIPE_WRITE]);
-	return (pipefd[PIPE_READ]);
+	else
+	{
+		close(pipefd[PIPE_WRITE]);
+		return (pipefd[PIPE_READ]);
+	}
 }

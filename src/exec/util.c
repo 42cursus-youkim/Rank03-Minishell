@@ -10,6 +10,11 @@ bool	is_child(pid_t pid)
 	return (pid == 0);
 }
 
+bool	is_fd_open(t_fd fd)
+{
+	return (fd > STDERR_FILENO);
+}
+
 //	same with dup2 but with error handling
 t_fd	api_dup2(t_fd from, t_fd to)
 {
