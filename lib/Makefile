@@ -39,6 +39,8 @@ SRC      := $(call choose_modules, $(PKGS))
 OBJ      := $(SRC:%.c=%.o)
 
 # ===== Rules =====
+.PHONY: all re clean fclean test red docs
+
 %.o: %.c
 	@echo "  $(WU)$(<F)$(R) -> $(E)$(@F)"
 	@$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
@@ -90,8 +92,6 @@ leaksup: docs all cls
 	@$(CC) $(DFLAGS) $(INC) $(NAME) tests/test.c -o test
 	@valgrind $(VFLAGS) --gen-suppressions=yes ./test
 	@rm test
-
-.PHONY: all re clean fclean test red docs
 
 # ===== Miscs =====
 cls:
