@@ -6,7 +6,7 @@
 #    By: youkim <youkim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/02 16:30:58 by youkim            #+#    #+#              #
-#    Updated: 2022/03/02 16:51:27 by youkim           ###   ########.fr        #
+#    Updated: 2022/03/02 17:47:48 by youkim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ PRE      := src
 INC      := -I include
 
 TEST     := test
+HGEN     := hgen
 
 # ===== Packages =====
 PKGS     := ft_string dict system ft_math list error
@@ -69,6 +70,11 @@ fclean: clean
 
 re: fclean all
 
+docs:
+	@set -e;\
+		for p in $(PKGS); do\
+			$(HGEN) -I include/$$p.h src/$$p 1> /dev/null;\
+		done
 # ===== Miscs =====
 
 R  ?= \033[0;91m

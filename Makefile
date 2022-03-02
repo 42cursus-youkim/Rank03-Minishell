@@ -6,7 +6,7 @@
 #    By: youkim <youkim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/02 16:30:44 by youkim            #+#    #+#              #
-#    Updated: 2022/03/02 17:04:49 by youkim           ###   ########.fr        #
+#    Updated: 2022/03/02 17:47:43 by youkim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ PRE      := src
 INC      := -I ~/.brew/opt/readline/include -I./include/ -I./lib/include
 LIB		 := -L ~/.brew/opt/readline/lib -lreadline -L./lib -lft
 LIBFT    := lib/libft.a
+HGEN     := hgen
 
 # ===== Packages =====
 PKGS     := scanner lexer parser \
@@ -88,6 +89,13 @@ tclean: fclean
 	@$(call log, G, 🗑 Remove $(LIBFT))
 
 re: fclean all
+
+docs:
+	@make --no-print-directory docs -C lib/
+	@set -e;\
+		for p in $(PKGS); do\
+			$(HGEN) -I include/$$p.h src/$$p 1> /dev/null;\
+		done
 
 # ===== Colors =====
 cls:
