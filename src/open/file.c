@@ -1,25 +1,5 @@
 #include "minishell.h"
 
-bool	is_dir(char *path)
-{
-	struct stat	buffer;
-
-	stat(path, &buffer);
-	return (is_path(path) && S_ISDIR(buffer.st_mode));
-}
-
-bool	is_path(char *path)
-{
-	struct stat	buffer;
-
-	return (stat(path, &buffer) == OK);
-}
-
-bool	is_absolute_path(char *path)
-{
-	return (is_path(path) && is_str_first(path, '/'));
-}
-
 bool	is_executable_exists(char *file, t_dict *env)
 {
 	int		i;
