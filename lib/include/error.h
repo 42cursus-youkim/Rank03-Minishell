@@ -11,7 +11,7 @@
 # define BRACE_ERROR		"unclosed brace: "
 # define MULTILINE_ERROR	"multiline is not supported :("
 # define MALLOC_ERROR		"failed to allocate memory :("
-# define SUBSTITUTION_ERROR	": bad substitution\n"
+# define SUBSTITUTION_ERROR	": bad substitution"
 
 //@func
 /*
