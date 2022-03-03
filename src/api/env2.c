@@ -46,6 +46,7 @@ t_res	env_set(t_dict *env, char *str)
 	return (OK);
 }
 
+//	NEVER returns NULL
 char	*env_get(t_dict *env, char *key)
 {
 	if (is_str_equal(key, "?"))

@@ -9,7 +9,7 @@ static char	*get_target(
 	if (argv_len == 1)
 		target = env_get(shell->env, "HOME");
 	else if (is_str_equal(context->argv[1], "-"))
-		target = dict_get(shell->env, "OLDPWD");
+		target = env_get(shell->env, "OLDPWD");
 	else
 		target = context->argv[1];
 	return (target);
