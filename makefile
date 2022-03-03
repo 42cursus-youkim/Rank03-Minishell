@@ -86,9 +86,6 @@ tclean: fclean
 re: fclean all
 
 # ===== Custom Rules =====
-red: tclean docs all cls
-ald: docs all cls
-
 docs:
 	@make --no-print-directory docs -C lib/
 	@set -e;\

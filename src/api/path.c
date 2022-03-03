@@ -32,6 +32,8 @@ static char	**new_path(t_dict *env)
 	char	**path;
 
 	raw = new_raw_path(env);
+	if (!raw)
+		return (NULL);
 	path = new_arr(NULL);
 	i = -1;
 	while (raw[++i])
@@ -54,6 +56,8 @@ char	**new_names_from_path(char *name, t_dict *env)
 	char	**path;
 
 	path = new_path(env);
+	if (!path)
+		return (NULL);
 	new = new_arr(NULL);
 	i = -1;
 	while (path[++i])
