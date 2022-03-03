@@ -1,6 +1,13 @@
 #ifndef API_H
 # define API_H
 
+# define PATH "PATH"
+# define HOME "HOME"
+# define PWD "PWD"
+# define OLDPWD "OLDPWD"
+# define USER "USER"
+# define SHLVL "SHLVL"
+
 //@func
 /*
 ** < env1.c > */

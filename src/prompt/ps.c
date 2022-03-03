@@ -13,6 +13,6 @@ static char	*prompt_color_result(t_shell *shell)
 
 void	prompt_refresh_ps(t_shell *shell)
 {
-	shell->prompt.user = env_get(shell->env, "USER");
+	shell->prompt.user = env_get(shell->env, USER);
 	ft_str_replace(&shell->prompt.ps1, prompt_color_result(shell));
 }
