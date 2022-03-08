@@ -13,8 +13,6 @@ char	*new_itoa(int n)
 	if (num < 0)
 		digit++;
 	str = ft_calloc(sizeof(char), digit);
-	if (!str)
-		return (NULL);
 	if (num < 0)
 	{
 		num = -num;

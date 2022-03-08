@@ -17,10 +17,8 @@ char	*new_path_resolved(char *path, t_dict *env)
 
 static char	**new_raw_path(t_dict *env)
 {
-	const char	*pathstr = dict_get(env, "PATH");
+	const char	*pathstr = env_get(env, PATH);
 
-	if (!pathstr)
-		return (NULL);
 	return (new_str_split(pathstr, ':'));
 }
 

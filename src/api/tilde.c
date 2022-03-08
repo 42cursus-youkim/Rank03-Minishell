@@ -14,6 +14,6 @@ t_res	path_replace_tilde(char **path_p, t_dict *env)
 	if (!is_path_tilde_expansion(*path_p))
 		return (ERR);
 	ft_str_replace(path_p, new_str_join((char *[]){
-			env_get(env, "HOME"), *path_p + 1, NULL}, '\0'));
+			env_get(env, HOME), *path_p + 1, NULL}, '\0'));
 	return (OK);
 }

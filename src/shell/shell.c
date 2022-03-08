@@ -5,7 +5,7 @@ static void	shell_increase_shlvl(t_shell *shell)
 	char	*shlvl_str;
 	int		shlvl_num;
 
-	shlvl_str = env_get(shell->env, "SHLVL");
+	shlvl_str = env_get(shell->env, SHLVL);
 	if (!shlvl_str || ft_atoi(shlvl_str, &shlvl_num) == ERR)
 		shlvl_num = 1;
 	shlvl_num++;

@@ -9,6 +9,8 @@ bool	is_executable_exists(char *file, t_dict *env)
 	if (is_path(file))
 		return (true);
 	names = new_names_from_path(file, env);
+	if (!names)
+		return (false);
 	i = -1;
 	result = false;
 	while (names[++i])

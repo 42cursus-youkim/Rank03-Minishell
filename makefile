@@ -56,6 +56,8 @@ SRC      := $(call choose_modules, $(PKGS))
 OBJ      := $(SRC:%.c=%.o)
 
 # ===== Rules =====
+.PHONY: all re clean fclean test red docs
+
 %.o: %.c
 	@printf "$(Y)%-10s$(WU)$(<F)$(R) -> $(E)$(@F)\n" [$(subst src/,,$(*D))]
 	@$(CC) $(CFLAGS) $(DFLAGS) $(INC) -c -o $@ $<
@@ -79,15 +81,11 @@ fclean: clean
 
 tclean: fclean
 	@make fclean -C lib
-
-# @$(call log, G, 🗑 Remove $(LIBFT))
+	@$(call log, G, 🗑 Remove $(LIBFT))
 
 re: fclean all
 
 # ===== Custom Rules =====
-red: tclean docs all cls
-ald: docs all cls
-
 docs:
 	@make --no-print-directory docs -C lib/
 	@set -e;\
@@ -107,8 +105,6 @@ supp: docs all cls
 	@valgrind $(VFLAGS) \
 		--log-file=supp3.txt\
 		--gen-suppressions=all ./$(NAME)
-
-.PHONY: $(NAME) all re clean fclean test red docs $(LIBFT)
 
 # ===== Colors =====
 cls:
