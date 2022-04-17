@@ -5,5 +5,4 @@
 little bash or zsh. You will learn a lot about processes and file descriptors.
 
 #### [📇 Project](https://github.com/orgs/minishell-jiphyeonjeon/projects/1)
-#### [📄 Subject pdf](https://cdn.intra.42.fr/pdf/pdf/26270/en.subject.pdf)
 #### [📘 Wiki](https://scarf.gitbook.io/minishell/)
